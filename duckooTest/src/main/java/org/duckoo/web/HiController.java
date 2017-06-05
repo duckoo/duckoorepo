@@ -14,6 +14,7 @@ public class HiController {
 	public void tt(){
 		System.out.println("ㅅㅅㅅㅅㅅ");
 		System.out.println("ddddd");
+		System.out.println("아옹 ㅚㄴㅁ어ㅘㅇ나");
 		
 	}
 }
