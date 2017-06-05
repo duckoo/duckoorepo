@@ -13,6 +13,7 @@ public class HiController {
 	@RequestMapping(value = "/op", method = RequestMethod.GET)
 	public void tt(){
 		System.out.println("ㅅㅅㅅㅅㅅ");
+		System.out.println("ddddd");
 		
 	}
 }
