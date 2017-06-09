@@ -1,0 +1,28 @@
+<html>
+<head></head>
+<body>
+  
+<canvas id="bg" width="800" height="600"></canvas>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.12/fabric.min.js">
+</script>
+    
+<script>
+var canvas=new fabric.Canvas("bg");
+
+var rect= new fabric.Rect({
+    left:150,
+    top:150,
+    fill:"red",
+    width:200,
+    height:200
+})
+canvas.add(rect);
+
+
+
+</script>
+</body>
+</html>
