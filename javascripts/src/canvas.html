@@ -1,0 +1,90 @@
+<html>
+<head>
+
+
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<body>
+
+<div>
+
+    <div style="width: 100%; height:5%; border-width:1px; border-color: black; border-style:solid; border-right: 0px;"> 
+        메뉴바
+
+    </div>
+
+    <div style="width: 10%; margin-top:2px; height:74%; border-width:1px; border-color: black; border-style:solid; float:left;"> 
+        <button id="createTable">테이블</i></button>
+    </div>
+
+    <div id="canvas" style="width: 89.5%; height:74%; float:left; overflow:auto;"> 
+        그림창
+    <div id="idid" style="margin-top:5px; margin-left:5px; width:300px; height:300px; border-width:1px; border-color: black; border-style:solid;">
+        <table>
+        <tr>
+            <th>컬럼명</th>
+            <th>타입</th>
+            <th>제약조건</th>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" style="width:100%"/>
+            </td>
+            <td>
+                <select name="speed" id="speed">
+                    <option>int</option>
+                    <option>varchar()</option>
+                    <option>timestamp</option>
+                </select>
+            </td>
+            <td>
+                <select name="speed" id="speed">
+                    <option selected="selected">---</option>
+                    <option>기본키</option>
+                    <option>외래키</option>
+                    <option>not null</option>
+                </select>
+            </td>
+        </tr>
+        </table>
+
+
+    </div>
+
+    </div>
+
+    <div id="console" style="width:100%; margin-top:2px; height:20%; border-width:1px; border-color: black; border-style:solid; float:left;">
+    콘솔창
+    </div>
+
+
+
+    
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+
+<script>
+    $(document).ready(function(){
+        $("#idid").draggable({containment: "#canvas", scroll: true});
+        $("#idid").resizable();
+        $("#console").resizable();
+
+        $("#createTable").on("click",function(e){
+            e.stopPropagation();
+            e.preventDefault();
+            $("#canvas").append();
+        });
+
+
+    });
+
+
+
+</script>
+
+
+
+</body>
+</html>
