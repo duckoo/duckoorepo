@@ -13,4 +13,8 @@ public class TestController {
 	public void erdPageGet(){
 		
 	}
+	@GetMapping("/erdMakingPageBackUp")
+	public void re(){
+		
+	}
 }
