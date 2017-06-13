@@ -68,6 +68,9 @@ width:20%;
 		<div id="canvasDIV"
 			style="width: 89.5%; height: 74%; float: left; overflow: scroll;">
 			<svg id="mySVG" width="100%" height="100%" style="position:relative;">
+			<foring >	
+				
+			</foring>
 			</svg>
 			
 		

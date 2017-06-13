@@ -120,8 +120,9 @@ body{
 	 </div> 
 	</div>
 
-		<div id="canvasDiv" style="float:left; width:83%; height:650px; border-bottom-style: groove;">
-
+		<div id="canvasDiv" style="float:left; width:83%; height:650px; border-bottom-style: groove; overflow:scroll;">
+			<div style="margin-top:100px; margin-left:100px; width:200px; height:250px; background-color: black;"></div>
+			<div style="margin-top:400px; margin-left:400px; width:200px; height:250px; background-color: red;"></div>
 		</div>
 		
 	<div id="footer">
@@ -129,15 +130,38 @@ body{
 		
 		</div>
 		<div id="miniMap" style="float:left; width:28%; height:250px;">
-			<iframe style="width:100%;height:100%;">
-			
-			</iframe>
+			<div id="iframe" style="width:100%;height:100%; overflow:scroll;">
+					
+			</div>
 		</div>
 		
 	</div>
 
 	</div>
 </div>
+<script>
+	$(document).ready(function(e){
+		var iframeChange = function(){
+			var canvasDIV=$("#canvasDiv");
+			var iframe =$("#iframe");
+			
+			canvasDIV.clone().width("20%").height("20%").appendTo(iframe);
+			
+			console.log(canvasDIV.clone().width());
+			
+			
+			//.appendTo(iframe);
+		
+			
+		};
+		
+		iframeChange();
+		
+	});
+
+</script>
+
+
 </body>
 
 
