@@ -6,7 +6,7 @@
   <configuration>
   
 	<typeAliases>
-		<package name="org.zoro.domain"/>
+		<package name="org.duckoo.domain"/>
 	</typeAliases>
 
 </configuration>
