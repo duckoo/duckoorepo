@@ -6,21 +6,31 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script type="text/javascript" src="/resources/js-graph-it_1.1/js-graph-it.js"></script>
+    <link rel="stylesheet" type="text/css" href="/resources/js-graph-it_1.1/js-graph-it.css">
+    <link rel="stylesheet" type="text/css" href="/resources/js-graph-it_1.1/sf-homepage/sf-homepage.css">
 <style>
 .entity {
-	width: 60%;
-	height: 70%;
+	width: 300px;
+	height: 350px;
 	position: relative;
 	left: 5px;
 	top: -100px;
 	z-index: 1;
+
+	
+}
+.connector{
+
+	
 }
 
 .attrArea {
 	border: 2px solid black;
 	width: 100%;
 	height: 100%;
-	overflow: auto;
+	overflow:auto;
 }
 button[name=attrPlusBtn]{
 	border-radius:50px;
@@ -28,20 +38,27 @@ button[name=attrPlusBtn]{
 }
        	   
 .culName{
-width:33%; 
+width:40%; 
 float:left;
 }
 .attrType{
-width:25%; 
+width:30%; 
 float:left;
 }
 .delUpBtns{
 float:left; 
-width:35%;
+width:20%;
+
 }
 
 .row{
-	display: inline-table;
+	display: inline-block;
+}
+.pk{
+	width:100%;
+}
+.std{
+	width:100%;
 }
 
 
@@ -56,10 +73,13 @@ width:35%;
 
 		<div id="canvasDIV"
 			style="width: 89.5%; height: 74%; float: left; overflow: scroll;">
-			<svg id="svg" width="100%" height="100%" style="position:relative;">
-
-				
+			<svg xmlns="http://www.w3.org/2000/svg"
+			xmlns:xlink="http://www.w3.org/1999/xlink"
+			 id="mySVG" width="100%" height="100%" style="position:relative;">
+			
 			</svg>
+			
+		
 		</div>
 	</div>
 
@@ -74,7 +94,7 @@ width:35%;
 		integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
 		crossorigin="anonymous"></script>
 
-
+ <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
 
 	<script>
          $(document).ready(function () {
@@ -106,68 +126,38 @@ width:35%;
               	   }
               	   addRowToDom($(tagetObj),{name:name,attrType:type});   
                  });
-        		//start ㅇㅇ
-        		var focusEntity = undefined;
-        		dom.on("click",".entity",function(e){
-        			e.stopPropagation();
-        			
-        				var selEntity=$(this);
-        				
-    	    			if(focusEntity ===undefined){
-	        			focusEntity =selEntity;
-	        			return;
-    	    			}
-        			 if(focusEntity !== selEntity){
-        				 switchState(focusEntity, selEntity);
-        				 focusEntity=undefined;
- 	        			return;
-        			 }
-        			
-        		 });
         		 
         		 
-        		 var FlagChange = function(entity){
-        			 
-        			 entity.focusFlag = true;
-        			 count++;
-        		 }
-        		 var switchState = function(first,next){
-        			 
-        			 if(first.offset().left>next.offset().left){
-        				 left = next;
-        				 right = first;
-        			 }else{
-        				 left = first;
-        				 right = next;
-        			 }
-        			 draw(left, right);
-        		 }
-        		 var draw = function(left, right){
-        			 var leftPosition = {};
-        			 leftPosition.x = left.offset().left + left.width();
-        			 leftPosition.y = left.offset().top + (left.height()/2);
-        			 
-        			 
-        			 var rightPosition = {};
-        			 rightPosition.x = right.offset().left;
-        			 rightPosition.y = right.offset().top + (right.height()/2);
-        			 
-        			 var svgLine = document.getElementById("svg");
-        			 var path = document.createElementNS("http://www.w3.org/2000/svg","path");
-        			 
-        			 svgLine.appendChild(path);
-        			 path.setAttribute("id","p1");
-        			 
-        			 document.getElementById("p1").setAttribute("d","M"+leftPosition.x+" "+leftPosition.y+" C " +(leftPosition.x+rightPosition.x)/2+" "+leftPosition.y+", "+(leftPosition.x+rightPosition.x)/2+" "+ rightPosition.y+", "+rightPosition.x+" "+rightPosition.y);
-        			 document.getElementById("p1").setAttribute("fill","none");
-        			  document.getElementById("p1").setAttribute("stroke-width","2");
-        			document.getElementById("p1").setAttribute("stroke","#000");
-
-        		 }
+   // start
+         		
+         		var entitys = new Array();
+         		
+         		dom.on("click",".entity",function(e){
+         			entitys.push($(this));
+         			if(entitys.length==2){
+         				var first = entitys[0].attr("id");	
+         				var second = entitys[1].attr("id");
+         				
+         				dom.append("<div class='connector "+first+" "+second+"'>"+
+         				      		"<img class='connector-end' src='/resources/js-graph-it_1.1/sf-homepage/arrow.gif'>"+
+         				      		"</div>"		
+         				
+         				);
+         				
+         				entitys = new Array();
+         				
+         			};
+         			
+         			
+         			
+         		 });
+         		 
+         		 
+    //end
         		 
-        		 //end ㅇㅇ
+        		 
         		 var entityArr={};
-        		
+        	
         		 
         		var addRowToDom=function(attrDom,opt){
                	   var name= opt.name||undefined;
@@ -194,12 +184,13 @@ width:35%;
         			         this.type=opt.type||undefined;
         			         this.constraint=opt.constraint||undefined;
         			         this.idex=opt.idex||undefined;
+        			         
         			      }
         			     };
         		 
         		var addToDom= function(){// 이부분 깨끗하게하고싶은데.
 			    	   dom.append(
-			        	"<div class='entity' id="+this.name+" >"+
+			        	"<div class='entity' id="+this.name+">"+
 			   			"	<input type='text' style='float:left;'></input>"+
 			   			"	<div style='float:left; width:35%;'>"+
 			   			"		<button><i class='fa fa-wrench' aria-hidden='true'></i></button>"+
@@ -229,14 +220,11 @@ width:35%;
 			           }
         		 
         		 
-        		
         		 var entity={
         			       name:undefined,
         			       attr:[],
-        			       focusFlag:undefined,
         			       init:function(opt){
         			           this.name=opt.name||undefined;
-        			          this.focusFlag=false;
         			       },
         			       addToDom:addToDom
         			    };

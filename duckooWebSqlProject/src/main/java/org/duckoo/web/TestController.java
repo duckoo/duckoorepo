@@ -17,4 +17,16 @@ public class TestController {
 	public void re(){
 		
 	}
+	@GetMapping("/erdMakingPageTaehyun")
+	public void re1(){
+		
+	}
+	@GetMapping("/test")
+	public void re2(){
+		
+	}
+	@GetMapping("/erdMain")
+	public void re3(){
+		
+	}
 }
