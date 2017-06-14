@@ -80,7 +80,7 @@ width:20%;
 var contact = function(firstElement,nextElement){
 	
 		jsPlumb.addEndpoint(firstElement,{
-			
+			endpoint:[['Image',{src:'/resources/images/dackbal_bottom.png'}],]
 		});
 	
     jsPlumb.connect({
