@@ -2,6 +2,7 @@ package org.duckoo.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -27,6 +28,19 @@ public class TestController {
 	}
 	@GetMapping("/erdMain")
 	public void re3(){
+		
+	}
+	@GetMapping("/editorPage")
+	public void re4(){
+		
+	}
+	@PostMapping("/editorPage")
+	public void re5(String sql){
+		
+		System.out.println(sql);
+	}
+	@GetMapping("/test2")
+	public void re6(){
 		
 	}
 }

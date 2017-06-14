@@ -138,6 +138,9 @@ function movemouse(e)
 		var i;
 		for(i = 0; i < blocksToMove.length; i++)
 		{
+			
+			console.log("bm: ",blocksToMove);
+			
 			blocksToMove[i].onMove();
 		}
 		return false;

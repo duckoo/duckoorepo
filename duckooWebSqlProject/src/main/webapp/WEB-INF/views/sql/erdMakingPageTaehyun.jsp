@@ -7,24 +7,29 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script type="text/javascript" src="/resources/js-graph-it_1.1/js-graph-it.js"></script>
-    <link rel="stylesheet" type="text/css" href="/resources/js-graph-it_1.1/js-graph-it.css">
-    <link rel="stylesheet" type="text/css" href="/resources/js-graph-it_1.1/sf-homepage/sf-homepage.css">
+<script type="text/javascript" src="/resources/js-graph-it_1.1/js-graph-it.js"></script>
+<link rel="stylesheet" type="text/css" href="/resources/js-graph-it_1.1/js-graph-it.css">
+<link rel="stylesheet" type="text/css" href="/resources/js-graph-it_1.1/sf-homepage/sf-homepage.css">
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+		integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+		crossorigin="anonymous"></script>
+
+
+
 <style>
 .entity {
-	width: 300px;
-	height: 350px;
-	position: relative;
-	left: 5px;
-	top: -100px;
-	z-index: 1;
-
-	
+	width: 200px;
+	height: 250px;
 }
-.connector{
-
 	
-}
+.block { position: absolute; }
+
 
 .attrArea {
 	border: 2px solid black;
@@ -71,30 +76,12 @@ width:20%;
 
 	<div style="height: 100%; width: 100%;">
 
-		<div id="canvasDIV"
-			style="width: 89.5%; height: 74%; float: left; overflow: scroll;">
-			<svg xmlns="http://www.w3.org/2000/svg"
-			xmlns:xlink="http://www.w3.org/1999/xlink"
-			 id="mySVG" width="100%" height="100%" style="position:relative;">
-			
-			</svg>
-			
-		
+		<div id="canvasDIV" style="width: 3000px; height: 3000px; float: left; overflow: scroll;">
+
+				
 		</div>
 	</div>
 
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.2/svg.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.2/svg.min.js"></script>
-
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-		integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-		crossorigin="anonymous"></script>
-
- <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
 
 	<script>
          $(document).ready(function () {
@@ -137,22 +124,24 @@ width:20%;
          			if(entitys.length==2){
          				var first = entitys[0].attr("id");	
          				var second = entitys[1].attr("id");
+      
          				
-         				dom.append("<div class='connector "+first+" "+second+"'>"+
+         				dom.append(
+         									"<div class='connector "+first+" "+second+"'>"+
          				      		"<img class='connector-end' src='/resources/js-graph-it_1.1/sf-homepage/arrow.gif'>"+
          				      		"</div>"		
          				
          				);
-         				
+         				initPageObjects();	
          				entitys = new Array();
          				
-         			};
-         			
+         			}
+         			initPageObjects();
          			
          			
          		 });
          		 
-         		 
+
     //end
         		 
         		 
@@ -189,8 +178,10 @@ width:20%;
         			     };
         		 
         		var addToDom= function(){// 이부분 깨끗하게하고싶은데.
-			    	   dom.append(
-			        	"<div class='entity' id="+this.name+">"+
+        			
+        			
+        			dom.append(
+			        	"<div class='entity block draggable' id="+this.name+">"+
 			   			"	<input type='text' style='float:left;'></input>"+
 			   			"	<div style='float:left; width:35%;'>"+
 			   			"		<button><i class='fa fa-wrench' aria-hidden='true'></i></button>"+
@@ -214,9 +205,7 @@ width:20%;
 			   			"	</div>"+
 			   		    " </div>"+
 			            "</div>");
-			                var  str="#"+this.name;
-			               $(str).draggable({scroll:true});
-			               $(str).resizable();
+			     
 			           }
         		 
         		 
@@ -263,7 +252,7 @@ width:20%;
         	 
            Entitys.makeEntity({name:"1212"});
            Entitys.makeEntity({name:"121333"});
-
+          
             /* var currentZoom = 1;
             $("button[target=zoomin]").on("click", function (e) {
                 e.stopPropagation();
