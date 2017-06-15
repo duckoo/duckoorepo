@@ -70,10 +70,19 @@ width:35%;
 
 	<div style="height: 100%; width: 100%;">
 
+<<<<<<< HEAD
 		<div id="canvasDIV" style="width: 89.5%; height: 74%; float: left; overflow: scroll;">
 			  <svg id="svg" width=3000px height=3000px style="position:relative;">
 <!-- 			   <image xlink:href="/resources/zaku/img/TestIMage.jpg" height="20px" width="20px"/>     -->
 			  </svg>
+=======
+		<div id="canvasDIV"
+			style="width: 89.5%; height: 74%; float: left; overflow: scroll;">
+			<svg id="svg" width="100%" height="100%" style="position:relative;">
+
+				
+			</svg>
+>>>>>>> branch 'master' of https://github.com/duckoo/duckoorepo
 		</div>
 	</div>
 
