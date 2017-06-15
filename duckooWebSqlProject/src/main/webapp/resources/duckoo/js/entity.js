@@ -1,5 +1,11 @@
 
 var EntityManager=(function(){
+	var entityArr={};// all of Entity;
+	var focusedEntity=undefined;
+	var $dom =$("#canvasDiv");	
+	var entityHtml=$("#entityTemplate").html();
+	var entityTemplate=Handlebars.compile(entityHtml);
+	
 ////////////////////////////////// inner Object protoType
 	var attribute = {
 			name : undefined,
@@ -13,50 +19,17 @@ var EntityManager=(function(){
 				this.idex = opt.idex || undefined;
 			}
 		};
-	
 	var entity = {
 		name : undefined,
 		attr:[],
 		init : function(opt) {
 			this.name = opt.name || undefined;
-			this.foreignObjectId=opt.foreignObjectId || undefined;
 		 },
-		genHtml:function(){ // onmousemove ='repaint(event) we will fix.........
-		var str="<div class='entity' id="+this.name+" onmousemove ='repaint(event)'>"+
-   			"	<input type='text' style='float:left;'></input>"+
-   			"	<div style='float:left; width:35%;'>"+
-   			"		<button><i class='fa fa-wrench' aria-hidden='true'></i></button>"+
-   			"		<button><i class='fa fa-trash' aria-hidden='true'></i></button>"+
-   			"	</div>"+
-   		 	" <div class='attrArea'>"+
-   			"	<div name="+this.name+" class='pk'>"+
-   			"	</div>"+
-   			"   <div>"+
-   			"		<button class='addAttrBtn' data-entityName='"+this.name+"'  data-attrType='pk' name='attrPlusBtn'>"+
-   			"			<i class='fa fa-plus' aria-hidden='true'></i>"+
-   			"		</button>	"+
-   			"	</div>"+
-   			"	<hr style='border-width:1px; border-color:red;'>"+
-   			"	<div name="+this.name+" class='std'>"+
-   			"	</div>	"+
-   			"	<div>"+
-   			"		<button class='addAttrBtn' data-entityName='"+this.name+" data-attrType='std' name='attrPlusBtn'>"+
-   			"			<i class='fa fa-plus' aria-hidden='true'></i>"+
-   			"		</button>"+		
-   			"	</div>"+
-   		    " </div>"+
-            "</div>";
-		  return str;
+		genHtml:function(){
+		  return entityTemplate(this);
 		}
 	 };
-// private Object /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	var entityArr={};// all of Entity;
-	var focusedEntity=undefined;
-
-	var $dom =$("#canvasDiv");
 ////////////////////////////////////////////////////////////////////////////////////////////////
-	
 	$dom.on("click",".entity",function(e){
 		e.stopPropagation();
 	    e.preventDefault();	
@@ -80,10 +53,6 @@ var EntityManager=(function(){
 	    e.preventDefault();
 	   
 	})
-	
-	
-	
-	
 // function///////////////////////////////////////////////////////////////////////////////////////////////////// 
 
 function createEntity(opt){
@@ -101,29 +70,47 @@ function createEntity(opt){
 	   }); 
        
        if(opt.show){
-    	   showEntity(opt);
+    	   showEntity(opt.name);
        }
-       
-       
     return newEntity;
 }	
 
-function showEntity(opt){
-	if(!opt.name){
-		alert("잘못된 이름");
+function showEntity(name){
+	var en= entityArr[name];
+	if(!en){
+	 console.log(en);
 		return;
 	}
-	var name=opt.name;
-	var str= entityArr[name].genHtml();
+	var str=en.genHtml();
 	$dom.append(str);
-	$("#"+name).draggable();
-	$("#"+name).resizable();
+	$("#"+name).draggable().resizable();
 }
+function hideEntity(name){
+	var en= entityArr[name];
+	if(!en)return;
+	$("#"+en.name).remove();
+}
+
+function deleteEntity(name){
+	var en= entityArr[name];
+	 if(!en)return;
+	 hideEntity(name);
+	 delete en; //delete 쓰지말라고하던데 흠
+}
+
 
 function setFocusByName(name){
 	focusedEntity=entityArr[name];
 }
 
+function setAttribute(entityName,opt){
+	var en=entityArr[entityName];
+	if(!en){alert("잘못된 엔티디 접근");return;}
+	
+	var newAttr=Object.create(attribute);
+	  newAttr.init(opt);
+	en.attr.push(newAttr);
+}
 
 function  getFocusByName(){
 	var _focusedEntity= focusedEntity||{};
@@ -138,7 +125,10 @@ return {
 	    showEntity:showEntity,
 	    setFocusByName:setFocusByName,
 	    getFocusByName:getFocusByName,
-	    getEntityByName:getEntityByName
+	    getEntityByName:getEntityByName,
+	    setAttribute:setAttribute,
+	    hideEntity:hideEntity,
+	    deleteEntity:deleteEntity
       };
 
 })();

@@ -17,7 +17,6 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
 		integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
 		crossorigin="anonymous"></script>
-
 <script type="text/javascript" src="/resources/duckoo/js/duckooPlumb.js"></script>
 <script type="text/javascript" src="/resources/duckoo/js/relationship.js"></script>
 
@@ -73,15 +72,45 @@ width:20%;
     <div class="canvas" id="canvasDiv"
       style="width: 1000px; height: 1000px; border: 1px solid black;">
     </div>
-    
-    
+  
+  
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
+ <script id="entityTemplate" type="text/x-handlebars-template">
+<div class='entity' id='{{name}}' onmousemove ='repaint(event)'>
+   <input type='text' style='float:left;'></input>
+   				<div style='float:left; width:35%;'>
+   					<button><i class='fa fa-wrench' aria-hidden='true'></i></button>
+   					<button><i class='fa fa-trash' aria-hidden='true'></i></button>
+   				</div>
+   		 	 <div class='attrArea'>
+   				<div name='{{name}}' class='pk'>
+   				</div>
+   			   <div>
+   					<button class='addAttrBtn' data-entityName='{{name}}'  data-attrType='pk' name='attrPlusBtn'>
+   						<i class='fa fa-plus' aria-hidden='true'></i>
+   					</button>
+   				</div>
+   				<hr style='border-width:1px; border-color:red;'>
+   				<div name="+this.name+" class='std'>
+   				</div>	
+   				<div>
+   					<button class='addAttrBtn' data-entityName='{{name}}' data-attrType='std' name='attrPlusBtn'>
+   						<i class='fa fa-plus' aria-hidden='true'></i>
+   					</button>		
+   				</div>
+   		</div>
+ </div>
+</script> 
+  
  <script type="text/javascript" src="/resources/duckoo/js/entity.js"></script>   
 <script>
 jsPlumb.ready(function() {
 	EntityManager.createEntity({name:"e1",show:true});
 	EntityManager.createEntity({name:"e2",show:true});
 	EntityManager.createEntity({name:"e3",show:true});
-	
+
+	/* var en=EntityManager.getEntityByName("e1");
+	console.log("entity: ",en.attr[0]); */
 	
  });
 	

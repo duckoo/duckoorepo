@@ -26,7 +26,7 @@ var renderManager=(function(){
 	    });
 	   
 	    //나중에 써먹어야된다.
-	   console.log("js: ",obj.getAttachedElements()[1].elementId);
+	    console.log("js: ",obj.getAttachedElements()[1].elementId);
 	    console.log("js: ",obj.getAttachedElements()[1].endpoint.y);
 	    console.log("js: ",obj.getAttachedElements()[1].endpoint.x); 
 	    console.log("js: ",obj.getAttachedElements()[1].endpoint);
