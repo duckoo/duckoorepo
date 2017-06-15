@@ -147,7 +147,6 @@ width:20%;
         			         this.type=opt.type||undefined;
         			         this.constraint=opt.constraint||undefined;
         			         this.idex=opt.idex||undefined;
-        			         
         			      }
         			     };
         		 
