@@ -6,6 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
  		<script type="text/javascript" src="/resources/jsplumb.min.js"></script>
+ 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gojs/1.7.12/go-debug.js"></script>
+ 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gojs/1.7.12/go.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script
@@ -79,14 +81,12 @@ width:20%;
 <script>
 var contact = function(firstElement,nextElement){
 	
-		jsPlumb.addEndpoint(firstElement,{
-			endpoint:[['Image',{src:'/resources/images/dackbal_bottom.png'}],]
-		});
+
 	
     jsPlumb.connect({
         source:$("#canvasDiv #"+firstElement),
         target:$("#canvasDiv #"+nextElement),
-      	
+        detachable: false,
         
         anchor:["Continuous", { faces:[ "bottom", "left" ,"right","top"] } ]
     });
@@ -175,7 +175,7 @@ jsPlumb.ready(function() {
 		      }
 		      
 		      var lines = document.getElementsByClassName("jtk-endpoint");
-		      console.log(lines.length);
+		      //console.log(lines.length);
 		      for(var i=0; i<lines.length; i++){
 		    	  lines[i].innerHTML="<img src='/resources/images/dackbal.png'/>";
 		    	  
