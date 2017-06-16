@@ -85,6 +85,8 @@ width:20%;
 
 	<script>
          $(document).ready(function () {
+        	 
+        	 
         	 var Entitys=(function(dom){
         	
         		 dom.on("click",".addAttrBtn",function(e){
@@ -240,10 +242,16 @@ width:20%;
         			            console.log(": ",Entityname,entityArr);
         			         entityArr[Entityname].attr.push(newAttr);    
         			   }
-        		 
+        		 	var searchForId = function(id){
+        		 		
+        		 		
+        		 		return entityArr[id];
+        		 	}
         		 return {
         			 makeEntity:makeEntity,
-        			 pushAttr:pushAttr
+        			 pushAttr:pushAttr,
+        			 entityArr:entityArr,
+        			 searchForId:searchForId
         		 } 
         	 })($("#canvasDIV"));
         	 
@@ -252,7 +260,9 @@ width:20%;
         	 
            Entitys.makeEntity({name:"1212"});
            Entitys.makeEntity({name:"121333"});
-          
+           
+           
+           genConnector("canvasDIV",Entitys);
             /* var currentZoom = 1;
             $("button[target=zoomin]").on("click", function (e) {
                 e.stopPropagation();
@@ -276,7 +286,7 @@ width:20%;
         });
 
     </script>
-
+<script type="text/javascript" src="/resources/conjs/sqlgen.js"></script>
 
 </body>
 
