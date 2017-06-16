@@ -108,10 +108,25 @@ width:20%;
    		</div>
  </div>
 </script> 
-  
+
+
+ <script id="sqlCreate" type="text/x-handlebars-template">
+
+ create table {{name}} (  
+{{#attr}}
+	  {{name}} {{type}},
+      {{gen name}}
+
+ {{/attr}}
+);
+
+</script> 
+
  <script type="text/javascript" src="/resources/duckoo/js/entity.js"></script>   
+   <script type="text/javascript" src="/resources/conjs/sqlgen.js"></script>
 <script>
 jsPlumb.ready(function() {
+	
 	EntityManager.createEntity({name:"e1",show:false});
 	EntityManager.createEntity({name:"e2",show:false});
 	EntityManager.createEntity({name:"e3",show:false});
@@ -128,7 +143,7 @@ jsPlumb.ready(function() {
 	
 	EntityManager.showEntity("e1");
 	
-	
+	sqlGenerator.generate(en);
 	
 	/* var en=EntityManager.getEntityByName("e1");
 	console.log("entity: ",en.attr[0]); */

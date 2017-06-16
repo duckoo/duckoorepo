@@ -1,31 +1,40 @@
-var genConnector = function initGen(canvasID, EntityManager){
+var sqlGenerator =(function(){
 	
 	
-	$("#"+canvasID).on("click",".entity",function(e){
-		e.stopPropagation();
-		e.preventDefault();
-		console.log("id for findEntityDiv",this.id);
-		var id = this.id;
-		console.log("arr",EntityManager.entityArr);
-		var target = EntityManager.searchForId(id);
-		generate(target);
-		console.log(Entitys);
-	});
+	var createSQLFORM=$("#sqlCreate").html();
+	var createSQLTemplate=Handlebars.compile(createSQLFORM);
+	
+	Handlebars.registerHelper('gen', function (cst) {
+		var compareName = cst.trim();
+		  if(compareName==="notnull"){
+			  
+		  }
+		  return "gen_";
+		});
 	
 	
-	var generate = function(targetEntity,targetRelations){
-		console.log(targetEntity);
-		var sql = "create table " + targetEntity.name + "(" +"\n";
+	var generate = function(entity){
+		var sql = createSQLTemplate(entity);
+	       
+		console.log(sql);
 		
-		searchAttributes();
-		
-		sql += "\n);"
-			console.log(sql);
 		return sql;
 	}
 	
-	var searchAttributes = function(targetEntity){
-		console.log(targetEntity);
+	var searchAttributes = function(targetEntityObject){
 		
+		var subText="";
+		var targetAttr = targetEntityObject.getAttr();
+		
+		targetEntity.getAttr({constraint:"pk"})
+		
+		for(var i=0;i<targetEntity.getAttr().length;i++){
+			subText+="\t"+targetAttr[i].name + " " + targetAttr[i].type + ",\n";
+		}
+		
+		return subText;
 	}
-}
+	
+	
+	return {generate:generate};
+})();
