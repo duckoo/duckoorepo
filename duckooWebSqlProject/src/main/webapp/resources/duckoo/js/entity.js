@@ -5,6 +5,21 @@ var EntityManager=(function(){
 	var $dom =$("#canvasDiv");	
 	var entityHtml=$("#entityTemplate").html();
 	var entityTemplate=Handlebars.compile(entityHtml);
+	/*
+	Handlebars.registerHelper("getPk",function(name){
+		var pk=entityArr[name].getAttr({constraint:"pk"})[0];
+		return "PK:"+pk[0].name+" "+pk[0].type;
+	});
+	*/
+	Handlebars.registerHelper("isExtend",function(opt){
+	  console.log("뭐냐: ",opt);
+		var str="";
+		if(opt===false)
+			str+="basic";
+		else
+			str+="extend";
+		return str;
+	});
 	
 ////////////////////////////////// inner Object protoType
 	var attribute = {
@@ -12,21 +27,69 @@ var EntityManager=(function(){
 			type : undefined,
 			idex : undefined,
 			constraint : undefined,
-			init : function(opt) {
+			init : function(opt) { // 이 함수도 리팩토링 대상. 모든 프로퍼티 비교해서 할당하자
 				this.name = opt.name || undefined;
 				this.type = opt.type || undefined;
 				this.constraint = opt.constraint || undefined;
 				this.idex = opt.idex || undefined;
+			},
+			compare:function(attr){
+				var key=Object.keys(attr);
+				var ret={};
+				for( var i=0,len=key.length; i<len;i++){
+					if( this[key[i]]===attr[key[i]])
+						ret[key[i]]=true;
+				}
+				return ret;
 			}
 		};
-	var entity = {
+   var entity = {
 		name : undefined,
 		attr:[],
+		extend:undefined,
 		init : function(opt) {
 			this.name = opt.name || undefined;
+			this.extend=false;
 		 },
 		genHtml:function(){
 		  return entityTemplate(this);
+		},
+		getAttr:function(att){
+			if(!att){return this.attr;}
+			var ret=[];
+			for( var attrVal of this.attr){
+				console.log("===",attrVal.compare(att));
+				var obj=attrVal.compare(att);
+			   if(Object.keys(obj).length!==0){
+				   ret.push(attrVal);
+				}
+			}
+			return ret;
+		},
+		getAttrByName:function(name){
+			for(var i=0,len=this.attr.length; i<len;i++){
+				if(this.attr[i]["name"]===name){
+					return this.attr[i];
+				}
+			}
+			return undefined;
+		},
+		deleteAttrByName:function(name){
+			for(var i=0,len=this.attr.length; i<len;i++){
+				if(this.attr[i]["name"]===name){
+					this.attr.splice(i,1);
+					break;
+				}
+			}
+		},
+		setAttr:function(opt){
+			var thatAttr= this.getAttrByName(opt.name);
+			if(thatAttr){thatAttr.init(opt);
+			   return;
+			}
+			var newAttr=Object.create(attribute);
+			  newAttr.init(opt);
+			this.attr.push(newAttr);
 		}
 	 };
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,11 +111,45 @@ var EntityManager=(function(){
 	     }
 	})
 	
-	$dom.on("click",".addAttrBtn",function(e){
-		e.stopPropagation();
-	    e.preventDefault();
-	   
-	})
+	
+		$dom.on("click",".scaleUpBtn",function(e){
+		    e.stopPropagation();
+		    e.preventDefault();
+		    var entityId = $(this).attr("data-scaleBtn");
+		    var $entity = $("#"+entityId);
+		    var $innerEntity = $("[data-innerEntity='"+entityId+"']");
+		    
+		    $entity.css("width",300);
+		    $entity.css("height",350);
+		    $innerEntity.css("width",275);
+		    $innerEntity.css("height",325);
+		    $(this).attr('class','scaleDownBtn');
+		    /* $("#myModal").modal();
+		     $("#myModal").draggable({
+		      handle: ".modal-header"
+		    });
+		    */
+		    renderManager.repaintEverything();
+		    
+		  });
+	
+	    $dom.on("click",".scaleDownBtn",function(e){
+		    e.stopPropagation();
+		    e.preventDefault();
+		    var entityId = $(this).attr("data-scaleBtn");
+		    var $entity = $("#"+entityId);
+		    var $innerEntity = $("[data-innerEntity='"+entityId+"']");
+
+		    $entity.css("width",175);
+		    $entity.css("height",125);
+		    $innerEntity.css("width",150);
+		    $innerEntity.css("height",100);
+		    $(this).attr('class','scaleUpBtn');
+		    
+		    renderManager.repaintEverything();
+		    
+		  });
+
 // function///////////////////////////////////////////////////////////////////////////////////////////////////// 
 
 function createEntity(opt){
@@ -75,24 +172,25 @@ function createEntity(opt){
     return newEntity;
 }	
 
+	
 function showEntity(name){
-	var en= entityArr[name];
+	var en=getEntityByName(name);
 	if(!en){
 	 console.log(en);
 		return;
 	}
 	var str=en.genHtml();
 	$dom.append(str);
-	$("#"+name).draggable().resizable();
+	$("#"+name).draggable();
 }
 function hideEntity(name){
-	var en= entityArr[name];
+	var en=getEntityByName(name);
 	if(!en)return;
 	$("#"+en.name).remove();
 }
 
 function deleteEntity(name){
-	var en= entityArr[name];
+	var en=getEntityByName(name);
 	 if(!en)return;
 	 hideEntity(name);
 	 delete en; //delete 쓰지말라고하던데 흠
@@ -104,12 +202,9 @@ function setFocusByName(name){
 }
 
 function setAttribute(entityName,opt){
-	var en=entityArr[entityName];
+	var en=getEntityByName(entityName);
 	if(!en){alert("잘못된 엔티디 접근");return;}
-	
-	var newAttr=Object.create(attribute);
-	  newAttr.init(opt);
-	en.attr.push(newAttr);
+	en.setAttr(opt);
 }
 
 function  getFocusByName(){
@@ -130,11 +225,9 @@ return {
 	    hideEntity:hideEntity,
 	    deleteEntity:deleteEntity
       };
-
 })();
 
 function repaint(){
     jsPlumb.repaintEverything();
 }
-
 
