@@ -9,6 +9,7 @@ var sqlGenerator =(function(){
 		  if(compareName==="notnull"){
 			  
 		  }
+		  //compare constraints type
 		  return "gen_";
 		});
 	
@@ -21,20 +22,7 @@ var sqlGenerator =(function(){
 		return sql;
 	}
 	
-	var searchAttributes = function(targetEntityObject){
-		
-		var subText="";
-		var targetAttr = targetEntityObject.getAttr();
-		
-		targetEntity.getAttr({constraint:"pk"})
-		
-		for(var i=0;i<targetEntity.getAttr().length;i++){
-			subText+="\t"+targetAttr[i].name + " " + targetAttr[i].type + ",\n";
-		}
-		
-		return subText;
-	}
-	
+
 	
 	return {generate:generate};
 })();
