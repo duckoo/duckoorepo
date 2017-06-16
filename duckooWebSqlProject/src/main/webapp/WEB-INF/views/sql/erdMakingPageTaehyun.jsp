@@ -286,7 +286,7 @@ width:20%;
         });
 
     </script>
-<script type="text/javascript" src="/resources/conjs/sqlgen.js"></script>
+
 
 </body>
 

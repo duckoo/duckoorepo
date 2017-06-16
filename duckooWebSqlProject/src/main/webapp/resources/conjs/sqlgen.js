@@ -1,31 +1,26 @@
-var genConnector = function initGen(canvasID, EntityManager){
+var sqlGenerator =(function(){
 	
 	
-	$("#"+canvasID).on("click",".entity",function(e){
-		e.stopPropagation();
-		e.preventDefault();
-		console.log("id for findEntityDiv",this.id);
-		var id = this.id;
-		console.log("arr",EntityManager.entityArr);
-		var target = EntityManager.searchForId(id);
-		generate(target);
-		console.log(Entitys);
-	});
+	var createSQLFORM=$("#sqlCreate").html();
+	var createSQLTemplate=Handlebars.compile(createSQLFORM);
+	
+	Handlebars.registerHelper('gen', function (cst,ty) {
+		console.log("야야야야",cst,ty);
+		var compareName = cst.trim();
+		  if(compareName==="notnull"){
+		  }
+		  //compare constraints type
+		  return cst;
+		});
 	
 	
-	var generate = function(targetEntity,targetRelations){
-		console.log(targetEntity);
-		var sql = "create table " + targetEntity.name + "(" +"\n";
-		
-		searchAttributes();
-		
-		sql += "\n);"
-			console.log(sql);
+	var generate = function(entity){
+		var sql = createSQLTemplate(entity);
+		console.log(sql);
 		return sql;
 	}
 	
-	var searchAttributes = function(targetEntity){
-		console.log(targetEntity);
-		
-	}
-}
+
+	
+	return {generate:generate};
+})();

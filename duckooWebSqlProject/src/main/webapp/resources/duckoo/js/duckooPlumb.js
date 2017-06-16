@@ -55,6 +55,7 @@ var renderManager=(function(){
 	
 	function repaintEverything(){
 		jsPlumb.repaintEverything();
+		console.log("trtrtrtrtrT");
 	}
 	return {
 		connectDiv:connectDiv,

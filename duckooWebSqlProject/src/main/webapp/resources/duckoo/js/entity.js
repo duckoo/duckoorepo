@@ -5,6 +5,21 @@ var EntityManager=(function(){
 	var $dom =$("#canvasDiv");	
 	var entityHtml=$("#entityTemplate").html();
 	var entityTemplate=Handlebars.compile(entityHtml);
+	/*
+	Handlebars.registerHelper("getPk",function(name){
+		var pk=entityArr[name].getAttr({constraint:"pk"})[0];
+		return "PK:"+pk[0].name+" "+pk[0].type;
+	});
+	*/
+	Handlebars.registerHelper("isExtend",function(opt){
+	  console.log("뭐냐: ",opt);
+		var str="";
+		if(opt===false)
+			str+="basic";
+		else
+			str+="extend";
+		return str;
+	});
 	
 ////////////////////////////////// inner Object protoType
 	var attribute = {
@@ -31,8 +46,10 @@ var EntityManager=(function(){
    var entity = {
 		name : undefined,
 		attr:[],
+		extend:undefined,
 		init : function(opt) {
 			this.name = opt.name || undefined;
+			this.extend=false;
 		 },
 		genHtml:function(){
 		  return entityTemplate(this);
@@ -94,11 +111,45 @@ var EntityManager=(function(){
 	     }
 	})
 	
-	$dom.on("click",".addAttrBtn",function(e){
-		e.stopPropagation();
-	    e.preventDefault();
-	   
-	})
+	
+		$dom.on("click",".scaleUpBtn",function(e){
+		    e.stopPropagation();
+		    e.preventDefault();
+		    var entityId = $(this).attr("data-scaleBtn");
+		    var $entity = $("#"+entityId);
+		    var $innerEntity = $("[data-innerEntity='"+entityId+"']");
+		    
+		    $entity.css("width",300);
+		    $entity.css("height",350);
+		    $innerEntity.css("width",275);
+		    $innerEntity.css("height",325);
+		    $(this).attr('class','scaleDownBtn');
+		    /* $("#myModal").modal();
+		     $("#myModal").draggable({
+		      handle: ".modal-header"
+		    });
+		    */
+		    renderManager.repaintEverything();
+		    
+		  });
+	
+	    $dom.on("click",".scaleDownBtn",function(e){
+		    e.stopPropagation();
+		    e.preventDefault();
+		    var entityId = $(this).attr("data-scaleBtn");
+		    var $entity = $("#"+entityId);
+		    var $innerEntity = $("[data-innerEntity='"+entityId+"']");
+
+		    $entity.css("width",175);
+		    $entity.css("height",125);
+		    $innerEntity.css("width",150);
+		    $innerEntity.css("height",100);
+		    $(this).attr('class','scaleUpBtn');
+		    
+		    renderManager.repaintEverything();
+		    
+		  });
+
 // function///////////////////////////////////////////////////////////////////////////////////////////////////// 
 
 function createEntity(opt){
@@ -130,7 +181,7 @@ function showEntity(name){
 	}
 	var str=en.genHtml();
 	$dom.append(str);
-	$("#"+name).draggable().resizable();
+	$("#"+name).draggable();
 }
 function hideEntity(name){
 	var en=getEntityByName(name);
@@ -174,7 +225,6 @@ return {
 	    hideEntity:hideEntity,
 	    deleteEntity:deleteEntity
       };
-
 })();
 
 function repaint(){

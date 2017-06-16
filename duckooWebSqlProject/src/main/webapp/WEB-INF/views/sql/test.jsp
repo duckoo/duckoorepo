@@ -23,47 +23,44 @@
 
 <style>
 .entity {
-	width: 200px;
-	height: 280px;
+    width:175px; height:125px; margin-top:50px; margin-left:50px;
+    -webkit-transition: width 0.5s, height 0.5s; /* For Safari 3.1 to 6.0 */
+    transition: width 0.5s, height 0.5s;
+    
 }
-	
+.deleteTbl{
+    width:100%; height:10px; font-size: 15px; font-weight: bold; color:red; text-align: right;
+}
+.innerEntity{
+    border-radius: 10px; width:150px; height:100px; border-style: solid; border-color: gray; margin-left:10px;
+    -webkit-transition: width 0.5s, height 0.5s; /* For Safari 3.1 to 6.0 */
+    transition: width 0.5s, height 0.5s;
+    background-color:white;
+}
+.table_name{
+  width:100%; height:25px; border-bottom-style:solid; border-bottom-color: gray;
+}
+.deleteTbl:hover{
+    cursor:pointer;
+}
+  .select-editable { position:relative; background-color:white; border:solid grey 1px;  width:120px; height:18px; }
+  .select-editable select { position:absolute; top:0px; left:0px; font-size:14px; border:none; width:120px; margin:0; }
+  .select-editable input { position:absolute; top:0px; left:0px; width:100px; padding:1px; font-size:12px; border:none; }
+  .select-editable select:focus, .select-editable input:focus { outline:none; }
 
 
-.attrArea {
-	border: 2px solid black;
-	width: 100%;
-	height: 250px;
-	overflow:auto;
+.modal
+{
+    overflow: hidden;
 }
-button[name=attrPlusBtn]{
-	border-radius:50px;
+.modal-dialog{
+    margin-right: 0;
+    margin-left: 0;
+}
+#canvasDiv{
+	background-image: url(http://freedevelopertutorials.azurewebsites.net/wp-content/uploads/2015/06/grid.png);
 
 }
-       	   
-.culName{
-width:40%; 
-float:left;
-}
-.attrType{
-width:30%; 
-float:left;
-}
-.delUpBtns{
-float:left; 
-width:20%;
-
-}
-
-.row{
-	display: inline-block;
-}
-.pk{
-	width:100%;
-}
-.std{
-	width:100%;
-}
-
 
 </style>
 
@@ -76,60 +73,72 @@ width:20%;
   
  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
  <script id="entityTemplate" type="text/x-handlebars-template">
-<div class='entity' id='{{name}}' onmousemove ='repaint(event)'>
-   <input type='text' style='float:left;'></input>
-   				<div style='float:left; width:35%;'>
-   					<button><i class='fa fa-wrench' aria-hidden='true'></i></button>
-   					<button><i class='fa fa-trash' aria-hidden='true'></i></button>
-   				</div>
-   		 	 <div class='attrArea'>
-   				<div name='{{name}}' class='pk'>
-   				</div>
-   			   <div>
-   					<button class='addAttrBtn' data-entityName='{{name}}'  data-attrType='pk' name='attrPlusBtn'>
-   						<i class='fa fa-plus' aria-hidden='true'></i>
-   					</button>
-   				</div>
-   				<hr style='border-width:1px; border-color:red;'>
-   				<div name="+this.name+" class='std'>
-   				</div>	
-   				<div>
-   					<button class='addAttrBtn' data-entityName='{{name}}' data-attrType='std' name='attrPlusBtn'>
-   						<i class='fa fa-plus' aria-hidden='true'></i>
-   					</button>		
-   				</div>
-                 {{#attr}}
-                	<div>
-                         {{name}},
-						 {{type}},
-						 {{constraint}}
-					</div>	
-                {{/attr}}
-   		</div>
- </div>
+
+<div class='entity' id='{{name}}'>
+        <div class='deleteTbl' data-deleteBtn='{{name}}'>x</div>
+        <div class='innerEntity' data-innerEntity='{{name}}'>
+          <div class='table_name'>
+              <div style='width:65%; margin-left:5px; float:left;'>{{name}}</div>
+              <button class='scaleUpBtn' data-scaleBtn='{{name}}'><i class='fa fa-chevron-down' aria-hidden='true' ></i></button>
+          </div>
+            <div class='attrArea' data-attrArea='{{name}}' data-attrAreaSmall={{name}} style='width:100%;'>
+              <div style='width:100%; border-bottom-style:solid; border-bottom-color: gray; background-color: rgba(255, 0, 0, 0.5);'>  
+                <div class='' id='pk_'+{{name}} style='width:100;'>
+                </div>
+              </div>
+                     {{isExtend extend}}
+              <div>  
+                <div class='' id='std_'+{{name}} style='width:100;'>
+                </div>
+              </div>
+          </div>    
+  </div>
+
 </script> 
-  
+
+
+ <script id="sqlCreate" type="text/x-handlebars-template">
+
+ create table {{name}} (  
+{{#attr}}
+	  {{name}},
+      {{gen name type}}
+
+ {{/attr}}
+);
+
+</script> 
+
  <script type="text/javascript" src="/resources/duckoo/js/entity.js"></script>   
+   <script type="text/javascript" src="/resources/conjs/sqlgen.js"></script>
 <script>
+
+
 jsPlumb.ready(function() {
-	EntityManager.createEntity({name:"e1",show:true});
-	EntityManager.createEntity({name:"e2",show:true});
-	EntityManager.createEntity({name:"e3",show:false});
+	 setInterval(function(){
+		repaint();
+	},100/3);
+
 	
+	EntityManager.createEntity({name:"e1",show:false});
+	EntityManager.createEntity({name:"e2",show:true});
+	 var en=EntityManager.getEntityByName("e1");
+	en.setAttr({name:"sibal",type:"tt",constraint:"pk"});
+	en.setAttr({name:"sibal2",type:"tt2",constraint:"not null"});
+	
+	EntityManager.showEntity("e1");
 /* 	getDivToRect("e1");
 	getDivToRect("e2");
 	getDivToRect("e3"); */
-	/* var en=EntityManager.getEntityByName("e1");
+	/*  var en=EntityManager.getEntityByName("e1");
 	 
-	en.setAttr({name:"sibal"});
-	en.setAttr({name:"sibal2"});
+	en.setAttr({name:"sibal",type:"tt",constraint:"pk"});
+	en.setAttr({name:"sibal2",type:"tt2",constraint:"pk"});
 	
-	//console.log("get",en.getAttr());
+	//console.log("get",en.getAttr()); */
 	
-	EntityManager.showEntity("e1");
+	//sqlGenerator.generate(en);
 	
-	
-	 */
 	/* var en=EntityManager.getEntityByName("e1");
 	console.log("entity: ",en.attr[0]); */
 	
