@@ -4,8 +4,9 @@ function createSvgImage(attr){
 	var y= attr.y || 0;
 	var width = attr.width || "20px";
 	var height = attr.height || "20px";
+	var id=attr.id;//tesssssssssss
 	console.log("in????????????");
-	var canvas = document.getElementById("svg");
+	var canvas = document.getElementById(id);
 	var img = document.createElementNS("http://www.w3.org/2000/svg",
 			"image");
 	
