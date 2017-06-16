@@ -56,7 +56,6 @@ function getDistance1FxOfPt(fx,pt){
    var c=fx.c;
    var x=pt.x;
    var y=pt.y;
-	
    var d= (Math.abs(a*x+b*y+c))/Math.sqrt((a*a+b*b));
    return d;
 }
