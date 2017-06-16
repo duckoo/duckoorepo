@@ -112,14 +112,14 @@ width:20%;
  <script type="text/javascript" src="/resources/duckoo/js/entity.js"></script>   
 <script>
 jsPlumb.ready(function() {
-	EntityManager.createEntity({name:"e1",show:false});
-	EntityManager.createEntity({name:"e2",show:false});
+	EntityManager.createEntity({name:"e1",show:true});
+	EntityManager.createEntity({name:"e2",show:true});
 	EntityManager.createEntity({name:"e3",show:false});
 	
 /* 	getDivToRect("e1");
 	getDivToRect("e2");
 	getDivToRect("e3"); */
-	var en=EntityManager.getEntityByName("e1");
+	/* var en=EntityManager.getEntityByName("e1");
 	 
 	en.setAttr({name:"sibal"});
 	en.setAttr({name:"sibal2"});
@@ -129,7 +129,7 @@ jsPlumb.ready(function() {
 	EntityManager.showEntity("e1");
 	
 	
-	
+	 */
 	/* var en=EntityManager.getEntityByName("e1");
 	console.log("entity: ",en.attr[0]); */
 	

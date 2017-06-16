@@ -120,7 +120,7 @@ function createEntity(opt){
        }
     return newEntity;
 }	
-	
+
 	
 function showEntity(name){
 	var en=getEntityByName(name);
