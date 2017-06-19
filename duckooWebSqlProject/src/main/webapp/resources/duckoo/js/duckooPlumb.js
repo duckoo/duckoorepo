@@ -4,7 +4,7 @@ var renderManager=(function(){
 ////////////////////////////////////////////////////////////////
 	function connectDiv(opt){
 		
-		var $source= opt.$source || undefined;
+		var $source= opt.$source ||undefined;
 		var $target= opt.$target ||undefined;
 		
 		if(!($source) || !($target) ){
@@ -55,7 +55,6 @@ var renderManager=(function(){
 	
 	function repaintEverything(){
 		jsPlumb.repaintEverything();
-		console.log("trtrtrtrtrT");
 	}
 	return {
 		connectDiv:connectDiv,
@@ -113,7 +112,6 @@ function getDivToRect(name){
 	 var height=div.offsetHeight;
 	 var  right= left+width;
 	 var bottom= top+height;
-	 
 	 
 	 var x=Math.round(left+width/2);
 	 var y=Math.round(top+height/2);

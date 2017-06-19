@@ -21,17 +21,32 @@ var EntityManager=(function(){
 		return str;
 	});
 	
+	 var counter=(function(){
+		   var count=0;
+		   return function(){return count++;}
+	 })();
+	
 ////////////////////////////////// inner Object protoType
 	var attribute = {
-			name : undefined,
-			type : undefined,
-			idex : undefined,
-			constraint : undefined,
-			init : function(opt) { // 이 함수도 리팩토링 대상. 모든 프로퍼티 비교해서 할당하자
-				this.name = opt.name || undefined;
-				this.type = opt.type || undefined;
-				this.constraint = opt.constraint || undefined;
-				this.idex = opt.idex || undefined;
+			id:undefined,
+			lName:undefined,
+			pName:undefined,
+			domainName:undefined,
+			datetype:undefined,
+			datelength:0,
+			nullable:true,
+			isPk:false,
+			isFk:false,
+			defaultExp:undefined,
+			init : function(opt) {
+			  this.setAttribute(opt);
+			   this.id=counter();
+			},
+			setAttribute:function(attrList){
+				var key=Object.keys(attrList);
+				for(var i=0,len=key.length; i<len;i++){
+					this[key[i]]=attrList[key[i]];
+				}
 			},
 			compare:function(attr){
 				var key=Object.keys(attr);
@@ -41,6 +56,19 @@ var EntityManager=(function(){
 						ret[key[i]]=true;
 				}
 				return ret;
+			},
+			clone:function(){
+				var nin= Object.create(attribute);
+				for( var attr in this){
+					nin[attr]=this[attr];
+				}
+				return nin;
+				
+				
+				
+				
+				
+				
 			}
 		};
    var entity = {
@@ -54,8 +82,16 @@ var EntityManager=(function(){
 		genHtml:function(){
 		  return entityTemplate(this);
 		},
-		getAttr:function(att){
-			if(!att){return this.attr;}
+		getAttr:function(id){
+			if(arguments.length===0){return this.attr;}
+			for(var i=0,len=this.attr.length; i<len;i++){
+				if(this.attr[i]["id"]===id){
+					return this.attr[i];
+				}
+			}
+			return undefined;
+		},
+		search:function(att){
 			var ret=[];
 			for( var attrVal of this.attr){
 				console.log("===",attrVal.compare(att));
@@ -66,31 +102,42 @@ var EntityManager=(function(){
 			}
 			return ret;
 		},
-		getAttrByName:function(name){
+		deleteAttr:function(id){
 			for(var i=0,len=this.attr.length; i<len;i++){
-				if(this.attr[i]["name"]===name){
-					return this.attr[i];
+				if(this.attr[i]["id"]===id){
+					var ret =this.attr[i];
+					this.attr.splice(i,1);
+					return ret;
 				}
 			}
 			return undefined;
 		},
-		deleteAttrByName:function(name){
-			for(var i=0,len=this.attr.length; i<len;i++){
-				if(this.attr[i]["name"]===name){
-					this.attr.splice(i,1);
-					break;
-				}
-			}
-		},
 		setAttr:function(opt){
-			var thatAttr= this.getAttrByName(opt.name);
-			if(thatAttr){thatAttr.init(opt);
+			var thatAttr= this.getAttr(opt.id);
+			console.log("that,:" ,thatAttr);
+			if(thatAttr){
+				thatAttr.setAttribute(opt);
 			   return;
 			}
 			var newAttr=Object.create(attribute);
 			  newAttr.init(opt);
 			this.attr.push(newAttr);
-		}
+		},
+		 setAttrArray:function(arr){
+			this.attr=arr; 
+		 },
+	    clone:function(){
+	       var newEntity=Object.create(entity);
+	       for( var pt in this){
+	    	   newEntity[pt]=this[pt];
+			}
+	       var ret=[]; 
+	    	for(var i=0,len=this.attr.length; i<len;i++){
+	    		ret.push(this.attr[i].clone());
+	    	}
+	    	newEntity.setAttrArray(ret);
+	    	return newEntity;
+	    }
 	 };
 ////////////////////////////////////////////////////////////////////////////////////////////////
 	$dom.on("click",".entity",function(e){
@@ -111,14 +158,29 @@ var EntityManager=(function(){
 	     }
 	})
 	
+	$dom.on("dblclick",".entity",function(e){
+		console.log("dbClick");
+		e.stopPropagation();
+	    e.preventDefault();	
+		   
+	  var name= $(this).attr("id");
+	  console.log("etity: ", entityArr[name]); 
+	   
+	  var cEntity= entityArr[name].clone();
+	     console.log("Cetity: ", cEntity); 
+		 modalAttribute.setModal(cEntity,modal);
+		 $("#myModal").modal();
+	});
 	
-		$dom.on("click",".scaleUpBtn",function(e){
+	
+	
+	
+   $dom.on("click",".scaleUpBtn",function(e){
 		    e.stopPropagation();
 		    e.preventDefault();
 		    var entityId = $(this).attr("data-scaleBtn");
 		    var $entity = $("#"+entityId);
 		    var $innerEntity = $("[data-innerEntity='"+entityId+"']");
-		    
 		    $entity.css("width",300);
 		    $entity.css("height",350);
 		    $innerEntity.css("width",275);
@@ -151,8 +213,7 @@ var EntityManager=(function(){
 		  });
 
 // function///////////////////////////////////////////////////////////////////////////////////////////////////// 
-
-function createEntity(opt){
+function createEntity(opt,show){
 	if(!opt.name){
 		alert("Entity 생성 잘못된 이름");
 		return;
@@ -161,12 +222,12 @@ function createEntity(opt){
       newEntity.init(opt);
        Object.defineProperty(entityArr,newEntity.name,{
 	         value:newEntity,
-	         writable:false,
+	         writable:true,
 	         enumerable:true,
 	         configurable:false
 	   }); 
        
-       if(opt.show){
+       if(show){
     	   showEntity(opt.name);
        }
     return newEntity;
@@ -215,9 +276,15 @@ function  getFocusByName(){
 function getEntityByName(name){
 	return entityArr[name];
 }
+function setEntity(entity){
+	if(!entity || !entity.name){return ;}
+	entityArr[entity.name]=entity;
+}
+
 return {
 	    createEntity:createEntity,
 	    showEntity:showEntity,
+	    setEntity:setEntity,
 	    setFocusByName:setFocusByName,
 	    getFocusByName:getFocusByName,
 	    getEntityByName:getEntityByName,
