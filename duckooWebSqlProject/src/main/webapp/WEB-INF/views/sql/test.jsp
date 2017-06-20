@@ -83,12 +83,12 @@
           </div>
             <div class='attrArea' data-attrArea='{{name}}' data-attrAreaSmall={{name}} style='width:100%;'>
               <div style='width:100%; border-bottom-style:solid; border-bottom-color: gray; background-color: rgba(255, 0, 0, 0.5);'>  
-                <div class='' id='pk_'+{{name}} style='width:100;'>
+                <div class='' id='pk_'+{{name}} style='width:100%;'>
                 </div>
               </div>
                      {{isExtend extend}}
               <div>  
-                <div class='' id='std_'+{{name}} style='width:100;'>
+                <div class='' id='std_'+{{name}} style='width:100%;'>
                 </div>
               </div>
           </div>    
