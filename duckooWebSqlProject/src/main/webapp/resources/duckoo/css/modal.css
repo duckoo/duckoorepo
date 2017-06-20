@@ -1,0 +1,94 @@
+@CHARSET "UTF-8";
+<style>
+.modal{
+    width:1200px;
+    height:700px;
+}
+.modal-body{
+    height:400px;
+     width:100%;
+}
+.sideBar{
+    width:150px;
+    height:100%;
+    float:left;
+    border-style: solid;
+    border-color: #787878;
+    border-radius:10px;
+}
+.attrBox{
+    width:640px;
+    height:100%;
+    float:left;
+    border-style:solid;
+    margin-left:20px;
+    border-color: #787878;
+    border-radius:10px;
+    overflow-y: scroll;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    overflow: scroll;
+}
+
+.modalTh, .datas {
+    padding: 10px;
+}
+.datas{
+    max-width: 20em;
+    max-height: 40px;
+}
+.attrMenu{
+      text-align: center;
+      text-decoration-line: underline;
+}
+.tbl,.modalTh, .datas{
+    border: 1px solid #ddd;
+    text-align: left;
+}
+.attrMenu:focus{
+    background-color:cornflowerblue;
+    border-radius: 10px;
+}
+.attrMenu:hover{
+     -webkit-transform: scale(1.2, 1.2); /* Safari */
+    transform: scale(1.2, 1.2);
+    background-color: wheat;
+    border-radius: 10px;
+}
+.deleteAttrBtn:hover{
+    cursor:pointer;
+     -webkit-transform: scale(1.2, 1.2); /* Safari */
+    transform: scale(1.2, 1.2);
+    color:red;
+
+}
+
+.addAttrBtn:hover{
+    cursor:pointer;
+     -webkit-transform: scale(1.2, 1.2); /* Safari */
+    transform: scale(1.2, 1.2);
+    color:green;
+}
+.btnWrapper{
+    float:left;
+    width:50px;
+    height:100px;
+}
+.datas:focus{
+    color: blue;
+}
+input{
+    width:50px;
+    border-style:none;
+    border-radius: 5px;
+}
+.contents{
+	height: 370px;
+}
+
+
+
+</style>

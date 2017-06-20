@@ -11,16 +11,13 @@ var EntityManager=(function(){
 		return "PK:"+pk[0].name+" "+pk[0].type;
 	});
 	*/
-	Handlebars.registerHelper("isExtend",function(opt){
-	  console.log("뭐냐: ",opt);
-		var str="";
-		if(opt===false)
-			str+="basic";
-		else
-			str+="extend";
+	Handlebars.registerHelper("getAttrHeight",function(ex){
+		var str="height:";
+		if(ex)str+="285px";
+		else str+="68px";
 		return str;
 	});
-	
+		
 	 var counter=(function(){
 		   var count=0;
 		   return function(){return count++;}
@@ -63,12 +60,6 @@ var EntityManager=(function(){
 					nin[attr]=this[attr];
 				}
 				return nin;
-				
-				
-				
-				
-				
-				
 			}
 		};
    var entity = {
@@ -102,19 +93,35 @@ var EntityManager=(function(){
 			}
 			return ret;
 		},
+		sortAttribute:function(){
+			var deskPk=[];
+	        var deskFK=[];
+	        var desk=[];
+			for(var i=0,len=this.attr.length;i<len;i++){
+				var att= this.attr[i];
+			  if(att.isPk)
+				deskPk.push(att);
+			  else if(att.isFk)
+				deskFK.push(att);
+			  else 
+				desk.push(att)
+			}
+            this.attr=deskPk.concat(deskFK,desk);			
+		},
 		deleteAttr:function(id){
+			var ret =undefined;
 			for(var i=0,len=this.attr.length; i<len;i++){
 				if(this.attr[i]["id"]===id){
 					var ret =this.attr[i];
-					this.attr.splice(i,1);
-					return ret;
+				    this.attr.splice(i,1);
+				    break;
 				}
 			}
-			return undefined;
+			return ret;
 		},
 		setAttr:function(opt){
 			var thatAttr= this.getAttr(opt.id);
-			console.log("that,:" ,thatAttr);
+		
 			if(thatAttr){
 				thatAttr.setAttribute(opt);
 			   return;
@@ -145,7 +152,7 @@ var EntityManager=(function(){
 	    e.preventDefault();	
 	     
 	     var id= $(this).attr("id");
-	     console.log(id);
+	  
 	     if(focusedEntity===undefined){
 	    	 focusedEntity=entityArr[id]; 
 	    	 return ;
@@ -159,20 +166,17 @@ var EntityManager=(function(){
 	})
 	
 	$dom.on("dblclick",".entity",function(e){
-		console.log("dbClick");
+		
 		e.stopPropagation();
 	    e.preventDefault();	
 		   
 	  var name= $(this).attr("id");
-	  console.log("etity: ", entityArr[name]); 
-	   
+	
 	  var cEntity= entityArr[name].clone();
-	     console.log("Cetity: ", cEntity); 
+	    
 		 modalAttribute.setModal(cEntity,modal);
 		 $("#myModal").modal();
 	});
-	
-	
 	
 	
    $dom.on("click",".scaleUpBtn",function(e){
@@ -180,19 +184,15 @@ var EntityManager=(function(){
 		    e.preventDefault();
 		    var entityId = $(this).attr("data-scaleBtn");
 		    var $entity = $("#"+entityId);
+		    entityArr[entityId].extend=true;
+		    entityArr[entityId].sortAttribute();
+		    $entity.html($(entityArr[entityId].genHtml()).html());
 		    var $innerEntity = $("[data-innerEntity='"+entityId+"']");
 		    $entity.css("width",300);
 		    $entity.css("height",350);
 		    $innerEntity.css("width",275);
 		    $innerEntity.css("height",325);
-		    $(this).attr('class','scaleDownBtn');
-		    /* $("#myModal").modal();
-		     $("#myModal").draggable({
-		      handle: ".modal-header"
-		    });
-		    */
-		    renderManager.repaintEverything();
-		    
+		    $entity.find('.scaleUpBtn').attr("class","scaleDownBtn");
 		  });
 	
 	    $dom.on("click",".scaleDownBtn",function(e){
@@ -201,15 +201,14 @@ var EntityManager=(function(){
 		    var entityId = $(this).attr("data-scaleBtn");
 		    var $entity = $("#"+entityId);
 		    var $innerEntity = $("[data-innerEntity='"+entityId+"']");
-
+		    entityArr[entityId].extend=false;
+		    entityArr[entityId].sortAttribute();
+		    $entity.html($(entityArr[entityId].genHtml()).html());
 		    $entity.css("width",175);
 		    $entity.css("height",125);
 		    $innerEntity.css("width",150);
 		    $innerEntity.css("height",100);
-		    $(this).attr('class','scaleUpBtn');
-		    
-		    renderManager.repaintEverything();
-		    
+		    $entity.find('.scaleDownBtn').attr("class","scaleUpBtn");
 		  });
 
 // function///////////////////////////////////////////////////////////////////////////////////////////////////// 

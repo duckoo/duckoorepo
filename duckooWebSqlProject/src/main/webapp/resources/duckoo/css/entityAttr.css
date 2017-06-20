@@ -1,0 +1,53 @@
+@CHARSET "UTF-8";
+<style>
+
+
+.pk{
+background-color: rgba(255, 0, 0, 0.2);
+ border-radius: 5px;
+}
+i[target=pk]{
+    color:red;
+}
+.fk{
+    background-color: #c8c8c8;
+    border-radius: 5px;
+}
+i[target=fk]{
+    color:#FFD700;
+}
+.std div{
+    text-align: left;
+    margin-left: 10px;
+}
+
+.attrTable{
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.pkTh, .pkTd, .stdTd, .fkTd {
+    padding: 5px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 12px;
+    width: 300px;
+    word-wrap:break-word;
+}
+.pkTd{
+    background-color: rgba(255, 0, 0, 0.2);
+}
+.fkTd{
+    background-color: lemonchiffon;
+    
+}
+.stdTd{
+	background-color: white;
+}
+.pkTh{
+	background-color: white;
+}
+
+</style>

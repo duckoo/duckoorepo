@@ -1,15 +1,13 @@
 var modalAttribute=(function(){
 	
-	var head= "<tr style='border-style:solid;'>"+
-    "        <th>키타입</th>"+
-    "        <th>논리이름</th>"+
-    "        <th>물리이름</th>"+
-    "        <th>데이터타입</th>"+
-    "        <th>Not null</th>"+
-    "        <th>Default</th>"+
+	var head= "<tr class='modalTr' style='border-style:solid;'>"+
+    "        <th class='modelTh'>키타입</th>"+
+    "        <th class='modelTh'>논리이름</th>"+
+    "        <th class='modelTh'>물리이름</th>"+
+    "        <th class='modelTh'>데이터타입</th>"+
+    "        <th class='modelTh'>Not null</th>"+
+    "        <th class='modelTh'>Default</th>"+
     "    </tr>";
-	
-	console.log("head: ",head);
 	
 	var body=
 	" <div class='attrBox'>"+
@@ -27,8 +25,6 @@ var modalAttribute=(function(){
 function makeToSelected(value,options){
 	var $el = $('<select />').html( options.fn(this) );
     $el.find('[value="' + value + '"]').attr({'selected':'selected'});
-    console.log("val: ", value);
-    
     return $el.html();
 }
 	
@@ -44,20 +40,38 @@ Handlebars.registerHelper('selectBasic', function(value, options ){
     return makeToSelected(value,options);
 });
 
-function setAttr(entity){
-	var attr= entity.getAttr();
+function tagSetAttr(enti){
+	var attr= enti.getAttr();
 	var $tbl=  $(".tbl");
 	 $tbl.html(head);
-	console.log("setAttr1: ",attr);
+	
 	for(var i=0,len=attr.length;i<len;i++){
 		 $tbl.append(columnTemplate(attr[i]));
 	}
 };
+function tagGetAttr(enti){
+	var attr=enti.getAttr();
+	for(var i=0,len=attr.length;i<len;i++){
+		var id= attr[i].id;
+		var selOption=$("#keyType_"+id+" option:selected");
+		attr[i].isPk=selOption.attr("data-pk")==="true" ? true:false;
+		attr[i].isFk=selOption.attr("data-fk")==="true" ? true:false;
+	    attr[i].lName=document.getElementById("lName_"+id).value;
+	    attr[i].pName=document.getElementById("pName_"+id).value;
+	    attr[i].datetype=document.getElementById("dataType_"+id).value;
+	    var nullSel=$("#notNull_"+id+" option:selected");
+	    attr[i].nullable=nullSel.val() ==="true" ? true:false;
+	}
+}
 
-function setModal(entity,modal){
+
+function setModal(_entity,modal){
+	
+	console.log("start Modal: ");
 	modal.setViewPort(body);
 	var target;
-	setAttr(entity);
+	var entity=_entity;
+	tagSetAttr(entity);
 	$('.tbl').on("click","tr .datas",function(e){
         e.stopPropagation();
         e.preventDefault();
@@ -66,17 +80,23 @@ function setModal(entity,modal){
        target = $(this).parent();
     });
     $('.deleteAttrBtn').on('click',function(e){
-        e.stopPropagation();
+         if(!target)return;
+    	e.stopPropagation();
         e.preventDefault();
-        target.remove();
+        var id=target.attr("id");
+        entity.deleteAttr(Number(id));
+         target.remove();
     });
-    
     $('.addAttrBtn').on('click',function(e){
         e.stopPropagation();
         e.preventDefault();
-        console.log("add c ",entity);
         entity.setAttr({lName:"none",pName:"none",domainName:"none",datetype:"int"}); 
-        setAttr(entity);
+        tagSetAttr(entity);
+    });
+    $('#saveBtn').one('click',function(e){
+    	tagGetAttr(entity);
+        EntityManager.setEntity(entity);
+        $("#myModal").modal("hide");
     });
    
    

@@ -1,3 +1,4 @@
+
 var modal=(function(){
 $("body").append(
 "<div class='modal fade' id='myModal' role='dialog'>"+
@@ -16,7 +17,7 @@ $("body").append(
          "   </div>"+
        " </div>"+
        " <div class='modal-footer'>"+
-       "   <button type='button' class='btn btn-info'>Save</button>"+
+       "   <button id='saveBtn' type='button' class='btn btn-info'>Save</button>"+
         "  <button type='button' class='btn btn-info' data-dismiss='modal'>Close</button>"+
        " </div>"+
       " </div>"+
