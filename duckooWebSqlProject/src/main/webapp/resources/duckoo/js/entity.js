@@ -5,12 +5,7 @@ var EntityManager=(function(){
 	var $dom =$("#canvasDiv");	
 	var entityHtml=$("#entityTemplate").html();
 	var entityTemplate=Handlebars.compile(entityHtml);
-	/*
-	Handlebars.registerHelper("getPk",function(name){
-		var pk=entityArr[name].getAttr({constraint:"pk"})[0];
-		return "PK:"+pk[0].name+" "+pk[0].type;
-	});
-	*/
+	
 	Handlebars.registerHelper("getAttrHeight",function(ex){
 		var str="height:";
 		if(ex)str+="285px";
@@ -64,7 +59,7 @@ var EntityManager=(function(){
 		};
    var entity = {
 		name : undefined,
-		attr:[],
+		//attr:[],
 		extend:undefined,
 		init : function(opt) {
 			this.name = opt.name || undefined;
@@ -218,6 +213,12 @@ function createEntity(opt,show){
 		return;
 	}
     var newEntity=Object.create(entity);
+    Object.defineProperty(newEntity,"attr",{
+    	  value:[],
+	      writable:true,
+	       enumerable:true,
+	       configurable:false
+    });
       newEntity.init(opt);
        Object.defineProperty(entityArr,newEntity.name,{
 	         value:newEntity,
@@ -256,11 +257,9 @@ function deleteEntity(name){
 	 delete en; //delete 쓰지말라고하던데 흠
 }
 
-
 function setFocusByName(name){
 	focusedEntity=entityArr[name];
 }
-
 function setAttribute(entityName,opt){
 	var en=getEntityByName(entityName);
 	if(!en){alert("잘못된 엔티디 접근");return;}

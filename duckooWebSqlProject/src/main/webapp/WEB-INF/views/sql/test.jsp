@@ -45,6 +45,7 @@
     transition: width 0.5s, height 0.5s;
     
     
+    
 }
 .deleteTbl{
     width:100%; height:10px; font-size: 15px; font-weight: bold; color:red; text-align: right;
@@ -85,79 +86,61 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
  <script id="entityTemplate" type="text/x-handlebars-template">
 <div class='entity' id='{{name}}'>
-        <div class='deleteTbl' data-deleteBtn='{{name}}'>x</div>
-        <div class='innerEntity' data-innerEntity='{{name}}'>
-          <div class='table_name'>
-              <div style='width:65%; margin-left:5px; float:left;'>{{name}}</div>
-              <button class='scaleUpBtn' style='float:right;' data-scaleBtn='{{name}}'><i class='fa fa-chevron-down' aria-hidden='true' ></i></button>
-          </div>
-            <div class='attrArea' data-attrArea='{{name}}' data-attrAreaSmall={{name}} style='width:100%; {{#getAttrHeight extend}}{{/getAttrHeight}}; position:relative; float:left; overflow:auto;'>
-              <div style='width:100%; height:100%; background-color: rgba(255, 0, 0, 0.5);'>  
-               {{#if extend}}
-					<div style="width:100%;">  
-        				<div class="attrTableDiv" style="width:100%;">
-							<table class="attrTable">
-								<tr class="pkRow">
-                    				<th class="pkTh">키타입</th>
-                    				<th class="pkTh">논리이름</th>
-                    				<th class="pkTh">물리이름</th>
-                    				<th class="pkTh">Not Null</th>
-                				</tr>
-						{{#attr}}
-							{{#if isPk}}
-                   					 <tr class="pkRow">
-                      					 <td class="pkTd">PK{{#if isFk}} FK{{/if}}</td>
-                       					 <td class="pkTd">{{lName}}</td>
-                        				 <td class="pkTd">{{pName}}</td>
-                        				 <td class="pkTd">{{nullable}}</td>
-                    			    </tr>
-							{{else if isFk}}
-                    				<tr class="fkRow">
-                       					 <td class="fkTd">FK</td>
-                        				 <td class="fkTd">{{lName}}</td>
-                        				 <td class="fkTd">{{pName}}</td>
-                        				 <td class="fkTd">{{nullable}}</td>
-                   					</tr>
-							{{else}}
-                   					 <tr class="stdRow">
-                       					 <td class="stdTd"></td>
-                       					 <td class="stdTd">{{lName}}</td>
-                        				 <td class="stdTd">{{pName}}</td>
-                        				 <td class="stdTd">{{nullable}}</td>
-                   					 </tr>
-							{{/if}}
-						
-						{{/attr}}
-						</table>							
-   					    </div>
-					</div>
-				</div>
-              {{else}}
-			  <div id='pk_{{name}}' style='width:100%;height:100%;'>
-                   {{#each attr}}
-                            {{#if isPk}}    
-                              <div class="pk"><i class="fa fa-key" target='pk' aria-hidden="true"></i>{{lName}}</div>
-                            {{else if isFk}}   
-  						    <div class="fk"><i class="fa fa-key" target='fk' aria-hidden="true"></i>{{lName}}</div>
-                          {{/if}} 
-                 {{/each}}
-
-            <div class='attrArea' data-attrArea='{{name}}' data-attrAreaSmall={{name}} style='width:100%;'>
-              <div style='width:100%; border-bottom-style:solid; border-bottom-color: gray; background-color: rgba(255, 0, 0, 0.5);'>  
-                <div class='' id='pk_'+{{name}} style='width:100%;'>
-
-                </div>
-              {{/if}}
-              </div>
-
-        </div>    
-              <div>  
-                <div class='' id='std_'+{{name}} style='width:100%;'>
-                </div>
-              </div>
-          </div>    
-
-  </div>
+    <div class='deleteTbl' data-deleteBtn='{{name}}'>x</div>
+    <div class='innerEntity' data-innerEntity='{{name}}'>
+        <div class='table_name'>
+           <div style='width:65%; margin-left:5px; float:left;'>{{name}}</div>
+           <button class='scaleUpBtn' style='float:right;' data-scaleBtn='{{name}}'><i class='fa fa-chevron-down' aria-hidden='true' ></i></button>
+        </div>
+        <div class='attrArea' data-attrArea='{{name}}' data-attrAreaSmall={{name}} style='width:100%; {{#getAttrHeight extend}}{{/getAttrHeight}}; float:left; overflow:auto;'>
+		{{#if extend}}
+			<div class="attrTableDiv" style="width:100%;">
+				<table class="attrTable">
+					<tr class="pkRow">
+                    	<th class="pkTh">키타입</th>
+                    	<th class="pkTh">논리이름</th>
+                    	<th class="pkTh">물리이름</th>
+                    	<th class="pkTh">Not Null</th>
+                	</tr>
+				{{#attr}}
+					{{#if isPk}}
+                   	<tr class="pkRow">
+                      	<td class="pkTd">PK{{#if isFk}} FK{{/if}}</td>
+                       	<td class="pkTd">{{lName}}</td>
+                        <td class="pkTd">{{pName}}</td>
+                        <td class="pkTd">{{nullable}}</td>
+                    </tr>
+					{{else if isFk}}
+                    <tr class="fkRow">
+                       	<td class="fkTd">FK</td>
+                        <td class="fkTd">{{lName}}</td>
+                        <td class="fkTd">{{pName}}</td>
+                        <td class="fkTd">{{nullable}}</td>
+                   	</tr>
+					{{else}}
+                   	<tr class="stdRow">
+                       	<td class="stdTd"></td>
+                       	<td class="stdTd">{{lName}}</td>
+                        <td class="stdTd">{{pName}}</td>
+                        <td class="stdTd">{{nullable}}</td>
+                   	</tr>
+					{{/if}}
+				{{/attr}}
+				</table>
+		{{else}}
+			<div id='pk_{{name}}' style='width:100%;height:100%;'>
+				{{#each attr}}
+					{{#if isPk}}
+						<div class="pk"><i class="fa fa-key" target='pk' aria-hidden="true"></i>{{lName}}</div>
+					{{else if isFk}}
+						<div class="fk"><i class="fa fa-key" target='fk' aria-hidden="true"></i>{{lName}}</div>
+					{{/if}}
+				{{/each}}
+			</div>
+		{{/if}}
+        </div>
+    </div>
+</div>
 </script> 
 
  <script id="modalTemplate" type="text/x-handlebars-template">
@@ -259,13 +242,21 @@ jsPlumb.ready(function() {
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	 en.setAttr({lName:"sibal3",pName:"s_sibla222233",datetype:"tt22222"});
-	 en.setAttr({lName:"sibal3",pName:"s_sibla222233",datetype:"tt22222"});
-	 en.setAttr({lName:"sibal3",pName:"s_sibla222233",datetype:"tt22222"});
+	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
+	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
+	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
+	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
+	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
+	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
+	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
+	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
 	 
+	 en.setAttr({lName:"sibal3",pName:"s_sibla222233",datetype:"tt22222"});
+	 en.setAttr({lName:"sibal3",pName:"s_sibla222233",datetype:"tt22222"});
+	 en.setAttr({lName:"sibal3",pName:"s_sibla222233",datetype:"tt22222"});
 	 EntityManager.showEntity("e1");
 	 EntityManager.createEntity({name:"e32232",attr:[]},true);
-	 //niceScroll({ horizrailenabled: true});
+	 $('.attrArea').niceScroll({ horizrailenabled: true});
 	 /*
 	 var en=EntityManager.getEntityByName("e1");
 	 en.setAttr({lName:"king",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
