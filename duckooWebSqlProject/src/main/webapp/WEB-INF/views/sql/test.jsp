@@ -91,6 +91,7 @@
               <div style='width:65%; margin-left:5px; float:left;'>{{name}}</div>
               <button class='scaleUpBtn' style='float:right;' data-scaleBtn='{{name}}'><i class='fa fa-chevron-down' aria-hidden='true' ></i></button>
           </div>
+<<<<<<< HEAD
             <div class='attrArea' data-attrArea='{{name}}' data-attrAreaSmall={{name}} style='width:100%; {{#getAttrHeight extend}}{{/getAttrHeight}}; position:relative; float:left; overflow:auto;'>
               <div style='width:100%; height:100%; background-color: rgba(255, 0, 0, 0.5);'>  
                {{#if extend}}
@@ -141,10 +142,24 @@
   						    <div class="fk"><i class="fa fa-key" target='fk' aria-hidden="true"></i>{{lName}}</div>
                           {{/if}} 
                  {{/each}}
+=======
+            <div class='attrArea' data-attrArea='{{name}}' data-attrAreaSmall={{name}} style='width:100%;'>
+              <div style='width:100%; border-bottom-style:solid; border-bottom-color: gray; background-color: rgba(255, 0, 0, 0.5);'>  
+                <div class='' id='pk_'+{{name}} style='width:100%;'>
+>>>>>>> branch 'master' of https://github.com/duckoo/duckoorepo
                 </div>
               {{/if}}
               </div>
+<<<<<<< HEAD
         </div>    
+=======
+                     {{isExtend extend}}
+              <div>  
+                <div class='' id='std_'+{{name}} style='width:100%;'>
+                </div>
+              </div>
+          </div>    
+>>>>>>> branch 'master' of https://github.com/duckoo/duckoorepo
   </div>
 </script> 
 
