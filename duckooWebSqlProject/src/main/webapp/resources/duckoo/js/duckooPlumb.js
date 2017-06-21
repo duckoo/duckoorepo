@@ -15,7 +15,8 @@ var renderManager=(function(){
 		       source:$source, 
 		       target:$target,
 		       detachable:false,
-		       anchor:["Continuous", { faces:[ "bottom", "left" ,"right","top"] } ]
+		       anchor:["Continuous", { faces:[ "bottom", "left" ,"right","top"] } ],
+		       scope:"canvasDiv"
 		  });
 		
 	   Object.defineProperty(lines,opt.id,{

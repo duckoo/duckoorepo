@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>erd main</title>
 <% Random random = new Random(); 
     int token= random.nextInt();
 %> 		 		
@@ -16,36 +16,28 @@
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
-  
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/1.7.2/jquery.jsPlumb.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
 		integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
 		crossorigin="anonymous"></script>
-		
-		
 <script type="text/javascript" src="/resources/duckoo/js/duckooPlumb.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/relationship.js?<%=token%>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.js"></script> 
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
-
-<style>
-#canvasDiv{
-	background-image: url(http://freedevelopertutorials.azurewebsites.net/wp-content/uploads/2015/06/grid.png);
-}
-</style>
 </head>
- <body>
-    <div class="canvas" id="canvasDiv"
-      style="width: 1000px; height: 1000px; border: 1px solid black;">
-    </div>
- 
+<body class="canvas" id="canvasDiv" style="width: 6000px; height: 6000px; border: 1px solid black;">
+
 <jsp:include page="/resources/duckoo/jsp/entity.jsp">
 <jsp:param name="token" value="<%=token%>" />
 </jsp:include> 
 
 <jsp:include page="/resources/duckoo/jsp/modalAttribute.jsp">
+<jsp:param name="token" value="<%=token%>" />
+</jsp:include> 
+
+<jsp:include page="/resources/duckoo/jsp/menu.jsp">
 <jsp:param name="token" value="<%=token%>" />
 </jsp:include> 
 
@@ -58,7 +50,6 @@ jsPlumb.ready(function() {
 	
 	 EntityManager.createEntity({name:"e1",attr:[]},false);
 	 var en=EntityManager.getEntityByName("e1");
-	
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isFk:true});
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
@@ -66,11 +57,7 @@ jsPlumb.ready(function() {
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	 
+	
 	 en.setAttr({lName:"sibal3",pName:"s_sibla222233",datetype:"tt22222"});
 	 en.setAttr({lName:"sibal3",pName:"s_sibla222233",datetype:"tt22222"});
 	 en.setAttr({lName:"sibal3",pName:"s_sibla222233",datetype:"tt22222"});

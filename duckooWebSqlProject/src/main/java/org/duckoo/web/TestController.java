@@ -9,16 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/sql")
 public class TestController {
 	
-	
-	@GetMapping("/erdMakingPage")
-	public void erdPageGet(){
-		
-	}
-	@GetMapping("/erdMakingPageBackUp")
-	public void re(){
-		
-	}
-	@GetMapping("/erdMakingPageTaehyun")
+
+	@GetMapping("/erdMain")
 	public void re1(){
 		
 	}
@@ -26,25 +18,5 @@ public class TestController {
 	public void re2(){
 		
 	}
-	@GetMapping("/erdMain")
-	public void re3(){
-		
-	}
-	@GetMapping("/editorPage")
-	public void re4(){
-		
-	}
-	@PostMapping("/editorPage")
-	public void re5(String sql){
-		
-		System.out.println(sql);
-	}
-	@GetMapping("/test2")
-	public void re6(){
-		
-	}
-	@GetMapping("/test3")
-	public void re7(){
-		
-	}
+	
 }
