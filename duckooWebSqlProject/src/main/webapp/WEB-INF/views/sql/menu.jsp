@@ -20,10 +20,10 @@
 	
 	<div id="sideBar">
 	 <div id="sideBtns" style="width:100%; vertical-align:middle; height:40px; border-radius: 5px;">
-	 	<button class="btn btn-success" style="margin-top:5px; margin-left:5px;" type="button" data-toggle="tooltip" data-placement="bottom" title="테이블생성">
+	 	<button id = "mkTbl" class="btn btn-success" style="margin-top:5px; margin-left:5px;" type="button" data-toggle="tooltip" data-placement="bottom" title="테이블생성">
 	 		<i class="fa fa-table" aria-hidden="true"></i>
 	 	</button>
-	 	<button class="btn btn-success" style="margin-top:5px;" type="button" data-toggle="tooltip" data-placement="top" title="관계생성">
+	 	<button id="mkCon"class="btn btn-success" style="margin-top:5px;" type="button" data-toggle="tooltip" data-placement="top" title="관계생성">
 			<i class="fa fa-long-arrow-down" aria-hidden="true"></i>
 		</button>
 	 </div>
