@@ -1,5 +1,5 @@
 
-var renderManager=(function()){
+var renderManager=(function(){
 	var lines={};
 ////////////////////////////////////////////////////////////////
 	function connectDiv(opt){
