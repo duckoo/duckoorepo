@@ -9,20 +9,19 @@
 <% Random random = new Random(); 
     int token= random.nextInt();
 %>
- 		<script type="text/javascript" src="/resources/jsplumb.min.js"></script>
- 		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/resources/duckoo/css/modal.css?<%=token%>">
-    <link rel="stylesheet" href="/resources/duckoo/css/entityAttr.css?<%=token%>">
-   
-    
+ 		
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/resources/duckoo/css/modal.css?<%=token%>">
+<link rel="stylesheet" href="/resources/duckoo/css/entityAttr.css?<%=token%>">
+<link rel="stylesheet" href="/resources/duckoo/css/menu.css?<%=token%>">
+<link rel="stylesheet" href="/resources/duckoo/css/entityTable.css?<%=token%>">
 <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/1.7.2/jquery.jsPlumb.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
 		integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
 		crossorigin="anonymous"></script>
@@ -34,55 +33,14 @@
 <script type="text/javascript" src="/resources/duckoo/js/modal.js?<%=token%>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.js"></script> 
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   
-
-<style>
-
-.entity {
-    width:175px; height:125px; margin-top:50px; margin-left:50px;
-    -webkit-transition: width 0.5s, height 0.5s; /* For Safari 3.1 to 6.0 */
-    transition: width 0.5s, height 0.5s;
-    
-    
-    
-}
-.deleteTbl{
-    width:100%; height:10px; font-size: 15px; font-weight: bold; color:red; text-align: right;
-}
-.innerEntity{
-    border-radius: 10px; width:150px; height:100px; border-style: solid; border-color: gray; margin-left:10px;
-    -webkit-transition: width 0.5s, height 0.5s; /* For Safari 3.1 to 6.0 */
-    transition: width 0.5s, height 0.5s;
-    background-color:white;
-}
-.table_name{
-  width:100%; height:25px; border-bottom-style:solid; border-bottom-color: gray; position:relative; float:left;
-}
-.deleteTbl:hover{
-    cursor:pointer;
-}
-  .select-editable { position:relative; background-color:white; border:solid grey 1px;  width:120px; height:18px; }
-  .select-editable select { position:absolute; top:0px; left:0px; font-size:14px; border:none; width:120px; margin:0; }
-  .select-editable input { position:absolute; top:0px; left:0px; width:100px; padding:1px; font-size:12px; border:none; }
-  .select-editable select:focus, .select-editable input:focus { outline:none; }
-
-#canvasDiv{
-	background-image: url(http://freedevelopertutorials.azurewebsites.net/wp-content/uploads/2015/06/grid.png);
-
-}
-
-</style>
-
 </head>
- <body>
-    <div class="canvas" id="canvasDiv"
-      style="width: 1000px; height: 1000px; border: 1px solid black;">
-    </div>
-  
-  
-  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Large Modal</button>
-  
+ <body class="canvas" id="canvasDiv" style="width: 6000px; height: 6000px; border: 1px solid black;">
+ 	
+<%@include file = "menu.jsp" %>    
+
+ 
  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
  <script id="entityTemplate" type="text/x-handlebars-template">
 <div class='entity' id='{{name}}'>
@@ -218,7 +176,7 @@ jsPlumb.ready(function() {
 	 setInterval(function(){
 		repaint();
 	},100/3);
-
+	console.log($("#canvasDiv"));
 	/*  EntityManager.createEntity({name:"e1"},true);
 	 var en=EntityManager.getEntityByName(-"e1");
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true});
@@ -256,7 +214,7 @@ jsPlumb.ready(function() {
 	 en.setAttr({lName:"sibal3",pName:"s_sibla222233",datetype:"tt22222"});
 	 EntityManager.showEntity("e1");
 	 EntityManager.createEntity({name:"e32232",attr:[]},true);
-	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
+	 //$('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
 	 /*
 	 var en=EntityManager.getEntityByName("e1");
 	 en.setAttr({lName:"king",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
@@ -264,6 +222,7 @@ jsPlumb.ready(function() {
 	 console.log("att: ",attr);
 	 modalAttribute.addColumn(attr);
 	 $("#myModal").modal(); */
+	 
 });
 	
 </script>
