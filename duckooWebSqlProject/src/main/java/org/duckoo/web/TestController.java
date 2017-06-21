@@ -47,4 +47,8 @@ public class TestController {
 	public void re7(){
 		
 	}
+	@GetMapping("/modal")
+	public void go(){
+		
+	}
 }
