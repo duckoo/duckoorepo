@@ -5,33 +5,40 @@ var EntityManager=(function(){
 	var $dom =$("#canvasDiv");	
 	var entityHtml=$("#entityTemplate").html();
 	var entityTemplate=Handlebars.compile(entityHtml);
-	/*
-	Handlebars.registerHelper("getPk",function(name){
-		var pk=entityArr[name].getAttr({constraint:"pk"})[0];
-		return "PK:"+pk[0].name+" "+pk[0].type;
-	});
-	*/
-	Handlebars.registerHelper("isExtend",function(opt){
-	  console.log("뭐냐: ",opt);
-		var str="";
-		if(opt===false)
-			str+="basic";
-		else
-			str+="extend";
+	
+	Handlebars.registerHelper("getAttrHeight",function(ex){
+		var str="height:";
+		if(ex)str+="285px";
+		else str+="68px";
 		return str;
 	});
+		
+	 var counter=(function(){
+		   var count=0;
+		   return function(){return count++;}
+	 })();
 	
 ////////////////////////////////// inner Object protoType
 	var attribute = {
-			name : undefined,
-			type : undefined,
-			idex : undefined,
-			constraint : undefined,
-			init : function(opt) { // 이 함수도 리팩토링 대상. 모든 프로퍼티 비교해서 할당하자
-				this.name = opt.name || undefined;
-				this.type = opt.type || undefined;
-				this.constraint = opt.constraint || undefined;
-				this.idex = opt.idex || undefined;
+			id:undefined,
+			lName:undefined,
+			pName:undefined,
+			domainName:undefined,
+			datetype:undefined,
+			datelength:0,
+			nullable:true,
+			isPk:false,
+			isFk:false,
+			defaultExp:undefined,
+			init : function(opt) {
+			  this.setAttribute(opt);
+			   this.id=counter();
+			},
+			setAttribute:function(attrList){
+				var key=Object.keys(attrList);
+				for(var i=0,len=key.length; i<len;i++){
+					this[key[i]]=attrList[key[i]];
+				}
 			},
 			compare:function(attr){
 				var key=Object.keys(attr);
@@ -41,11 +48,18 @@ var EntityManager=(function(){
 						ret[key[i]]=true;
 				}
 				return ret;
+			},
+			clone:function(){
+				var nin= Object.create(attribute);
+				for( var attr in this){
+					nin[attr]=this[attr];
+				}
+				return nin;
 			}
 		};
    var entity = {
 		name : undefined,
-		attr:[],
+		//attr:[],
 		extend:undefined,
 		init : function(opt) {
 			this.name = opt.name || undefined;
@@ -54,8 +68,16 @@ var EntityManager=(function(){
 		genHtml:function(){
 		  return entityTemplate(this);
 		},
-		getAttr:function(att){
-			if(!att){return this.attr;}
+		getAttr:function(id){
+			if(arguments.length===0){return this.attr;}
+			for(var i=0,len=this.attr.length; i<len;i++){
+				if(this.attr[i]["id"]===id){
+					return this.attr[i];
+				}
+			}
+			return undefined;
+		},
+		search:function(att){
 			var ret=[];
 			for( var attrVal of this.attr){
 				console.log("===",attrVal.compare(att));
@@ -66,31 +88,58 @@ var EntityManager=(function(){
 			}
 			return ret;
 		},
-		getAttrByName:function(name){
-			for(var i=0,len=this.attr.length; i<len;i++){
-				if(this.attr[i]["name"]===name){
-					return this.attr[i];
-				}
+		sortAttribute:function(){
+			var deskPk=[];
+	        var deskFK=[];
+	        var desk=[];
+			for(var i=0,len=this.attr.length;i<len;i++){
+				var att= this.attr[i];
+			  if(att.isPk)
+				deskPk.push(att);
+			  else if(att.isFk)
+				deskFK.push(att);
+			  else 
+				desk.push(att)
 			}
-			return undefined;
+            this.attr=deskPk.concat(deskFK,desk);			
 		},
-		deleteAttrByName:function(name){
+		deleteAttr:function(id){
+			var ret =undefined;
 			for(var i=0,len=this.attr.length; i<len;i++){
-				if(this.attr[i]["name"]===name){
-					this.attr.splice(i,1);
-					break;
+				if(this.attr[i]["id"]===id){
+					var ret =this.attr[i];
+				    this.attr.splice(i,1);
+				    break;
 				}
 			}
+			return ret;
 		},
 		setAttr:function(opt){
-			var thatAttr= this.getAttrByName(opt.name);
-			if(thatAttr){thatAttr.init(opt);
+			var thatAttr= this.getAttr(opt.id);
+		
+			if(thatAttr){
+				thatAttr.setAttribute(opt);
 			   return;
 			}
 			var newAttr=Object.create(attribute);
 			  newAttr.init(opt);
 			this.attr.push(newAttr);
-		}
+		},
+		 setAttrArray:function(arr){
+			this.attr=arr; 
+		 },
+	    clone:function(){
+	       var newEntity=Object.create(entity);
+	       for( var pt in this){
+	    	   newEntity[pt]=this[pt];
+			}
+	       var ret=[]; 
+	    	for(var i=0,len=this.attr.length; i<len;i++){
+	    		ret.push(this.attr[i].clone());
+	    	}
+	    	newEntity.setAttrArray(ret);
+	    	return newEntity;
+	    }
 	 };
 ////////////////////////////////////////////////////////////////////////////////////////////////
 	$dom.on("click",".entity",function(e){
@@ -98,7 +147,7 @@ var EntityManager=(function(){
 	    e.preventDefault();	
 	     
 	     var id= $(this).attr("id");
-	     console.log(id);
+	  
 	     if(focusedEntity===undefined){
 	    	 focusedEntity=entityArr[id]; 
 	    	 return ;
@@ -111,26 +160,34 @@ var EntityManager=(function(){
 	     }
 	})
 	
+	$dom.on("dblclick",".entity",function(e){
+		
+		e.stopPropagation();
+	    e.preventDefault();	
+		   
+	  var name= $(this).attr("id");
 	
-		$dom.on("click",".scaleUpBtn",function(e){
+	  var cEntity= entityArr[name].clone();
+	    
+		 modalAttribute.setModal(cEntity,modal);
+		 $("#myModal").modal();
+	});
+	
+	
+   $dom.on("click",".scaleUpBtn",function(e){
 		    e.stopPropagation();
 		    e.preventDefault();
 		    var entityId = $(this).attr("data-scaleBtn");
 		    var $entity = $("#"+entityId);
+		    entityArr[entityId].extend=true;
+		    entityArr[entityId].sortAttribute();
+		    $entity.html($(entityArr[entityId].genHtml()).html());
 		    var $innerEntity = $("[data-innerEntity='"+entityId+"']");
-		    
 		    $entity.css("width",300);
 		    $entity.css("height",350);
 		    $innerEntity.css("width",275);
 		    $innerEntity.css("height",325);
-		    $(this).attr('class','scaleDownBtn');
-		    /* $("#myModal").modal();
-		     $("#myModal").draggable({
-		      handle: ".modal-header"
-		    });
-		    */
-		    renderManager.repaintEverything();
-		    
+		    $entity.find('.scaleUpBtn').attr("class","scaleDownBtn");
 		  });
 	
 	    $dom.on("click",".scaleDownBtn",function(e){
@@ -139,34 +196,38 @@ var EntityManager=(function(){
 		    var entityId = $(this).attr("data-scaleBtn");
 		    var $entity = $("#"+entityId);
 		    var $innerEntity = $("[data-innerEntity='"+entityId+"']");
-
+		    entityArr[entityId].extend=false;
+		    entityArr[entityId].sortAttribute();
+		    $entity.html($(entityArr[entityId].genHtml()).html());
 		    $entity.css("width",175);
 		    $entity.css("height",125);
 		    $innerEntity.css("width",150);
 		    $innerEntity.css("height",100);
-		    $(this).attr('class','scaleUpBtn');
-		    
-		    renderManager.repaintEverything();
-		    
+		    $entity.find('.scaleDownBtn').attr("class","scaleUpBtn");
 		  });
 
 // function///////////////////////////////////////////////////////////////////////////////////////////////////// 
-
-function createEntity(opt){
+function createEntity(opt,show){
 	if(!opt.name){
 		alert("Entity 생성 잘못된 이름");
 		return;
 	}
     var newEntity=Object.create(entity);
+    Object.defineProperty(newEntity,"attr",{
+    	  value:[],
+	      writable:true,
+	       enumerable:true,
+	       configurable:false
+    });
       newEntity.init(opt);
        Object.defineProperty(entityArr,newEntity.name,{
 	         value:newEntity,
-	         writable:false,
+	         writable:true,
 	         enumerable:true,
 	         configurable:false
 	   }); 
        
-       if(opt.show){
+       if(show){
     	   showEntity(opt.name);
        }
     return newEntity;
@@ -196,11 +257,9 @@ function deleteEntity(name){
 	 delete en; //delete 쓰지말라고하던데 흠
 }
 
-
 function setFocusByName(name){
 	focusedEntity=entityArr[name];
 }
-
 function setAttribute(entityName,opt){
 	var en=getEntityByName(entityName);
 	if(!en){alert("잘못된 엔티디 접근");return;}
@@ -215,9 +274,15 @@ function  getFocusByName(){
 function getEntityByName(name){
 	return entityArr[name];
 }
+function setEntity(entity){
+	if(!entity || !entity.name){return ;}
+	entityArr[entity.name]=entity;
+}
+
 return {
 	    createEntity:createEntity,
 	    showEntity:showEntity,
+	    setEntity:setEntity,
 	    setFocusByName:setFocusByName,
 	    getFocusByName:getFocusByName,
 	    getEntityByName:getEntityByName,

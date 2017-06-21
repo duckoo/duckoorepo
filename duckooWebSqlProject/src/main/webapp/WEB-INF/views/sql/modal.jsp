@@ -54,34 +54,24 @@ background-color: red;
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/resources/conjs/modalChange.js"></script>
 
-<div id="myModal"  role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
-      </div>
-      <div class="modal-body">
-      	<div class = "side_tab">
-      		<div  class = "general" tabindex="-1"><i class="fa fa-table" aria-hidden="true"></i>안뇽</div>
-      		<div class = "general" ><i class="fa fa-table" aria-hidden="true"></i>잘가</div>
-      	</div>
-      	<div class="columns">
-      	<table class="">
-      	
-      		
-      	</table>
-         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  <!-- Modal -->
+  <div class="modal fade" id="tbl_nameModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">테이블 생성.</h4>
+        </div>
+        <div class="modal-body">
+          <p>테이블 이름 입력.</p><input type="text" id="tbl_name"></input>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
-
   </div>
-</div>
+
 
 
 <script>

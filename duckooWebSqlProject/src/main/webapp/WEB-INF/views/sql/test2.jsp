@@ -61,12 +61,10 @@
          $("#item_right").draggable();
          $("#item_down").draggable();
         
-     
        var contact = function(firstElement,nextElement){
             jsPlumb.connect({
                 source:$("#diagramContainer #"+firstElement),
                 target:$("#diagramContainer #"+nextElement),
-              
                 endpoint:"Rectangle",
                 anchor:["Continuous", { faces:[ "bottom", "left" ,"right","top"] } ]
             });
