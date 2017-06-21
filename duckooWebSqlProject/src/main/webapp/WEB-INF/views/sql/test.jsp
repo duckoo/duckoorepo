@@ -51,7 +51,7 @@
     width:100%; height:10px; font-size: 15px; font-weight: bold; color:red; text-align: right;
 }
 .innerEntity{
-    border-radius: 10px; width:150px; height:100px; border-style: solid; border-color: red; margin-left:10px;
+    border-radius: 10px; width:150px; height:100px; border-style: solid; border-color: gray; margin-left:10px;
     -webkit-transition: width 0.5s, height 0.5s; /* For Safari 3.1 to 6.0 */
     transition: width 0.5s, height 0.5s;
     background-color:white;
@@ -131,7 +131,7 @@
 			<div id='pk_{{name}}' style='width:100%;height:100%;'>
 				{{#each attr}}
 					{{#if isPk}}
-						<div class="pk"><i class="fa fa-key" target='pk' aria-hidden="true"></i>{{lName}}</div>
+						<div class="pkDiv"><i class="fa fa-key" target='pk' aria-hidden="true"></i>{{lName}}</div>
 					{{else if isFk}}
 						<div class="fk"><i class="fa fa-key" target='fk' aria-hidden="true"></i>{{lName}}</div>
 					{{/if}}
@@ -240,7 +240,7 @@ jsPlumb.ready(function() {
 	 var en=EntityManager.getEntityByName("e1");
 	
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
+	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isFk:true});
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
@@ -256,7 +256,7 @@ jsPlumb.ready(function() {
 	 en.setAttr({lName:"sibal3",pName:"s_sibla222233",datetype:"tt22222"});
 	 EntityManager.showEntity("e1");
 	 EntityManager.createEntity({name:"e32232",attr:[]},true);
-	 $('.attrArea').niceScroll({ horizrailenabled: true});
+	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
 	 /*
 	 var en=EntityManager.getEntityByName("e1");
 	 en.setAttr({lName:"king",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
