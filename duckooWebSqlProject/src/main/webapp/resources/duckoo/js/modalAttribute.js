@@ -96,6 +96,8 @@ function setModal(_entity,modal){
     $('#saveBtn').one('click',function(e){
     	tagGetAttr(entity);
         EntityManager.setEntity(entity);
+        var $entity = $("#"+entity.name);
+        $entity.html($(entity.genHtml()).html());
         $("#myModal").modal("hide");
     });
    
