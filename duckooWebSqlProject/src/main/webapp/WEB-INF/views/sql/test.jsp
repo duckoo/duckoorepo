@@ -37,40 +37,53 @@
 <jsp:param name="token" value="<%=token%>" />
 </jsp:include> 
 
-<jsp:include page="/resources/duckoo/jsp/menu.jsp">
+<%-- <jsp:include page="/resources/duckoo/jsp/menu.jsp">
+<jsp:param name="token" value="<%=token%>" />
+</jsp:include> --%> 
+
+<jsp:include page="/resources/duckoo/jsp/sqlGen.jsp">
 <jsp:param name="token" value="<%=token%>" />
 </jsp:include> 
 
 <script>
 jsPlumb.ready(function() {
-	 setInterval(function(){
-		 console.log("re: ");
-		repaint();
+	 
+	setInterval(function(){
+	   jsPlumb.repaintEverything();
 	},1000/20);
 	
-	 EntityManager.createEntity({name:"e1",attr:[]},false);
+	/*
+	 EntityManager.createEntity({name:"e1"},false);
 	 var en=EntityManager.getEntityByName("e1");
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isFk:true});
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	
-	 en.setAttr({lName:"sibal3",pName:"s_sibla222233",datetype:"tt22222"});
-	 en.setAttr({lName:"sibal3",pName:"s_sibla222233",datetype:"tt22222"});
-	 en.setAttr({lName:"sibal3",pName:"s_sibla222233",datetype:"tt22222"});
+	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"int",datelength:10,isPk:true,isFk:true});
+	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"int",datelength:11,isFk:true});
+	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"int",datelength:12,isPk:true,isFk:true});
+	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"int",datelength:13,isPk:true,isFk:true});
+	 
 	 EntityManager.showEntity("e1");
-	 EntityManager.createEntity({name:"e32232",attr:[]},true);
-	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
-	 /*
-	 var en=EntityManager.getEntityByName("e1");
-	 en.setAttr({lName:"king",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	 var attr=en.getAttr(0);
-	 console.log("att: ",attr);
-	 modalAttribute.addColumn(attr);
-	 $("#myModal").modal(); */
+	 EntityManager.createEntity({name:"e32232"},true);
+
+	 console.log("sq",SqlFactory);
+	 
+	 var genSql=SqlFactory.get("mysql");
+	
+	var sql = genSql.genCreateTableDDL(en);
+	 console.log("sql",sql);
+	  */
+	  
+/* 
+  observer ex....
+ EntityManager.createEntity({name:"e1"},true); 
+ var observer=Object.create(Obsever);
+ observer.init("entityclick",function(opt){
+	console.log(opt); 
+ });
+  observer.fx=function(opt){
+	 console.log("hi");
+ } 
+EntityManager.setEventObserver("click",observer);
+EntityManager.setEventObserver("scaleUpBtn_click",observer);   */
+	  
 });
 	
 </script>

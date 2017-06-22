@@ -2,7 +2,6 @@
 		event.stopPropagation();
 		event.preventDefault();
 		var target = event.srcElement;
-	
 		
 		var allTag = document.getElementsByClassName("attrs");
 		

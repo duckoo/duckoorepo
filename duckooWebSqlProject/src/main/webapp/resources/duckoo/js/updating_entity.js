@@ -1,10 +1,8 @@
-
 var EntityManager=(function(){
 	var entityArr={};// all of Entity;
-	var focusedEntity=undefined;
-	var $dom =$("#canvasDiv");	
 	var entityHtml=$("#entityTemplate").html();
 	var entityTemplate=Handlebars.compile(entityHtml);
+	var eventObserver=[];
 	
 	Handlebars.registerHelper("getAttrHeight",function(ex){
 		var str="height:";
@@ -12,12 +10,10 @@ var EntityManager=(function(){
 		else str+="68px";
 		return str;
 	});
-		
-	 var counter=(function(){
+	var counter=(function(){
 		   var count=0;
 		   return function(){return count++;}
 	 })();
-	
 ////////////////////////////////// inner Object protoType
 	var attribute = {
 			id:undefined,
@@ -26,7 +22,7 @@ var EntityManager=(function(){
 			domainName:undefined,
 			datetype:undefined,
 			datelength:0,
-			nullable:true,
+			notNull:false,
 			isPk:false,
 			isFk:false,
 			defaultExp:undefined,
@@ -59,8 +55,6 @@ var EntityManager=(function(){
 		};
    var entity = {
 		name : undefined,
-		//attr:[],
-		extend:undefined,
 		init : function(opt) {
 			this.name = opt.name || undefined;
 			this.extend=false;
@@ -141,70 +135,6 @@ var EntityManager=(function(){
 	    	return newEntity;
 	    }
 	 };
-////////////////////////////////////////////////////////////////////////////////////////////////
-	$dom.on("click",".entity",function(e){
-		e.stopPropagation();
-	    e.preventDefault();	
-	     
-	     var id= $(this).attr("id");
-	  
-	     if(focusedEntity===undefined){
-	    	 focusedEntity=entityArr[id]; 
-	    	 return ;
-	     }
-	    	 
-	     if(focusedEntity.name!==id){
-	    	var fid= focusedEntity.name;
-	    	renderManager.connectDiv({$source:$("#"+fid) ,$target:$("#"+id),id:id+""+fid});
-	    	focusedEntity=undefined;
-	     }
-	})
-	
-	$dom.on("dblclick",".entity",function(e){
-		
-		e.stopPropagation();
-	    e.preventDefault();	
-		   
-	  var name= $(this).attr("id");
-	
-	  var cEntity= entityArr[name].clone();
-	    
-		 modalAttribute.setModal(cEntity,modal);
-		 $("#myModal").modal();
-	});
-	
-	
-   $dom.on("click",".scaleUpBtn",function(e){
-		    e.stopPropagation();
-		    e.preventDefault();
-		    var entityId = $(this).attr("data-scaleBtn");
-		    var $entity = $("#"+entityId);
-		    entityArr[entityId].extend=true;
-		    entityArr[entityId].sortAttribute();
-		    $entity.html($(entityArr[entityId].genHtml()).html());
-		    var $innerEntity = $("[data-innerEntity='"+entityId+"']");
-		    $entity.css("width",300);
-		    $entity.css("height",350);
-		    $innerEntity.css("width",275);
-		    $innerEntity.css("height",325);
-		    $entity.find('.scaleUpBtn').attr("class","scaleDownBtn");
-		  });
-	
-	    $dom.on("click",".scaleDownBtn",function(e){
-		    e.stopPropagation();
-		    e.preventDefault();
-		    var entityId = $(this).attr("data-scaleBtn");
-		    var $entity = $("#"+entityId);
-		    var $innerEntity = $("[data-innerEntity='"+entityId+"']");
-		    entityArr[entityId].extend=false;
-		    entityArr[entityId].sortAttribute();
-		    $entity.html($(entityArr[entityId].genHtml()).html());
-		    $entity.css("width",175);
-		    $entity.css("height",125);
-		    $innerEntity.css("width",150);
-		    $innerEntity.css("height",100);
-		    $entity.find('.scaleDownBtn').attr("class","scaleUpBtn");
-		  });
 
 // function///////////////////////////////////////////////////////////////////////////////////////////////////// 
 function createEntity(opt,show){
@@ -219,6 +149,12 @@ function createEntity(opt,show){
 	       enumerable:true,
 	       configurable:false
     });
+    Object.defineProperty(newEntity,"extend",{
+  	  value:false,
+	      writable:true,
+	       enumerable:true,
+	       configurable:false
+     });
       newEntity.init(opt);
        Object.defineProperty(entityArr,newEntity.name,{
 	         value:newEntity,
@@ -231,9 +167,7 @@ function createEntity(opt,show){
     	   showEntity(opt.name);
        }
     return newEntity;
-}	
-
-	
+}		
 function showEntity(name){
 	var en=getEntityByName(name);
 	if(!en){
@@ -257,42 +191,56 @@ function deleteEntity(name){
 	 delete en; //delete 쓰지말라고하던데 흠
 }
 
-function setFocusByName(name){
-	focusedEntity=entityArr[name];
-}
 function setAttribute(entityName,opt){
 	var en=getEntityByName(entityName);
 	if(!en){alert("잘못된 엔티디 접근");return;}
 	en.setAttr(opt);
 }
 
-function  getFocusByName(){
-	var _focusedEntity= focusedEntity||{};
-  return _focusedEntity.name;
-}
-
 function getEntityByName(name){
 	return entityArr[name];
 }
+
 function setEntity(entity){
 	if(!entity || !entity.name){return ;}
 	entityArr[entity.name]=entity;
 }
 
+function setEventObserver(eventName,observer){
+	if(!eventObserver[eventName])eventObserver[eventName]=[];
+	if("fire" in observer)
+	   if("name" in observer)
+	     eventObserver[eventName].push({name:observer.name,observer:observer});
+}
+
+function fire(eventName,opt){
+ if(eventObserver[eventName]){
+	 eventObserver[eventName].every(function(temp){
+		 temp.observer.fire(opt);
+	  });
+   }
+}
+
+function deleteObserver(name){ // 잘 안될 가능성 높음
+ var key=Object.keys(eventObserver);
+     for(var i=0,len=key.length;i<len;i++){
+    	 var inArr=eventObserver[key[i]];
+    	 for(var i=0, len=inArr.length;i<len;i++){
+    		 if( inArr[i].name ===name)
+    			 delete inArr[i];
+    	 }
+     }
+}
 return {
 	    createEntity:createEntity,
 	    showEntity:showEntity,
 	    setEntity:setEntity,
-	    setFocusByName:setFocusByName,
-	    getFocusByName:getFocusByName,
 	    getEntityByName:getEntityByName,
 	    setAttribute:setAttribute,
 	    hideEntity:hideEntity,
-	    deleteEntity:deleteEntity
+	    deleteEntity:deleteEntity,
+	    setEventObserver:setEventObserver,
+	    fire:fire,
+	    deleteObserver:deleteObserver
       };
 })();
-
-function repaint(){
-    jsPlumb.repaintEverything();
-}
-

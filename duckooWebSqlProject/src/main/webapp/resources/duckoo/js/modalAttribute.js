@@ -60,10 +60,9 @@ function tagGetAttr(enti){
 	    attr[i].pName=document.getElementById("pName_"+id).value;
 	    attr[i].datetype=document.getElementById("dataType_"+id).value;
 	    var nullSel=$("#notNull_"+id+" option:selected");
-	    attr[i].nullable=nullSel.val() ==="true" ? true:false;
+	    attr[i].notNull=nullSel.val() ==="true" ? true:false;
 	}
 }
-
 
 function setModal(_entity,modal){
 	
