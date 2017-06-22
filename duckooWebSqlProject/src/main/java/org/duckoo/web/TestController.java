@@ -18,5 +18,13 @@ public class TestController {
 	public void re2(){
 		
 	}
+	@GetMapping("/testTaebong")
+	public void re3(){
+		
+	}
+	@GetMapping("/testMinwoo")
+	public void re4(){
+		
+	}
 	
 }

@@ -13,7 +13,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-          <button type="button"  id="conferm" class ="btn btn-success">conform</button>
+          <button type="button"  id="conform" class ="btn btn-success">conform</button>
         </div>
       </div>
     </div>

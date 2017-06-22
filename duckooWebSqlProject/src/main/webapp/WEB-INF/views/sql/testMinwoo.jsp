@@ -66,7 +66,20 @@ jsPlumb.ready(function() {
 	 en.setAttr({lName:"sibal3",pName:"s_sibla222233",datetype:"tt22222"});
 	 EntityManager.showEntity("e1");
 	 EntityManager.createEntity({name:"e32232",attr:[]},true);
-	 $('.attrArea').niceScroll("#e1",{ horizrailenabled: true});
+	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
+	 
+		$("#conform").on("click",function(e){
+			var tempName = $("#tbl_name").val();
+			var result = verifyControll.isEntityExist(tempName);
+			if(!result){
+				EntityManager.createEntity({name:tempName,attr:[],false});
+				EntityManager.showEntity(tempName);
+			}
+		else{
+			console.log("tttt");
+		}
+		});
+	 
 	 /*
 	 var en=EntityManager.getEntityByName("e1");
 	 en.setAttr({lName:"king",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
