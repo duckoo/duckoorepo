@@ -1,5 +1,4 @@
 var modalAttribute=(function(){
-	
 	var head= "<tr class='modalTr' style='border-style:solid;'>"+
     "        <th class='modelTh'>키타입</th>"+
     "        <th class='modelTh'>논리이름</th>"+
@@ -9,7 +8,7 @@ var modalAttribute=(function(){
     "        <th class='modelTh'>Default</th>"+
     "    </tr>";
 	
-	var body=
+var body=
 	" <div class='attrBox'>"+
     " <table class='tbl'>"+String(head)+"</table>"+
     "</div>"+
@@ -18,16 +17,59 @@ var modalAttribute=(function(){
     " <div class='deleteAttrBtn'><i class='fa fa-times-circle fa-2x' aria-hidden='true'></i></div>"+
     "</div>"; 
 	
-	var columnHTML= $("#attrAddForm").html();
-	var columnTemplate=Handlebars.compile(columnHTML);
+var columnHTML= $("#attrAddForm").html();
+var columnTemplate=Handlebars.compile(columnHTML);
 	
+var target=undefined;
+var entity=undefined;
+
+var Obserable= DObserable.createObserable();
+
+function click_trDatas(e){
+	 $("tr").css("background-color","");
+	 var $that=$(e.that);  
+	 $that.parent().css("background-color","#269abc");
+	  target = $that.parent();
+}
+var obb=Object.create(Obsever);
+obb.init("colorChange",click_trDatas);
+Obserable.setEventObserver("click_trDatas",obb);
+
+function delBtn(e){
+	 if(!target)return;
+	  var id=target.attr("id");
+	 entity.deleteAttr(Number(id));
+	 target.remove();
+};
+obb=Object.create(Obsever);
+obb.init("delBtn",delBtn);
+Obserable.setEventObserver("delBtn",obb);
+
+function addBtn(e){
+	console.log("sibal");
+    entity.setAttr({lName:"none",pName:"none",domainName:"none",datetype:"int"}); 
+    tagSetAttr(entity);
+}
+obb=Object.create(Obsever);
+obb.init("addBtn2",addBtn);
+Obserable.setEventObserver("addBtn",obb);
+
+function saveBtn(e){
+	tagGetAttr(entity);
+    EntityManager.setEntity(entity);
+    var $entity = $("#"+entity.name);
+    $entity.html($(entity.genHtml()).html());
+}
+
+obb=Object.create(Obsever);
+obb.init("saveBtn",saveBtn);
+Obserable.setEventObserver("saveBtn",obb);
 
 function makeToSelected(value,options){
 	var $el = $('<select />').html( options.fn(this) );
     $el.find('[value="' + value + '"]').attr({'selected':'selected'});
     return $el.html();
 }
-	
 Handlebars.registerHelper('select', function(isPK,isFK, options ){
 	var value="";
 	value+=isPK?"PK":"";
@@ -40,11 +82,13 @@ Handlebars.registerHelper('selectBasic', function(value, options ){
     return makeToSelected(value,options);
 });
 
-function tagSetAttr(enti){
-	var attr= enti.getAttr();
-	var $tbl=  $(".tbl");
-	 $tbl.html(head);
+function tagSetAttr(){
+	var attr= entity.getAttr();
+	console.log("attr: ",attr)
 	
+	var $tbl=  $(".tbl");
+	console.log("whwhwhy?: ",$tbl)
+	 $tbl.html(head);
 	for(var i=0,len=attr.length;i<len;i++){
 		 $tbl.append(columnTemplate(attr[i]));
 	}
@@ -64,50 +108,15 @@ function tagGetAttr(enti){
 	}
 }
 
-function setModal(_entity,modal){
-	
-	console.log("start Modal: ");
+function setModal(enti,modal){
+	entity=enti;
 	modal.setViewPort(body);
-	var target;
-	var entity=_entity;
-	tagSetAttr(entity);
-	$('.tbl').on("click","tr .datas",function(e){
-        e.stopPropagation();
-        e.preventDefault();
-        $("tr").css("background-color","");
-        $(this).parent().css("background-color","#269abc");
-       target = $(this).parent();
-    });
-    $('.deleteAttrBtn').on('click',function(e){
-         if(!target)return;
-    	e.stopPropagation();
-        e.preventDefault();
-        var id=target.attr("id");
-        entity.deleteAttr(Number(id));
-         target.remove();
-    });
-    $('.addAttrBtn').on('click',function(e){
-        e.stopPropagation();
-        e.preventDefault();
-        entity.setAttr({lName:"none",pName:"none",domainName:"none",datetype:"int"}); 
-        tagSetAttr(entity);
-    });
-    $('#saveBtn').one('click',function(e){
-    	tagGetAttr(entity);
-        EntityManager.setEntity(entity);
-        var $entity = $("#"+entity.name);
-        var $innerEntity = $("[data-innerEntity='"+entity.name+"']");
-        console.log($innerEntity);
-        $entity.html($(entity.genHtml()).html());
-        $entity.css("width",300);
-	    $entity.css("height",350);
-	    $innerEntity.css("width",275);
-	    $innerEntity.css("height",325);
-        
-        $("#myModal").modal("hide");
-    });
-   
-   
+	 tagSetAttr();
+	 console.log("tlwkr");
 }
-return {setModal:setModal}	
+
+return {
+	    setModal:setModal,
+	    Obserable:Obserable
+	  };
 })();

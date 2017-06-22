@@ -41,7 +41,6 @@ var DObserable=(function(){
 	}
 	
 	return{
-	     name:"121313121",
 	     createObserable:createObserable
 	};
 })();

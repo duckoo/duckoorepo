@@ -39,3 +39,54 @@
 </script> 
 <script type="text/javascript" src="/resources/duckoo/js/modal.js?<%=request.getParameter("token")%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/modalAttribute.js?<%=request.getParameter("token")%>"></script>
+<script>
+
+$(document).on("click",".datas",function(e){
+    e.stopPropagation();
+    e.preventDefault();
+  /*   $("tr").css("background-color","");
+    $(this).parent().css("background-color","#269abc");
+   target = $(this).parent();
+    */
+   modalAttribute.Obserable.fire("click_trDatas",{event:e,that:this});
+});
+
+$(document).on('click','.deleteAttrBtn',function(e){
+	e.stopPropagation();
+    e.preventDefault();
+	/* if(!target)return;
+    var id=target.attr("id");
+    entity.deleteAttr(Number(id));
+     target.remove();
+      */
+     modalAttribute.Obserable.fire("delBtn",{event:e,that:this});     
+});
+
+$(document).on('click','.addAttrBtn',function(e){
+    e.stopPropagation();
+    e.preventDefault();
+    /* entity.setAttr({lName:"none",pName:"none",domainName:"none",datetype:"int"}); 
+    tagSetAttr(entity); */
+    console.log(modalAttribute);
+    modalAttribute.Obserable.fire("addBtn",{event:e,that:this});
+});
+
+$(document).on('click','#saveBtn',function(e){
+	/* tagGetAttr(entity);
+    EntityManager.setEntity(entity); */
+    /*
+    var $entity = $("#"+entity.name);
+    var $innerEntity = $("[data-innerEntity='"+entity.name+"']");
+    console.log($innerEntity);
+    $entity.html($(entity.genHtml()).html());
+    $entity.css("width",300);
+    $entity.css("height",350);
+    $innerEntity.css("width",275);
+    $innerEntity.css("height",325);
+    */
+    modalAttribute.Obserable.fire("saveBtn",{event:e,that:this});
+    $("#myModal").modal("hide");
+});
+
+
+</script>
