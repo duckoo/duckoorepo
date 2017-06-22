@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/resources/duckoo/css/mainModal.css">
 <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -22,11 +23,12 @@
 		crossorigin="anonymous"></script>
 <script type="text/javascript" src="/resources/duckoo/js/duckooPlumb.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/relationship.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/EntityControll.js?<%=token%>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.js"></script> 
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
-
+<script type="text/javascript" src="/resources/duckoo/js/Observer.js?<%=token%>"></script>
 
 </head>
 
@@ -44,13 +46,21 @@
 <jsp:param name="token" value="<%=token%>" />
 </jsp:include> 
 
+
+<jsp:include page="RelationModal.jsp">
+<jsp:param name="token" value="<%=token%>" />
+</jsp:include> 
+
+
 <script>
 jsPlumb.ready(function() {
 	 setInterval(function(){
-		 console.log("re: ");
-		repaint();
+		 console.log("re:");
+		jsPlumb.repaintEverything();
 	},1000/20);
-	
+	$("#identified").modal();
+	var mkFlag = false;
+	var tempRelation = {};
 	 EntityManager.createEntity({name:"e1",attr:[]},false);
 	 var en=EntityManager.getEntityByName("e1");
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
@@ -68,18 +78,41 @@ jsPlumb.ready(function() {
 	 EntityManager.createEntity({name:"e32232",attr:[]},true);
 	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
 	 
-		$("#conform").on("click",function(e){
-			var tempName = $("#tbl_name").val();
-			var result = verifyControll.isEntityExist(tempName);
-			if(!result){
-				EntityManager.createEntity({name:tempName,attr:[],false});
-				EntityManager.showEntity(tempName);
-			}
-		else{
-			console.log("tttt");
-		}
-		});
+
+	
 	 
+	
+	 function disbindEntityEvent(){
+			 $("#canvasDiv").off("click",".entity");
+	 
+	 }
+	 function collectSelectOption(EntityObject,isSource){
+		 console.log("entity :" ,EntityObject);
+		 pkAttrArray = [];
+		 for(var i=0;i<EntityObject.attr.length;i++){
+			 if(EntityObject.attr[i].isPk){
+				 pkAttrArray.push(EntityObject.attr[i]);
+			 }
+		 }
+		 createSelectOption(pkAttrArray,isSource);
+	 }
+	 function createSelectOption(pkAttrArr,isSource){
+		 var targetLink;
+		 if(isSource){
+			 targetLink = $("#sourceCol");
+			 
+		 }else{
+			 targetLink = $("#targetCol");
+			 
+		 }
+		 targetLink.html("");
+		 for(var i = 0;i<pkAttrArr.length;i++){
+			 targetLink.append("<option value="+pkAttrArr[i].pName+">"+pkAttrArr[i].pName+"</option>");
+			 
+		 }
+		 
+	 }
+
 	 /*
 	 var en=EntityManager.getEntityByName("e1");
 	 en.setAttr({lName:"king",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});

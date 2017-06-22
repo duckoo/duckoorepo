@@ -111,7 +111,7 @@ var EntityManager=(function(){
 			return ret;
 		},
 		setAttr:function(opt){
-			var thatAttr= this.getAttr(opt.id);
+			var thatAttr= this.getAttr(opt.id);//id???
 		
 			if(thatAttr){
 				thatAttr.setAttribute(opt);
