@@ -8,6 +8,21 @@ function(domainName, datetype ,datelength){
 	return datetype+"("+datelength+")";
 });
 	
+Handlebars.registerHelper("isEnd", function(last) {
+	 if(!last)return ",";
+});
+
+Handlebars.registerHelper("getPk", function(that) {
+    console.log(that);
+ var pkArr= that.search({isPk:true});
+       var str=pkArr[0].pName;
+    for(var i=1,len=pkArr.length;i<len;i++){
+    	str+=","+pkArr[i].pName;
+    }
+    return str;
+});
+
+
 	function genCreateTableDDL(entity){
 		return createTableDDLTemplate(entity);
 	}

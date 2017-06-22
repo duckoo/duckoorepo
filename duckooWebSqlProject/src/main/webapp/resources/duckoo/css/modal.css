@@ -29,8 +29,8 @@
 
 .tbl {
     border-collapse: collapse;
-    width: 100%;
-    overflow: scroll;
+    width: 650px;
+   
 }
 
 .modalTh, .datas {

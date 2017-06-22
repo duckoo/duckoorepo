@@ -5,42 +5,50 @@
     <link rel="stylesheet" href="/resources/duckoo/css/entityAttr.css?<%=request.getParameter("token")%>">
 
  <script id="attrAddForm" type="text/x-handlebars-template">
- <tr class='modalTr' id={{id}}>
-   <td class='datas'>
- <select id="keyType_{{id}}">
-  {{#select isPk isFk}}
-    <option data-pk="true" data-fk="false"  value="PK">PK</option>
-    <option data-pk="false" data-fk="true"  value="FK">FK</option>
-    <option data-pk="true" data-fk="true"  value="PKFK">PK+FK</option>
-    <option data-pk="false" data-fk="false"  value="None">None</option>
-   {{/select}}
-  </select>
-   </td>
-   <td class='datas'><input id="lName_{{id}}" type='text' value={{lName}} maxlength="10"  style="width:100px;"></input></td>
-   <td class='datas'><input id="pName_{{id}}" type='text' value={{pName}}  maxlength="10" style="width:100px;"></input></td>
-   <td class='datas'>
-      <select style='width: 100px; height:24px; float: left;' onchange='this.nextElementSibling.value=this.value'>
+<div class="modalTr">
+        <span class="datas">
+            <select id="keyType_{{id}}">
+            {{#select isPk isFk}}
+                <option data-pk="true" data-fk="false"  value="PK">PK</option>
+                <option data-pk="false" data-fk="true"  value="FK">FK</option>
+                <option data-pk="true" data-fk="true"  value="PKFK">PK+FK</option>
+                <option data-pk="false" data-fk="false"  value="None">None</option>    
+            {{/select}}
+            </select>
+        </span>
+        <span class="datas"><input id="lName_{{id}}" type='text' value={{lName}} maxlength="10"  style="width:100px;"></input></span>
+        <span class="datas"><input id="pName_{{id}}" type='text' value={{pName}}  maxlength="10" style="width:100px;"></input></span>
+        <span class="datas">
+            <select style='width: 100px; height:24px; float: left;' onchange='this.nextElementSibling.value=this.value'>
              <option></option>
              <option>int()</option>
              <option>varchar()</option>
-       </select>
-    <input id="dataType_{{id}}" value={{datetype}} style='width: 85px; margin-left: -99px; margin-top: 1px; border: none; float: left;'/>
-  </td>
-   <td class='datas'>
-     <select id="notNull_{{id}}">
-    {{#selectBasic notNull}}
-       <option value="false">아니오</option>
-       <option value="true">예</option>   
-     {{/selectBasic}}  
-     </select>
-   </td>
-   <td class='datas'><input type='text' maxlength="10"></input></td>
- </tr>
+            </select>
+            <input id="dataType_{{id}}" value={{datetype}} style='width: 85px; margin-left: -99px; margin-top: 1px; border: none; float: left;'/>
+        </span>
+        <span class="datas"><input type='text' maxlength="10"></input></span>
+        <span class="datas"><button class="openConstraintBtn" data-openCB="{{id}}">+</button></span>
+    </div>
+    <div class='modalTr consCheckBox' id="openDiv_{{id}}" style='border-bottom:2px solid black; border-top:2px solid black; display:none; transition:0.5s;'>
+        <span class='datas1' style='border-right:none;'></span>
+        <span class='datas1' style='border-right:none;'></span>
+        <span class='datas1' style='border-right:none;'></span>
+        <span class='datas1' style='border-right:none;'><input type='checkbox' name='Not Null' value='Not Null'>Not Null</input></span>
+        <span class='datas1' style='border-right:none;'><input type='checkbox' name='Autoincrement' value='Autoincrement'>Autoincrement</input></span>
+        <span class='datas1' style='border-right:none;'><input type='checkbox' name='Unique' value='Unique'>Unique</input></span>
+    </div>
 </script> 
 <script type="text/javascript" src="/resources/duckoo/js/modal.js?<%=request.getParameter("token")%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/modalAttribute.js?<%=request.getParameter("token")%>"></script>
 <script>
-
+$(document).on("click",".openConstraintBtn",function(e){
+	
+	
+	
+	
+	modalAttribute.Obserable.fire("openConstraintBtn",{event:e,that:this});
+	
+})
 $(document).on("click",".datas",function(e){
     e.stopPropagation();
     e.preventDefault();

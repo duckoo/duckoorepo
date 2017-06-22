@@ -1,16 +1,16 @@
 var modalAttribute=(function(){
-	var head= "<tr class='modalTr' style='border-style:solid;'>"+
-    "        <th class='modelTh'>키타입</th>"+
-    "        <th class='modelTh'>논리이름</th>"+
-    "        <th class='modelTh'>물리이름</th>"+
-    "        <th class='modelTh'>데이터타입</th>"+
-    "        <th class='modelTh'>Not null</th>"+
-    "        <th class='modelTh'>Default</th>"+
-    "    </tr>";
+	var head= "<div class='modalTr'>"+
+        "<span class='modalTh'>키타입</span>"+
+        "<span class='modalTh'>논리이름</span>"+
+        "<span class='modalTh'>물리이름</span>"+
+        "<span class='modalTh'>데이터타입</span>"+
+        "<span class='modalTh'>기본값</span>"+
+       "<span class='modalTh'>제약조건</span>"+
+    "</div>";
 	
 var body=
 	" <div class='attrBox'>"+
-    " <table class='tbl'>"+String(head)+"</table>"+
+    " <div class='tbl'>"+String(head)+"</div>"+
     "</div>"+
     "<div class = 'btnWrapper'>"+
     " <div class='addAttrBtn'><i class='fa fa-plus-circle fa-2x' aria-hidden='true'></i></div>"+
@@ -25,8 +25,11 @@ var entity=undefined;
 
 var Obserable= DObserable.createObserable();
 
+
+
+
 function click_trDatas(e){
-	 $("tr").css("background-color","");
+	 $("div").css("background-color","");
 	 var $that=$(e.that);  
 	 $that.parent().css("background-color","#269abc");
 	  target = $that.parent();
@@ -34,6 +37,26 @@ function click_trDatas(e){
 var obb=Object.create(Obsever);
 obb.init("colorChange",click_trDatas);
 Obserable.setEventObserver("click_trDatas",obb);
+
+
+function openConstraintBtn(e){
+	        
+/*	e.event
+	e.that;
+*/	
+ console.log("evetn.: ", e)	;
+	var id=$(e.that).attr("data-openCB");
+	var $hiddenDiv=$("#openDiv_"+id);
+	if($hiddenDiv.css("display")==='none')
+		$hiddenDiv.css("display","block");
+	else
+		$hiddenDiv.css("display","none");
+	
+};
+var obb=Object.create(Obsever);
+obb.init("openConstraintBtn",openConstraintBtn);
+Obserable.setEventObserver("openConstraintBtn",obb);
+
 
 function delBtn(e){
 	 if(!target)return;
@@ -46,7 +69,6 @@ obb.init("delBtn",delBtn);
 Obserable.setEventObserver("delBtn",obb);
 
 function addBtn(e){
-	console.log("sibal");
     entity.setAttr({lName:"none",pName:"none",domainName:"none",datetype:"int"}); 
     tagSetAttr(entity);
 }

@@ -63,15 +63,15 @@ jsPlumb.ready(function() {
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"int",datelength:12,isPk:true,isFk:true});
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"int",datelength:13,isPk:true,isFk:true});
 	 
-	 EntityManager.showEntity("e1");
-	 EntityManager.createEntity({name:"e32232"},true);
+	  EntityManager.showEntity("e1");
+	/* EntityManager.createEntity({name:"e32232"},true); */
 
 	 //console.log("sq",SqlFactory);
 	 
-	/*  var genSql=SqlFactory.get("mysql");
+	  var genSql=SqlFactory.get("mysql");
 	
 	var sql = genSql.genCreateTableDDL(en);
-	 console.log("sql",sql); */
+	 console.log("sql: ",sql); 
 	
 	 
 //  observer ex....

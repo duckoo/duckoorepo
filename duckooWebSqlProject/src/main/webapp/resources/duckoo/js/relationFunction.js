@@ -21,11 +21,9 @@ var relationfunction=(function(){
 		    	$("#relationModal").modal();
 		    	tempRelation= {source:fid,target:id,name:id+""+fid};
 		    	
-		    	
 		    	collectSelectOption(EntityManager.getEntityByName(elementArr[0]),true);
 		    	collectSelectOption(EntityManager.getEntityByName(elementArr[1]),false);
 		    	console.log("tempRelation : ",tempRelation);
-		    	
 		    	
 		    	elementArr=[];
 		    	return;
