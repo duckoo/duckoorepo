@@ -132,7 +132,7 @@ $("#idf").on("click",function(e){
 		$("#relationModal").modal("hide");
 		$("#identified").modal();
 		var tempArr = relationfunction.getElementArr();
-		relationfunction.collectSelectOption(EntityManager.getEntityByName(tempArr[0]),true,relationfunction.getTempRelation().relationLine);
+		relationfunction.collectSelectOption(EntityManager.getEntityByName(tempArr[0]) , true , relationfunction.getTempRelation().relationLine);
 		relationfunction.collectSelectOption(EntityManager.getEntityByName(tempArr[1]),false,relationfunction.getTempRelation().relationLine);
 	});
 $("#nidf").on("click",function(e){
@@ -188,7 +188,9 @@ $("#relSave").on("click",function(e){
 		alert("대응되는 Attribute를 찾을 수 없습니다. 자동생성은 AutoGenerete를 체크하세요");
 		
 	}
-	relationfunction.changeFlagState();
+	
+	$("#makeRelationBtn").trigger("click");
+	$("#identified").modal('hide');
 });
 
 
@@ -209,7 +211,9 @@ function autoGen(srcElementId,tarElementId,connectionType){
       	relationfunction.getTempRelation().relationType = ($(this).val());
        }
     }); 
-	var cloneAttr = EntityManager.getEntityByName(srcElementId).search({pName:relationfunction.getTempRelation().relationAttr[0]})[0].clone();
+	//배열로나옴
+    var cloneAttr = EntityManager.getEntityByName(srcElementId).search({pName:relationfunction.getTempRelation().relationAttr[0]})[0].clone();
+	
 	cloneAttr.isFk = true;
 	if(connectionType=="nidentify"){cloneAttr.isPk=false;}
   	EntityManager.setAttribute(tarElementId, cloneAttr);

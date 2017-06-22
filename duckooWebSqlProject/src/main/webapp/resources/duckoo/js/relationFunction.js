@@ -22,8 +22,7 @@ var relationfunction=(function(){
 		    	tempRelation= {source:fid,target:id,name:id+""+fid};
 		    	
 		    	
-		    	//collectSelectOption(EntityManager.getEntityByName(elementArr[0]),true);
-		    	//collectSelectOption(EntityManager.getEntityByName(elementArr[1]),false);
+		    	
 		    	console.log("tempRelation : ",tempRelation);
 		    	
 		    	
@@ -61,16 +60,13 @@ var relationfunction=(function(){
 	 function createSelectOption(pkAttrArr,isSource,relationType){
 		 var targetLink;
 		 if(isSource){
-			 targetLink = $("#sourceCol");
-			 
+			 targetLink = $("#sourceCol"); 
 		 }else{
 			 targetLink = $("#targetCol");
-			 
 		 }
 		 targetLink.html("");
 		 for(var i = 0;i<pkAttrArr.length;i++){
 			 targetLink.append("<option value="+pkAttrArr[i].pName+">"+pkAttrArr[i].pName+"</option>");
-			 
 		 }
 		 
 	 }
