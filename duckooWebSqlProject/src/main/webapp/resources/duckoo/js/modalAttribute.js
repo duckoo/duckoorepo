@@ -60,10 +60,9 @@ function tagGetAttr(enti){
 	    attr[i].pName=document.getElementById("pName_"+id).value;
 	    attr[i].datetype=document.getElementById("dataType_"+id).value;
 	    var nullSel=$("#notNull_"+id+" option:selected");
-	    attr[i].nullable=nullSel.val() ==="true" ? true:false;
+	    attr[i].notNull=nullSel.val() ==="true" ? true:false;
 	}
 }
-
 
 function setModal(_entity,modal){
 	
@@ -97,7 +96,14 @@ function setModal(_entity,modal){
     	tagGetAttr(entity);
         EntityManager.setEntity(entity);
         var $entity = $("#"+entity.name);
+        var $innerEntity = $("[data-innerEntity='"+entity.name+"']");
+        console.log($innerEntity);
         $entity.html($(entity.genHtml()).html());
+        $entity.css("width",300);
+	    $entity.css("height",350);
+	    $innerEntity.css("width",275);
+	    $innerEntity.css("height",325);
+        
         $("#myModal").modal("hide");
     });
    

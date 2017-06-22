@@ -16,18 +16,31 @@
 	
 
 	<div id="sideBar">
-	 <div id="sideBtns" style="width:100%; vertical-align:middle; height:40px; border-radius: 5px;">
-	 	<button class="btn btn-success" style="margin-top:5px; margin-left:5px;" type="button" data-toggle="tooltip" data-placement="bottom" title="테이블생성">
+	 <a class="menuClosebtn" onclick="closeSideBar()">&times;</a>
+	
+	</div>
+
+
+	<div id="mainNaviBar">
+		<button id="makeTableBtn" class="btn btn-success" style="margin-top:5px; margin-left:5px;" type="button" data-toggle="tooltip" data-placement="bottom" title="테이블생성">
 	 		<i class="fa fa-table" aria-hidden="true"></i>
 	 	</button>
-	 	<button class="btn btn-success" style="margin-top:5px;" type="button" data-toggle="tooltip" data-placement="top" title="관계생성">
+		<button id="makeRelationBtn" class="btn btn-success" style="margin-top:5px;" type="button" data-toggle="tooltip" data-placement="top" title="관계생성">
 			<i class="fa fa-long-arrow-down" aria-hidden="true"></i>
 		</button>
-	 </div>
+		<div class="dropdown btn btn-success" style="float:left;">
+  			<button class="dropbtn">Menu</button>
+  			<div class="dropdown-content" style="left:0;">
+    			<a href="#" onclick="sideBarOpen()"><i class="fa fa-folder-open-o" style="margin-right:10px;" aria-hidden="true"></i>Explorer</a>
+    			<a href="#" onclick="consoleOpen()"><i class="fa fa-television" style="margin-right:10px;" aria-hidden="true"></i>Console</a>
+  			</div>
+		</div>
 	</div>
 
-		
 
 	<div id="console">
-		
+	<a class="menuClosebtn" onclick="closeConsole()">&times;</a>	
 	</div>
+	
+	
+<script type="text/javascript" src="/resources/duckoo/js/menu.js?<%=request.getParameter("token")%>"></script>

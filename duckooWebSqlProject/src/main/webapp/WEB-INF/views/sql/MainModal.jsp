@@ -64,9 +64,12 @@
         	</select>
         </div>
         <div id="options">
-        	<input type="checkbox" class="option" class="relationtype" value="OneToOne">1:1<br />
-        	<input type="checkbox" class="option" class="relationtype" value="OneToMany" checked>1:M<br />
-        	<input type="checkbox" class="option" class="relationtype" value="ManyToMany">M:N<br />
+        	<input type="checkbox" class="option"  value="OneToOne">1:1<br />
+        	<input type="checkbox" class="option"  value="OneToMany" checked>1:M<br />
+        	<input type="checkbox" class="option"  value="ManyToMany">M:N<br />
+        </div>
+        <div id="genOption">
+        	<input type="checkbox" class="genOption" value="gen">Auto Genereting Foreign Key<br/>
         </div>
         </div>
         <div class="modal-footer">

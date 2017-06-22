@@ -47,14 +47,14 @@
 </jsp:include> --> 
 
 <%@include file="MainModal.jsp" %>
-<%@include file="menu.jsp" %>
+<%@include file="/resources/duckoo/jsp/menu.jsp" %>
 
 
 <script>
 jsPlumb.ready(function() {
 	 setInterval(function(){
 		 console.log("re:");
-		repaint();
+		jsPlumb.repaintEverything();
 	},1000/20);
 	$("#identified").modal();
 	var mkFlag = false;
@@ -76,8 +76,8 @@ jsPlumb.ready(function() {
 	 EntityManager.createEntity({name:"e32232",attr:[]},true);
 	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
 	 
-	 
-	 $("#mkTbl").on("click",function(e){
+
+	 $("#makeTableBtn").on("click",function(e){
 		 $("#tbl_nameModal").modal({backdrop:'static'});
 		 
 		 
@@ -98,7 +98,7 @@ jsPlumb.ready(function() {
 		 
 	 });
 	
-	 $("#mkCon").on("click",function(e){
+	 $("#makeRelationBtn").on("click",function(e){
 		 	e.stopPropagation();
 			e.preventDefault();
 			console.log(mkFlag);
@@ -215,6 +215,7 @@ jsPlumb.ready(function() {
 		 }
 		 
 	 }
+
 	 /*
 	 var en=EntityManager.getEntityByName("e1");
 	 en.setAttr({lName:"king",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});

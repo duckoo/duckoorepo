@@ -28,9 +28,9 @@
   </td>
    <td class='datas'>
      <select id="notNull_{{id}}">
-    {{#selectBasic nullable}}
-       <option value="true">아니오</option>
-       <option value="false">예</option>   
+    {{#selectBasic notNull}}
+       <option value="false">아니오</option>
+       <option value="true">예</option>   
      {{/selectBasic}}  
      </select>
    </td>
