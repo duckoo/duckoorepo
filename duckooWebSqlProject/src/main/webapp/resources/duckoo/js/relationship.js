@@ -4,10 +4,15 @@ var RelationShipManager = (function() {
 		source : undefined,
 		target : undefined,
 		RelationAttrName : [ {}, {} ],
+		relationType:undefined,
+		relationLine:undefined,
 		init : function(opt) {
-			this.name = opt.name;
-			this.source = opt.source;
-			this.target = opt.target;
+			this.name = opt.temp.name||undefined;
+			this.source = opt.temp.source||undefined;
+			this.target = opt.temp.target||undefined;
+			this.RelationAttrName = opt.temp.RelationType;
+			this.relationType=opt.temp.relationType;
+			this.relationLine = opt.temp.relationLine;
 		}
 	// database 공부합시다.
 	}
@@ -23,6 +28,8 @@ var RelationShipManager = (function() {
 			enumerable : true,
 			configurable : false
 		});
+		newRela.init(opt);
+		
 	}
 	function getRelationship(rName) {
 		return relationshipArr[rName];
