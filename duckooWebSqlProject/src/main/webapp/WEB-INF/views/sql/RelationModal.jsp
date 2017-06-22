@@ -31,7 +31,7 @@
           	<button type="button" id="idf" class="btn btn-info">식</button>
           </div>
           <div class="nidentify">
-          	<button type="button" id="ndif"class="btn btn-danger">비식</button>
+          	<button type="button" id="nidf"class="btn btn-danger">비식</button>
           </div>
         </div>
         <div class="modal-footer">
@@ -49,6 +49,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-Rtitle">관계생성[식별]</h4>
+          <h4>자동 FK컬럼 생성을 원하시면 Auto Generation을 체크해 주시기 바랍니다.</h4>
         </div>
         <div class="modal-Rbody">
         <div id="srcInfo">
@@ -69,7 +70,7 @@
         	<input type="checkbox" class="option"  value="ManyToMany">M:N<br />
         </div>
         <div id="genOption">
-        	<input type="checkbox" class="genOption" value="gen">Auto Genereting Foreign Key<br/>
+        	<input type="checkbox" class="genOption" value=true>Auto Genereting Foreign Key<br/>
         </div>
         </div>
         <div class="modal-footer">
@@ -79,6 +80,7 @@
       </div>
     </div>
 </div>
+
 
 <script type="text/javascript" src="/resources/duckoo/js/relationFunction.js?<%=request.getAttribute("token")%>"></script>
 <script>
@@ -129,15 +131,42 @@ $("#idf").on("click",function(e){
 		relationfunction.getTempRelation().relationLine = "identify";
 		$("#relationModal").modal("hide");
 		$("#identified").modal();
-		
+		var tempArr = relationfunction.getElementArr();
+		relationfunction.collectSelectOption(EntityManager.getEntityByName(tempArr[0]),true,relationfunction.getTempRelation().relationLine);
+		relationfunction.collectSelectOption(EntityManager.getEntityByName(tempArr[1]),false,relationfunction.getTempRelation().relationLine);
 	});
+$("#nidf").on("click",function(e){
+	e.stopPropagation();
+	e.preventDefault();
+	relationfunction.getTempRelation().relationLine = "nidentify";
+	$("#relationModal").modal("hide");
+	$("#identified").modal();
+	var tempArr = relationfunction.getElementArr();
+	relationfunction.collectSelectOption(EntityManager.getEntityByName(tempArr[0]),true,relationfunction.getTempRelation().relationLine);
+	relationfunction.collectSelectOption(EntityManager.getEntityByName(tempArr[1]),false,relationfunction.getTempRelation().relationLine);
+});
 
 $("#relSave").on("click",function(e){
 	e.stopPropagation();
 	e.preventDefault();
 	console.log(relationfunction.getSrcPK());
 	console.log(relationfunction.getTarPK());
-	if(EntityControll.isPkExist(relationfunction.getSrcPK(),relationfunction.getTarPK())){
+	
+	var autoFlag = false;  
+	$(".genOption").each(function() {
+   	  
+        if($(this).is(':checked')){
+        	autoFlag =  true;
+        }else{
+        autoFlag= false;
+        }
+     });
+	console.log("autoFlag",autoFlag);
+	if(autoFlag){
+		autoGen(relationfunction.getTempRelation().source,relationfunction.getTempRelation().target,relationfunction.getTempRelation().relationLine);
+	}
+	
+	else if(EntityControll.isPkExist(relationfunction.getSrcPK(),relationfunction.getTarPK())){
 	console.log($("#sourceCol option:selected").val());
 	relationfunction.getTempRelation().relationAttr=[$("#sourceCol option:selected").val(),$("#targetCol option:selected").val()]
 	
@@ -164,8 +193,14 @@ $("#relSave").on("click",function(e){
 
 
 
-function autoGen(srcElementId,targetElementId){
-	relationfunction.getTempRelation().relationAttr=[$("#sourceCol option:selected").val(),$("#sourceCol option:selected")];
+
+
+
+
+function autoGen(srcElementId,tarElementId,connectionType){
+	console.log("src 엘리먼트 :",srcElementId);
+	console.log("tar 엘리먼트 :",tarElementId);
+	relationfunction.getTempRelation().relationAttr=[$("#sourceCol option:selected").val(),$("#sourceCol option:selected").val()];
 	
     $(".option").each(function() {
   	  
@@ -173,16 +208,17 @@ function autoGen(srcElementId,targetElementId){
       	
       	relationfunction.getTempRelation().relationType = ($(this).val());
        }
-    });
-	console.log(EntityManager.getEntityByName(srcElementId).search({pName:relationfunction.getTempRelation().relationAttr[0]}));
-  	
+    }); 
+	var cloneAttr = EntityManager.getEntityByName(srcElementId).search({pName:relationfunction.getTempRelation().relationAttr[0]})[0].clone();
+	cloneAttr.isFk = true;
+	if(connectionType=="nidentify"){cloneAttr.isPk=false;}
+  	EntityManager.setAttribute(tarElementId, cloneAttr);
 	//tempRelation Attr이용해서 connect option 지정.
-	renderManager.connectDiv({$source:$("#"+relationfunction.getTempRelation().source) ,$target:$("#"+	relationfunction.getTempRelation().target),id:relationfunction.getTempRelation().source+" "+relationfunction.getTempRelation().target});
+	renderManager.connectDiv({$source:$("#"+relationfunction.getTempRelation().source) ,$target:$("#"+relationfunction.getTempRelation().target),id:relationfunction.getTempRelation().source+" "+relationfunction.getTempRelation().target});
 	
 	console.log(relationfunction.getTempRelation());
 	
 }
-
 
 
 

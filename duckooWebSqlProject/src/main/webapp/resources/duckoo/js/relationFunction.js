@@ -22,12 +22,12 @@ var relationfunction=(function(){
 		    	tempRelation= {source:fid,target:id,name:id+""+fid};
 		    	
 		    	
-		    	collectSelectOption(EntityManager.getEntityByName(elementArr[0]),true);
-		    	collectSelectOption(EntityManager.getEntityByName(elementArr[1]),false);
+		    	//collectSelectOption(EntityManager.getEntityByName(elementArr[0]),true);
+		    	//collectSelectOption(EntityManager.getEntityByName(elementArr[1]),false);
 		    	console.log("tempRelation : ",tempRelation);
 		    	
 		    	
-		    	elementArr=[];
+		    	
 		    	return;
 		     }
 		 }
@@ -39,7 +39,7 @@ var relationfunction=(function(){
 	  EntityManager.Obserable.setEventObserver("click",observer);
 	  
 
-	 function collectSelectOption(EntityObject,isSource){
+	 function collectSelectOption(EntityObject,isSource,relationType){
 		 console.log("entity :" ,EntityObject);
 		 pkAttrArray = [];
 		 
@@ -55,10 +55,10 @@ var relationfunction=(function(){
 		 }else{
 			 tarPKElement = pkAttrArray;
 		 }
-		 createSelectOption(pkAttrArray,isSource);
+		 createSelectOption(pkAttrArray,isSource,relationType);
 		 
 	 }
-	 function createSelectOption(pkAttrArr,isSource){
+	 function createSelectOption(pkAttrArr,isSource,relationType){
 		 var targetLink;
 		 if(isSource){
 			 targetLink = $("#sourceCol");
@@ -89,10 +89,17 @@ var relationfunction=(function(){
 	function getTarPK(){
 		return tarPKElement;
 	}
+	function getElementArr(){
+		var tempEleArr = elementArr;
+		elementArr=[];
+		return tempEleArr;
+	}
 	 return {changeFlagState:changeFlagState,
 		 	getTempRelation:getTempRelation,
+		 	collectSelectOption:collectSelectOption,
 		 	getSrcPK:getSrcPK,
-		 	getTarPK:getTarPK}
+		 	getTarPK:getTarPK,
+		 	getElementArr:getElementArr}
 	 
 	 
 	 

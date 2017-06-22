@@ -76,7 +76,7 @@ var EntityManager=(function(){
 		search:function(att){
 			var ret=[];
 			for( var attrVal of this.attr){
-				console.log("===",attrVal.compare(att));
+				
 				var obj=attrVal.compare(att);
 			   if(Object.keys(obj).length!==0){
 				   ret.push(attrVal);
