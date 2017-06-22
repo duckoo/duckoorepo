@@ -26,6 +26,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.js"></script> 
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
+
+<script type="text/javascript" src="/resources/duckoo/js/Observer.js?<%=token%>"></script>  
+
 </head>
 <body class="canvas" id="canvasDiv" style="width: 6000px; height: 6000px; border: 1px solid black;">
 
@@ -71,8 +74,8 @@ jsPlumb.ready(function() {
 	 console.log("sql",sql);
 	  */
 	  
-/* 
-  observer ex....
+
+//  observer ex....
  EntityManager.createEntity({name:"e1"},true); 
  var observer=Object.create(Obsever);
  observer.init("entityclick",function(opt){
@@ -81,8 +84,8 @@ jsPlumb.ready(function() {
   observer.fx=function(opt){
 	 console.log("hi");
  } 
-EntityManager.setEventObserver("click",observer);
-EntityManager.setEventObserver("scaleUpBtn_click",observer);   */
+  EntityManager.Obserable.setEventObserver("click",observer);
+  EntityManager.Obserable.setEventObserver("scaleUpBtn_click",observer); 
 	  
 });
 	

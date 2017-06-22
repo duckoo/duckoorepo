@@ -2,7 +2,9 @@ var EntityManager=(function(){
 	var entityArr={};// all of Entity;
 	var entityHtml=$("#entityTemplate").html();
 	var entityTemplate=Handlebars.compile(entityHtml);
-	var eventObserver=[];
+	console.log("what:? ",DObserable);
+
+	var Obserable=DObserable.createObserable();
 	
 	Handlebars.registerHelper("getAttrHeight",function(ex){
 		var str="height:";
@@ -206,31 +208,6 @@ function setEntity(entity){
 	entityArr[entity.name]=entity;
 }
 
-function setEventObserver(eventName,observer){
-	if(!eventObserver[eventName])eventObserver[eventName]=[];
-	if("fire" in observer)
-	   if("name" in observer)
-	     eventObserver[eventName].push({name:observer.name,observer:observer});
-}
-
-function fire(eventName,opt){
- if(eventObserver[eventName]){
-	 eventObserver[eventName].every(function(temp){
-		 temp.observer.fire(opt);
-	  });
-   }
-}
-
-function deleteObserver(name){ // 잘 안될 가능성 높음
- var key=Object.keys(eventObserver);
-     for(var i=0,len=key.length;i<len;i++){
-    	 var inArr=eventObserver[key[i]];
-    	 for(var i=0, len=inArr.length;i<len;i++){
-    		 if( inArr[i].name ===name)
-    			 delete inArr[i];
-    	 }
-     }
-}
 return {
 	    createEntity:createEntity,
 	    showEntity:showEntity,
@@ -239,8 +216,6 @@ return {
 	    setAttribute:setAttribute,
 	    hideEntity:hideEntity,
 	    deleteEntity:deleteEntity,
-	    setEventObserver:setEventObserver,
-	    fire:fire,
-	    deleteObserver:deleteObserver
+	    Obserable:Obserable
       };
 })();
