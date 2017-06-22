@@ -61,7 +61,7 @@
     </div>
 </div>
 </script> 
-<script type="text/javascript" src="/resources/duckoo/js/updating_entity.js?<%=request.getParameter("token")%>"></script>  
+<script type="text/javascript" src="/resources/duckoo/js/entity.js?<%=request.getParameter("token")%>"></script>  
 <script type="text/javascript" src="/resources/duckoo/js/domainManager.js?<%=request.getParameter("token")%>"></script>
  <script>
   var $dom=$("body");

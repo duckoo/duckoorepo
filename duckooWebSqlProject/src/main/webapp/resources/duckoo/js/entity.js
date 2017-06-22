@@ -208,6 +208,9 @@ function setEntity(entity){
 	entityArr[entity.name]=entity;
 }
 
+function getEntity(){
+	return entityArr;
+}
 return {
 	    createEntity:createEntity,
 	    showEntity:showEntity,
@@ -216,6 +219,7 @@ return {
 	    setAttribute:setAttribute,
 	    hideEntity:hideEntity,
 	    deleteEntity:deleteEntity,
-	    Obserable:Obserable
+	    Obserable:Obserable,
+	    getEntity:getEntity
       };
 })();

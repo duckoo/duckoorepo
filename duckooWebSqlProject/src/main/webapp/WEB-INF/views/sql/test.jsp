@@ -55,7 +55,7 @@ jsPlumb.ready(function() {
 	   jsPlumb.repaintEverything();
 	},1000/20);
 	
-	/*
+	
 	 EntityManager.createEntity({name:"e1"},false);
 	 var en=EntityManager.getEntityByName("e1");
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"int",datelength:10,isPk:true,isFk:true});
@@ -66,17 +66,16 @@ jsPlumb.ready(function() {
 	 EntityManager.showEntity("e1");
 	 EntityManager.createEntity({name:"e32232"},true);
 
-	 console.log("sq",SqlFactory);
+	 //console.log("sq",SqlFactory);
 	 
-	 var genSql=SqlFactory.get("mysql");
+	/*  var genSql=SqlFactory.get("mysql");
 	
 	var sql = genSql.genCreateTableDDL(en);
-	 console.log("sql",sql);
-	  */
-	  
-
+	 console.log("sql",sql); */
+	
+	 
 //  observer ex....
- EntityManager.createEntity({name:"e1"},true); 
+/*  EntityManager.createEntity({name:"e1"},true); 
  var observer=Object.create(Obsever);
  observer.init("entityclick",function(opt){
 	console.log(opt); 
@@ -85,9 +84,11 @@ jsPlumb.ready(function() {
 	 console.log("hi");
  } 
   EntityManager.Obserable.setEventObserver("click",observer);
-  EntityManager.Obserable.setEventObserver("scaleUpBtn_click",observer); 
-	  
-});
+  EntityManager.Obserable.setEventObserver("scaleUpBtn_click",observer);  */ 
+  
+  
+  
+}); 
 	
 </script>
    
