@@ -61,7 +61,6 @@
     </div>
 </div>
 </script> 
-<script type="text/javascript" src="/resources/duckoo/js/Observer.js?<%=request.getParameter("token")%>"></script>  
 <script type="text/javascript" src="/resources/duckoo/js/entity.js?<%=request.getParameter("token")%>"></script>  
 <script type="text/javascript" src="/resources/duckoo/js/domainManager.js?<%=request.getParameter("token")%>"></script>
  <script>
@@ -70,62 +69,53 @@
  $dom.on("click",".entity",function(e){
 	    e.stopPropagation();
 	    e.preventDefault();	
-	 /* 	
-	     var id= $(this).attr("id");
-	     if(focusedEntity===undefined){
-	    	 focusedEntity=entityArr[id]; 
-	    	 return ;
-	     }
-	     if(focusedEntity.name!==id){
-	    	var fid= focusedEntity.name;
-	    	renderManager.connectDiv({$source:$("#"+fid) ,$target:$("#"+id),id:id+""+fid});
-	    	focusedEntity=undefined;
-	     } */
-	   EntityManager.fire("click",{event:e,that:this});
+	    EntityManager.Obserable.fire("click",{event:e,that:this});
 	})
 	
 	$dom.on("dblclick",".entity",function(e){
 		e.stopPropagation();
 	    e.preventDefault();	
-	   /*  var name= $(this).attr("id");
-	  var cEntity= entityArr[name].clone();
+	  var name= $(this).attr("id");
+	  var cEntity=EntityManager.getEntityByName(name).clone();
 		 modalAttribute.setModal(cEntity,modal);
-		 $("#myModal").modal(); */
-		 EntityManager.fire("dblclick",{event:e,that:this});
+		 $("#myModal").modal();
+		 
+		 EntityManager.Obserable.fire("dblclick",{event:e,that:this});
 	});
    $dom.on("click",".scaleUpBtn",function(e){
 		    e.stopPropagation();
 		    e.preventDefault();
-		  /*   var entityId = $(this).attr("data-scaleBtn");
+		   var entityId = $(this).attr("data-scaleBtn");
 		    var $entity = $("#"+entityId);
-		    entityArr[entityId].extend=true;
-		    entityArr[entityId].sortAttribute();
-		    $entity.html($(entityArr[entityId].genHtml()).html());
+		    EntityManager.getEntityByName(entityId).extend=true;
+		    EntityManager.getEntityByName(entityId).sortAttribute();
+		    $entity.html($( EntityManager.getEntityByName(entityId).genHtml()).html());
 		    var $innerEntity = $("[data-innerEntity='"+entityId+"']");
 		    $entity.css("width",300);
 		    $entity.css("height",350);
 		    $innerEntity.css("width",275);
 		    $innerEntity.css("height",325);
-		    $entity.find('.scaleUpBtn').attr("class","scaleDownBtn"); */
-		    EntityManager.fire("scaleUpBtn_click",{event:e,that:this});
+		    $entity.find('.scaleUpBtn').attr("class","scaleDownBtn");
+		    
+		    EntityManager.Obserable.fire("scaleUpBtn_click",{event:e,that:this});
 		});
    
 	    $dom.on("click",".scaleDownBtn",function(e){
 		    e.stopPropagation();
 		    e.preventDefault();
-		/*     var entityId = $(this).attr("data-scaleBtn");
+		    var entityId = $(this).attr("data-scaleBtn");
 		    var $entity = $("#"+entityId);
 		    var $innerEntity = $("[data-innerEntity='"+entityId+"']");
-		    entityArr[entityId].extend=false;
-		    entityArr[entityId].sortAttribute();
-		    $entity.html($(entityArr[entityId].genHtml()).html());
+		    EntityManager.getEntityByName(entityId).extend=false;
+		    EntityManager.getEntityByName(entityId).sortAttribute();
+		    $entity.html($(EntityManager.getEntityByName(entityId).genHtml()).html());
 		    $entity.css("width",175);
 		    $entity.css("height",125);
 		    $innerEntity.css("width",150);
 		    $innerEntity.css("height",100);
 		    $entity.find('.scaleDownBtn').attr("class","scaleUpBtn");
-		     */
-		    EntityManager.fire("scaleDownBtn_click",{event:e,that:this});
+		    
+		    EntityManager.Obserable.fire("scaleDownBtn_click",{event:e,that:this});
 		  });
 </script>
  

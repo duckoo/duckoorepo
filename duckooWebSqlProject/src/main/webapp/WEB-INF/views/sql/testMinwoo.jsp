@@ -28,7 +28,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.js"></script> 
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
-
+<script type="text/javascript" src="/resources/duckoo/js/Observer.js?<%=token%>"></script>
 
 </head>
 
@@ -42,12 +42,14 @@
 <jsp:param name="token" value="<%=token%>" />
 </jsp:include> 
 
-<!--<jsp:include page="/resources/duckoo/jsp/menu.jsp">
+<jsp:include page="/resources/duckoo/jsp/menu.jsp">
 <jsp:param name="token" value="<%=token%>" />
-</jsp:include> --> 
+</jsp:include> 
 
-<%@include file="MainModal.jsp" %>
-<%@include file="/resources/duckoo/jsp/menu.jsp" %>
+
+<jsp:include page="RelationModal.jsp">
+<jsp:param name="token" value="<%=token%>" />
+</jsp:include> 
 
 
 <script>
@@ -77,114 +79,9 @@ jsPlumb.ready(function() {
 	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
 	 
 
-	 $("#makeTableBtn").on("click",function(e){
-		 $("#tbl_nameModal").modal({backdrop:'static'});
-		 
-		 
-	 });
-	 $("#conform").on("click",function(e){
-		 
-		 var tempName = $("#tbl_name").val().trim();
-		 
-		 if(!EntityControll.isEntityExist(tempName)){
-		 	EntityManager.createEntity({name:tempName,attr:[]},false);
-		 	EntityManager.showEntity(tempName);
-		 	$("#tbl_nameModal").modal('hide');
-		 }
-		 else{
-			 console.log("중복.");
-			 
-		 }
-		 
-	 });
 	
-	 $("#makeRelationBtn").on("click",function(e){
-		 	e.stopPropagation();
-			e.preventDefault();
-			console.log(mkFlag);
-			var icon = $(this);
-			mkFlag = (!mkFlag);
-			
-			if(mkFlag){
-				icon.css("background-color","#FF0066");
-				
-				mkConnect(mkFlag,tempRelation);
-				
-				return;
-			}else{
-				icon.css("background-color","#5cb85c");
-				console.log("state change");
-				disbindEntityEvent();
-				return;
-			}
-		
-		
-	 });
 	 
-	 $("#idf").on("click",function(e){
-			e.stopPropagation();
-			e.preventDefault();
-			tempRelation.temp.relationLine = "identify";
-			$("#relationModal").modal("hide");
-			$("#identified").modal();
-			
-		});
-	 
-	 $("#relSave").on("click",function(e){
-		e.stopPropagation();
-		e.preventDefault();
-		console.log($("#sourceCol option:selected").val());
-		tempRelation.temp.relationAttr=[$("#sourceCol option:selected").val(),$("#targetCol option:selected").val()]
-		
-	      $(".option").each(function() {
-	    	  
-	         if($(this).is(':checked')){
-	        	 console.log("이ㅏ렇게 쒸바련아",$(this).val());
-	            tempRelation.temp.relationType = ($(this).val());
-	         }
-	      });
-		//tempRelation Attr이용해서 connect option 지정.
-		renderManager.connectDiv({$source:$("#"+tempRelation.temp.source) ,$target:$("#"+tempRelation.temp.target),id:tempRelation.source+""+tempRelation.target});
-		console.log(tempRelation);
-	 });
-	 
-	 
-	 function mkConnect(flag,tempRelation){ 
-		 
-		var elementArr=[]; 
-	 
-	 	$("#canvasDiv").on("click",".entity",function(e){
-		 if(flag){	
-			e.stopPropagation();
-			e.preventDefault();
-			var id = $(this).attr('id');
-		 	if(elementArr.length==0){
-			
-				elementArr.push(id);
-				console.log("firstArr :",elementArr);
-				return;
-		 	}
-		 	else if(elementArr[0]!==id){
-		    	var fid= elementArr[0];//relationship 이용해서  modal작업끝나고 랜더링
-		    	elementArr.push(id);
-		    	console.log("second :",elementArr);
-		    	$("#relationModal").modal();
-		    	tempRelation.temp = {source:fid,target:id,name:id+""+fid};
-		    	
-		    	
-		    	collectSelectOption(EntityManager.getEntityByName(elementArr[0]),true);
-		    	collectSelectOption(EntityManager.getEntityByName(elementArr[1]),false);
-		    	console.log("tempRelation : ",tempRelation);
-		    	
-		    	
-		    	
-		    	
-		    	elementArr=[];
-		    	return;
-		     }
-		 }
-	 	});
-	 }
+	
 	 function disbindEntityEvent(){
 			 $("#canvasDiv").off("click",".entity");
 	 

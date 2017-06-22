@@ -5,9 +5,13 @@ var EntityControll = (function(){
 		if(temp)return true;
 		return false;
 	}
-	function isPkExist(){
+	function isPkExist(srcPK,tarPK){
+		if(srcPK.length!=0&&tarPK.length!=0){return true;}
 		
+		return false;
 	}
 	
-	return {isEntityExist:isEntityExist};	
+	return {isEntityExist:isEntityExist,
+			isPkExist:isPkExist};	
+	
 })();
