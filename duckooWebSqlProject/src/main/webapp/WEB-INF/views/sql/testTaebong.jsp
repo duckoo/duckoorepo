@@ -55,7 +55,7 @@
 <script>
 jsPlumb.ready(function() {
 	 setInterval(function(){
-		 console.log("re:");
+		 
 		jsPlumb.repaintEverything();
 	},1000/20);
 	
@@ -75,7 +75,7 @@ jsPlumb.ready(function() {
 	 var en2 = EntityManager.getEntityByName("e32232");
 	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"tt22222",isPk:true});
 	 en2.setAttr({lName:"글제목",pName:"title",datetype:"tt22222"});
-	 en2.setAttr({lName:"내용",pName:"content",datetype:"tt22222"});
+	 en2.setAttr({lName:"내용",pName:"contentㅁㄴㅇ리;ㅑㅂㅈㄷ겸ㄴㅇ러ㅗ",datetype:"tt22222"});
 	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
 	 
 	EntityManager.showEntity("e32232");

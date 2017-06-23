@@ -5,39 +5,36 @@
     <link rel="stylesheet" href="/resources/duckoo/css/entityAttr.css?<%=request.getParameter("token")%>">
 
  <script id="attrAddForm" type="text/x-handlebars-template">
-        <div class='modalTr'>
+        <div class='modalTr' name="openAttrDelUpDiv_{{id}}">
             <div class='datas'>
-                <select id="keyType_{{id}}">
-                  {{#select isPk isFk}}
-                    <option data-pk="true" data-fk="false"  value="PK">PK</option>
-                    <option data-pk="false" data-fk="false"  value="None">None</option>    
-                  {{/select}}
-                </select>
+				{{#if isPk}}
+					<p id="keyType_{{id}}">PK</p>
+				{{else}}
+					<p id="keyType_{{id}}">NONE</p>
+				{{/if}}	
             </div>
-            <div class='datas'><input id="lName_{{id}}" type='text' value={{lName}} style="width:100px;"></input></div>
-            <div class='datas'><input id="pName_{{id}}" type='text' value={{pName}} style="width:100px;"></input></div>
-            <div class='datas'>
-                <select style='width: 100px; height:24px; float: left;' onchange='this.nextElementSibling.value=this.value'>
-                    <option></option>
-                    <option>int()</option>
-                    <option>varchar()</option>
-                </select>
-                <input id="dataType_{{id}}" value={{datetype}} style='width: 85px; margin-left: -99px; margin-top: 1px; border: none; float: left;'/>
-            </div>
-            <div class='datas'><input type='text' style='width:100px;'></input></div>
-            <div class='datas'><button class="openConstraintBtn" data-openCB="{{id}}">+</button></div>
+            <div class='datas'><p id="lName_{{id}}">{{lName}}</p></div>
+            <div class='datas'><p id="pName_{{id}}"{{pName}}>{{pName}}</p></div>
+            <div class='datas'><p id="dataType_{{id}}">{{datetype}}</p></div>
+            <div class='datas'><p id="default_{{default}}">{{default}}</p></div>
+            <div class='datas'><button class="openConstraintBtn" data-openCB="{{id}}"><i class="fa fa-chevron-down" aria-hidden="true"></i></button></div>
         </div>
         <div class='modalTr' id="openDiv_{{id}}" name='ConstraintCheckBox'>
-            <input type='checkbox' name='Not Null' value='Not Null'>Not Null</input>
-            <input type='checkbox' name='Autoincrement' value='Autoincrement'>Autoincrement</input>
-            <input type='checkbox' name='Unique' value='Unique'>Unique</input>
+            <input onclick="return false;" type='checkbox' name='Not Null' value='Not Null'>Not Null</input>
+            <input onclick="return false;" type='checkbox' name='Autoincrement' value='Autoincrement'>Autoincrement</input>
+            <input onclick="return false;" type='checkbox' name='Unique' value='Unique'>Unique</input>
         </div>
+		<div class='modalTr' id="openAttrDelUpDiv_{{id}}" name='attrDelUpBtnBox'>
+			<button>수정</button>
+			<button>삭제</button>
+		</div>
 </script> 
 <script type="text/javascript" src="/resources/duckoo/js/modal.js?<%=request.getParameter("token")%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/modalAttribute.js?<%=request.getParameter("token")%>"></script>
 <script>
 $(document).on("click",".openConstraintBtn",function(e){
-	
+	e.stopPropagation();
+    e.preventDefault();
 	
 	
 	

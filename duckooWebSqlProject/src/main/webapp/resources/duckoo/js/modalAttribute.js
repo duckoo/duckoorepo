@@ -1,5 +1,5 @@
 var modalAttribute=(function(){
-	var head= "<div class='modalTr'>"+
+	var head= "<div class='modalTr' style='height:46px'>"+
         "<div class='modalTh'>키타입</div>"+
         "<div class='modalTh'>논리이름</div>"+
         "<div class='modalTh'>물리이름</div>"+
@@ -9,12 +9,9 @@ var modalAttribute=(function(){
     "</div>";
 	
 var body=
+	"<div class='attrBoxHeader'>"+String(head)+"</div>"+
 	" <div class='attrBox'>"+
-    " <div class='tbl'>"+String(head)+"</div>"+
-    "</div>"+
-    "<div class = 'btnWrapper'>"+
-    " <div class='addAttrBtn'><i class='fa fa-plus-circle fa-2x' aria-hidden='true'></i></div>"+
-    " <div class='deleteAttrBtn'><i class='fa fa-times-circle fa-2x' aria-hidden='true'></i></div>"+
+    " <div class='tbl'></div>"+
     "</div>"; 
 	
 var columnHTML= $("#attrAddForm").html();
@@ -32,7 +29,20 @@ function click_trDatas(e){
 	 $("div").css("background-color","");
 	 var $that=$(e.that);  
 	 $that.parent().css("background-color","#269abc");
-	  target = $that.parent();
+	 
+	 target = $that.parent();
+	 var $hiddenBtnDiv = $("#"+$that.parent().attr("name"));
+	 if($hiddenBtnDiv.css("display")==='none'){
+			$hiddenBtnDiv.css("display","block");
+			setTimeout(function(){$hiddenBtnDiv.css("padding-top","15px");},0.1);
+			setTimeout(function(){$hiddenBtnDiv.css("height","49px");},0.1);
+	}
+	else{
+			$hiddenBtnDiv.css("height","0px");
+			$hiddenBtnDiv.css("padding-top","0px");
+			setTimeout(function(){$hiddenBtnDiv.css("display","none");},270);
+	}
+	 
 }
 var obb=Object.create(Obsever);
 obb.init("colorChange",click_trDatas);
@@ -47,6 +57,7 @@ function openConstraintBtn(e){
  console.log("evetn.: ", e)	;
 	var id=$(e.that).attr("data-openCB");
 	var $hiddenDiv=$("#openDiv_"+id);
+	var $btnsDiv=$("#openAttrDelUpDiv_"+id);
 	if($hiddenDiv.css("display")==='none'){
 		$hiddenDiv.css("display","block");
 		setTimeout(function(){$hiddenDiv.css("padding-top","15px");},0.1);
@@ -61,6 +72,7 @@ function openConstraintBtn(e){
 var obb=Object.create(Obsever);
 obb.init("openConstraintBtn",openConstraintBtn);
 Obserable.setEventObserver("openConstraintBtn",obb);
+
 
 
 function delBtn(e){
@@ -121,7 +133,7 @@ function tagSetAttr(){
 	
 	var $tbl=  $(".tbl");
 	console.log("whwhwhy?: ",$tbl)
-	 $tbl.html(head);
+	 $tbl.html("");
 	for(var i=0,len=attr.length;i<len;i++){
 		 $tbl.append(columnTemplate(attr[i]));
 	}
