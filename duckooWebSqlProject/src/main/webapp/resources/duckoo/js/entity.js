@@ -178,7 +178,7 @@ function showEntity(name){
 	}
 	var str=en.genHtml();
 	$dom.append(str);
-	$("#"+name).draggable();
+	$("#"+name).draggable({handle:".table_name"});
 }
 function hideEntity(name){
 	var en=getEntityByName(name);

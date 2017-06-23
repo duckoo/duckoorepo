@@ -70,10 +70,7 @@ jsPlumb.ready(function() {
 	 en.setAttr({lName:"등록날자",pName:"regdate",datetype:"tt2"});
 	 
 	
-	
 	 EntityManager.showEntity("e1");
-	 
-	 
 	 EntityManager.createEntity({name:"e32232",attr:[]},false);
 	 var en2 = EntityManager.getEntityByName("e32232");
 	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"tt22222",isPk:true});
@@ -84,16 +81,7 @@ jsPlumb.ready(function() {
 	EntityManager.showEntity("e32232");
 	
 	 
-	
-	
 
-	 /*
-	 var en=EntityManager.getEntityByName("e1");
-	 en.setAttr({lName:"king",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	 var attr=en.getAttr(0);
-	 console.log("att: ",attr);
-	 modalAttribute.addColumn(attr);
-	 $("#myModal").modal(); */
 });
 	
 </script>

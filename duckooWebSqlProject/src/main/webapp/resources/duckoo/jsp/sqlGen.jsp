@@ -15,8 +15,14 @@
  <script id="mysqlCreateDDL" type="text/x-handlebars-template">
  create table {{name}} (  
    {{#attr}}
-	  {{pName}} {{#genMySQLType domainName datetype datelength}}{{/genMySQLType}} {{#if notNull}} NOT NULL {{/if}} {{#if isPk}} PRIMARY KEY {{/if}},
+  {{pName}} {{#genMySQLType domainName datetype datelength}}{{/genMySQLType}} {{#if notNull}} NOT NULL {{/if}} {{#isEnd @last}}{{/isEnd}}    
    {{/attr}}
 );
+
+ALTER TABLE {{name}}
+ADD CONSTRAINT PK_{{name}} PRIMARY KEY({{#getPk this}} {{/getPk}}) 
+
+
+
 </script> 
 <script type="text/javascript" src="/resources/duckoo/js/sql/sqlgen.js?<%=request.getParameter("token")%>"></script>

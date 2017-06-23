@@ -21,11 +21,10 @@ var relationfunction=(function(){
 		    	console.log("second :",elementArr);
 		    	$("#relationModal").modal();
 		    	tempRelation= {source:fid,target:id,name:id+""+fid};
-		    	
-		    	
-		    	
+		    
 		    	console.log("tempRelation : ",tempRelation);
 		    	
+
 		    	return;
 		     }
 		 }
@@ -146,9 +145,11 @@ var relationfunction=(function(){
 		 	collectSelectOption:collectSelectOption,
 		 	getSrcPK:getSrcPK,
 		 	getTarPK:getTarPK,
+
 		 	getElementArr:getElementArr,
 		 	initiateElementArr:initiateElementArr}
 	 
+
 	 
 	 
 })();

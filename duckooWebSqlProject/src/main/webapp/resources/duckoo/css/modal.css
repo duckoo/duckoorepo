@@ -9,7 +9,7 @@
      width:100%;
 }
 .sideBar{
-    width:150px;
+    width:17%;
     height:100%;
     float:left;
     border-style: solid;
@@ -17,7 +17,7 @@
     border-radius:10px;
 }
 .attrBox{
-    width:640px;
+    width:74%;
     height:100%;
     float:left;
     border-style:solid;
@@ -29,25 +29,52 @@
 
 .tbl {
     border-collapse: collapse;
-    width: 100%;
-    overflow: scroll;
+    width: 650px;
+    height:100%;
 }
-
-.modalTh, .datas {
-    padding: 10px;
+.modalTr{
+    width:670px;
+    height:50px;
+    border-bottom: 1px solid white;
+    position: relative;
+    float: left;
+    background-color: #E7E7E7;
+}
+.modalTh{
+    border-right: 2px solid white;
+    position: relative;
+    float:left;
+    width:109px;
+    height: 49px;
+    text-align: center;
+    padding-top: 15px;
+    font-weight:bold;
+    font-size:15px;
 }
 .datas{
-    max-width: 20em;
-    max-height: 40px;
+    border-right: 2px solid white;
+    position: relative;
+    float:left;
+    width:109px;
+    height: 49px;
+    text-align: center;
+    padding-top: 15px;
+
 }
+div[name=ConstraintCheckBox]{
+    text-align: center;
+    padding-top: 15px;
+    height:0px;
+    transition:0.5s;
+    display:none;
+}
+
+
 .attrMenu{
       text-align: center;
       text-decoration-line: underline;
 }
-.tbl,.modalTh, .datas{
-    border: 1px solid #ddd;
-    text-align: left;
-}
+
 .attrMenu:focus{
     background-color:cornflowerblue;
     border-radius: 10px;

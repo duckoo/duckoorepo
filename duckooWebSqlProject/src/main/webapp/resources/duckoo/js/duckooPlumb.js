@@ -7,7 +7,7 @@ var renderManager=(function(){
 		var $source= opt.$source ||undefined;
 		var $target= opt.$target ||undefined;
 		console.log("line option :",opt.lineType);
-		var paintStyle1 = {  
+		var paintStyle = {  
 				strokeStyle: "#46F10F",
 				lineWidth: 5,
 				dashstyle:undefined
@@ -26,7 +26,7 @@ var renderManager=(function(){
 		       detachable:false,
 		       anchor:["Continuous", { faces:[ "bottom", "left" ,"right","top"] } ],
 		       connector:['Flowchart'],
-		       paintStyle:paintStyle1,
+		       paintStyle:paintStyle,
 		       
 		      
 		  });
