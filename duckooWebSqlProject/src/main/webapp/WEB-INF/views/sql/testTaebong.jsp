@@ -82,8 +82,7 @@ jsPlumb.ready(function() {
 	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
 	
 	 v(en2).show();
-	EntityManager.showEntity("e32232");
-	
+
 	 
 });
 	
