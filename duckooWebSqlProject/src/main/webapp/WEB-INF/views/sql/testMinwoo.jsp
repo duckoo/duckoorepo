@@ -29,6 +29,8 @@
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
 <script type="text/javascript" src="/resources/duckoo/js/Observer.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/view/dView.js?<%=request.getParameter("token")%>"></script>
+
 
 </head>
 
@@ -64,13 +66,15 @@ jsPlumb.ready(function() {
 	 EntityManager.createEntity({name:"e1",attr:[]},false);
 	 var en=EntityManager.getEntityByName("e1");
 	 en.setAttr({lName:"게시글번호",pName:"bno",datetype:"tt2",isPk:true,isFk:false});
-	 en.setAttr({lName:"글제목",pName:"title",datetype:"tt2",isFk:false});
+	 en.setAttr({lName:"글제목",pName:"title",datetype:"tt2",isPk:true,isFk:false});
 	 en.setAttr({lName:"글내용",pName:"content",datetype:"tt2"});
 	 en.setAttr({lName:"작성자",pName:"writer",datetype:"tt2"});
 	 en.setAttr({lName:"등록날자",pName:"regdate",datetype:"tt2"});
 	 
 	
-	 EntityManager.showEntity("e1");
+	 v(en).show();
+	 
+	 
 	 EntityManager.createEntity({name:"e32232",attr:[]},false);
 	 var en2 = EntityManager.getEntityByName("e32232");
 	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"tt22222",isPk:true});
@@ -78,9 +82,10 @@ jsPlumb.ready(function() {
 	 en2.setAttr({lName:"내용",pName:"content",datetype:"tt22222"});
 	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
 	 
-	EntityManager.showEntity("e32232");
+	 v(en2).show();
 	
 	 
+
 });
 	
 </script>

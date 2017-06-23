@@ -12,6 +12,40 @@ Handlebars.registerHelper("isEnd", function(last) {
 	 if(!last)return ",";
 });
 
+Handlebars.registerHelper("isNotNull", function(ispk,notnull) {
+	  var ret="";
+	  if(ispk)ret="NOT NULL";
+	  if(notnull)ret="NOT NULL";
+    return ret;
+});
+
+Handlebars.registerHelper("genFK", function(that) {
+  	var reArr=RelationShipManager.getSource(that.name);
+  	console.log("tName",that.name);
+  	console.log("re: ",reArr);
+    var sql="";
+    for(var i=0,len =reArr.length;i<len;i++){
+    	console.log("source ",reArr[i].RelationAttrName);
+    	
+    	var sf = arrTofileArea(reArr[i].RelationAttrName[0]);
+      	console.log("sf: ",sf);
+    	
+        var tf = arrTofileArea(reArr[i].RelationAttrName[1]);
+        var fxconName="FK_"+that.name +"_"+reArr[i].source+""+i;
+    	sql +="ALTER TABLE "+that.name+"  ADD  CONSTRAINT "+fxconName+" FOREIGN KEY ("+tf+") REFERENCES "+reArr[i].source+"("+sf+") \n";
+    }
+    return sql;
+});
+
+function arrTofileArea(arr){
+	console.log("atArea: ",arr);
+	var str=arr[0];
+	for(var i=1,len = arr.length;i<len ;i++){
+		str+=","+arr[i];
+	}
+ return str;
+}
+
 Handlebars.registerHelper("getPk", function(that) {
     console.log(that);
  var pkArr= that.search({isPk:true});
@@ -22,6 +56,14 @@ Handlebars.registerHelper("getPk", function(that) {
     return str;
 });
 
+Handlebars.registerHelper("getDefault", function(exp) {
+	console.log("exp",exp)
+	
+	if(exp){
+		return " DEFAULT "+ exp;
+	}
+	return "";
+});
 
 	function genCreateTableDDL(entity){
 		return createTableDDLTemplate(entity);

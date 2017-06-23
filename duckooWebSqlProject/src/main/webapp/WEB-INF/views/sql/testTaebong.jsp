@@ -29,6 +29,7 @@
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
 <script type="text/javascript" src="/resources/duckoo/js/Observer.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/view/dView.js?<%=request.getParameter("token")%>"></script>
 
 </head>
 
@@ -70,14 +71,17 @@ jsPlumb.ready(function() {
 	 en.setAttr({lName:"등록날자",pName:"regdate",datetype:"tt2"});
 	 
 	
-	 EntityManager.showEntity("e1");
+	 
+	 v(en).show();
+	 
 	 EntityManager.createEntity({name:"e32232",attr:[]},false);
 	 var en2 = EntityManager.getEntityByName("e32232");
 	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"tt22222",isPk:true});
 	 en2.setAttr({lName:"글제목",pName:"title",datetype:"tt22222"});
 	 en2.setAttr({lName:"내용",pName:"contentㅁㄴㅇ리;ㅑㅂㅈㄷ겸ㄴㅇ러ㅗ",datetype:"tt22222"});
 	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
-	 
+	
+	 v(en2).show();
 	EntityManager.showEntity("e32232");
 	
 	 

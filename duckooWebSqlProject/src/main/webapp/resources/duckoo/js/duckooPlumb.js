@@ -6,7 +6,16 @@ var renderManager=(function(){
 		
 		var $source= opt.$source ||undefined;
 		var $target= opt.$target ||undefined;
+		console.log("line option :",opt.lineType);
+		var paintStyle = {  
+				strokeStyle: "#46F10F",
+				lineWidth: 5,
+				dashstyle:undefined
+		        };
 		
+		if(opt.lineType=="nidentify"){
+			paintStyle.dashstyle= "3 3";
+		}
 		if(!($source) || !($target) ){
 			alert("잘못된 이름 ");
 			return;
@@ -16,7 +25,10 @@ var renderManager=(function(){
 		       target:$target,
 		       detachable:false,
 		       anchor:["Continuous", { faces:[ "bottom", "left" ,"right","top"] } ],
-		       scope:"canvasDiv"
+		       connector:['Flowchart'],
+		       paintStyle:paintStyle,
+		       
+		      
 		  });
 		
 	   Object.defineProperty(lines,opt.id,{

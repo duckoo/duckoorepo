@@ -28,6 +28,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
 
 <script type="text/javascript" src="/resources/duckoo/js/Observer.js?<%=token%>"></script>  
+<script type="text/javascript" src="/resources/duckoo/js/view/dView.js?<%=request.getParameter("token")%>"></script>
+
 
 </head>
 <body class="canvas" id="canvasDiv" style="width: 6000px; height: 6000px; border: 1px solid black;">
@@ -55,24 +57,37 @@ jsPlumb.ready(function() {
 	   jsPlumb.repaintEverything();
 	},1000/20);
 	
-	
-	 EntityManager.createEntity({name:"e1"},false);
+	 EntityManager.createEntity({name:"e1"});
 	 var en=EntityManager.getEntityByName("e1");
+	
+	 
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"int",datelength:10,isPk:true,isFk:true});
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"int",datelength:11,isFk:true});
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"int",datelength:12,isPk:true,isFk:true});
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"int",datelength:13,isPk:true,isFk:true});
-	 
-	  EntityManager.showEntity("e1");
-	/* EntityManager.createEntity({name:"e32232"},true); */
 
-	 //console.log("sq",SqlFactory);
-	 
-	  var genSql=SqlFactory.get("mysql");
+	/*  console.log("en: ",en);
+	var fac = dView.get("entity");
+	fac.inject(en);
+	en.show();
+	 */
+	v(en).show();
+	/* console.log("fac: ",fac);
+	fac.inject(en)
+	console.log("show",en.show);
+	console.log(": ",en);
+	en.show.call(en);
+	fac.show.call(en);
+	console.log()
+	 */
 	
+	 RelationShipManager.createRelationship({name:"r1",source:"test", target:"e1" ,RelationAttrName:[ ["1","2"],["3","4"] ] })
+	 
+	var genSql=SqlFactory.get("mysql");
 	var sql = genSql.genCreateTableDDL(en);
 	 console.log("sql: ",sql); 
-	
+
+	 
 	 
 //  observer ex....
 /*  EntityManager.createEntity({name:"e1"},true); 

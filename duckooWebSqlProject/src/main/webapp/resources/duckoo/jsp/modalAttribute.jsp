@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="/resources/duckoo/css/entityAttr.css?<%=request.getParameter("token")%>">
 
  <script id="attrAddForm" type="text/x-handlebars-template">
-        <div class='modalTr' name="openAttrDelUpDiv_{{id}}">
+        <div class='modalTr' id={{id}} name="openAttrDelUpDiv_{{id}}">
             <div class='datas'>
 				{{#if isPk}}
 					<p id="keyType_{{id}}">PK</p>
@@ -33,10 +33,9 @@
 <script type="text/javascript" src="/resources/duckoo/js/modalAttribute.js?<%=request.getParameter("token")%>"></script>
 <script>
 $(document).on("click",".openConstraintBtn",function(e){
+
 	e.stopPropagation();
     e.preventDefault();
-	
-	
 	
 	modalAttribute.Obserable.fire("openConstraintBtn",{event:e,that:this});
 	
@@ -87,6 +86,5 @@ $(document).on('click','#saveBtn',function(e){
     modalAttribute.Obserable.fire("saveBtn",{event:e,that:this});
     $("#myModal").modal("hide");
 });
-
 
 </script>

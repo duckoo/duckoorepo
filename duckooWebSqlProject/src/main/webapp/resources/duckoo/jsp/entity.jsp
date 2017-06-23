@@ -61,9 +61,13 @@
     </div>
 </div>
 </script> 
-<script type="text/javascript" src="/resources/duckoo/js/entity.js?<%=request.getParameter("token")%>"></script>  
+<script type="text/javascript" src="/resources/duckoo/js/entity/Manager.js?<%=request.getParameter("token")%>"></script>  
+<script type="text/javascript" src="/resources/duckoo/js/entity/Attribute.js?<%=request.getParameter("token")%>"></script>  
+<script type="text/javascript" src="/resources/duckoo/js/entity/Entity.js?<%=request.getParameter("token")%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/domainManager.js?<%=request.getParameter("token")%>"></script>
- <script>
+<script type="text/javascript" src="/resources/duckoo/js/view/EntityView.js?<%=request.getParameter("token")%>"></script>
+
+<script>
   var $dom=$("body");
  
  $dom.on("click",".entity",function(e){
@@ -87,9 +91,16 @@
 		    e.preventDefault();
 		   var entityId = $(this).attr("data-scaleBtn");
 		    var $entity = $("#"+entityId);
-		    EntityManager.getEntityByName(entityId).extend=true;
-		    EntityManager.getEntityByName(entityId).sortAttribute();
-		    $entity.html($( EntityManager.getEntityByName(entityId).genHtml()).html());
+		    
+		    var entity= EntityManager.getEntityByName(entityId);
+		    entity.extend=true;
+		    entity.sortAttribute();
+		    
+		    v(entity).refresh();
+		    
+		 /*   
+		 $entity.html($( EntityManager.getEntityByName(entityId).genHtml()).html());*/		    
+		 
 		    var $innerEntity = $("[data-innerEntity='"+entityId+"']");
 		    $entity.css("width",300);
 		    $entity.css("height",350);
@@ -106,9 +117,16 @@
 		    var entityId = $(this).attr("data-scaleBtn");
 		    var $entity = $("#"+entityId);
 		    var $innerEntity = $("[data-innerEntity='"+entityId+"']");
-		    EntityManager.getEntityByName(entityId).extend=false;
-		    EntityManager.getEntityByName(entityId).sortAttribute();
-		    $entity.html($(EntityManager.getEntityByName(entityId).genHtml()).html());
+		    var entity= EntityManager.getEntityByName(entityId);
+		    
+		    
+		    entity.extend=false;
+		    entity.sortAttribute();
+		    v(entity).refresh();
+		    v(entity).refresh();
+		    
+		    //$entity.html($(EntityManager.getEntityByName(entityId).genHtml()).html());
+		    
 		    $entity.css("width",175);
 		    $entity.css("height",125);
 		    $innerEntity.css("width",150);
@@ -117,6 +135,7 @@
 		    
 		    EntityManager.Obserable.fire("scaleDownBtn_click",{event:e,that:this});
 		  });
+	    
 </script>
  
  

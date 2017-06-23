@@ -78,6 +78,7 @@ Obserable.setEventObserver("openConstraintBtn",obb);
 function delBtn(e){
 	 if(!target)return;
 	  var id=target.attr("id");
+	  console.log("id",id);
 	 entity.deleteAttr(Number(id));
 	 target.remove();
 };
@@ -97,13 +98,14 @@ function saveBtn(e){
 	tagGetAttr(entity);
     EntityManager.setEntity(entity);
     var $entity = $("#"+entity.name);
-    $entity.html($(entity.genHtml()).html());
+    
+    v(entity).refresh();
+    
     var $innerEntity = $("[data-innerEntity='"+entity.name+"']");
     $entity.css("width",300);
     $entity.css("height",350);
     $innerEntity.css("width",275);
     $innerEntity.css("height",325);
-    
 }
 
 obb=Object.create(Obsever);
