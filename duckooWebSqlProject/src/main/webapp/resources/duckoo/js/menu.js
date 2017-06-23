@@ -21,7 +21,8 @@ var $sideBar = $("#sideBar");
 		},
 			stop: function() {
 			$(this).css('transition', memo);
-		}
+		},
+		handle:".sideBarHeader"
 	});
 	function sideBarOpen(){
 		document.getElementById("sideBar").style.display="block";
@@ -60,7 +61,8 @@ var $sideBar = $("#sideBar");
 		},
 			stop: function() {
 			$(this).css('transition', memo);
-		}
+		},
+		handle:".consoleHeader"
 	});
 	function consoleOpen(){
 		document.getElementById("console").style.display="block";

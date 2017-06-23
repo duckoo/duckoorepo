@@ -1,11 +1,11 @@
 var modalAttribute=(function(){
 	var head= "<div class='modalTr'>"+
-        "<span class='modalTh'>키타입</span>"+
-        "<span class='modalTh'>논리이름</span>"+
-        "<span class='modalTh'>물리이름</span>"+
-        "<span class='modalTh'>데이터타입</span>"+
-        "<span class='modalTh'>기본값</span>"+
-       "<span class='modalTh'>제약조건</span>"+
+        "<div class='modalTh'>키타입</div>"+
+        "<div class='modalTh'>논리이름</div>"+
+        "<div class='modalTh'>물리이름</div>"+
+        "<div class='modalTh'>데이터타입</div>"+
+        "<div class='modalTh'>기본값</div>"+
+       "<div class='modalTh'>제약조건</div>"+
     "</div>";
 	
 var body=
@@ -47,11 +47,16 @@ function openConstraintBtn(e){
  console.log("evetn.: ", e)	;
 	var id=$(e.that).attr("data-openCB");
 	var $hiddenDiv=$("#openDiv_"+id);
-	if($hiddenDiv.css("display")==='none')
+	if($hiddenDiv.css("display")==='none'){
 		$hiddenDiv.css("display","block");
-	else
-		$hiddenDiv.css("display","none");
-	
+		setTimeout(function(){$hiddenDiv.css("padding-top","15px");},0.1);
+		setTimeout(function(){$hiddenDiv.css("height","49px");},0.1);
+	}
+	else{
+		$hiddenDiv.css("height","0px");
+		$hiddenDiv.css("padding-top","0px");
+		setTimeout(function(){$hiddenDiv.css("display","none");},270);
+	}
 };
 var obb=Object.create(Obsever);
 obb.init("openConstraintBtn",openConstraintBtn);
@@ -81,6 +86,12 @@ function saveBtn(e){
     EntityManager.setEntity(entity);
     var $entity = $("#"+entity.name);
     $entity.html($(entity.genHtml()).html());
+    var $innerEntity = $("[data-innerEntity='"+entity.name+"']");
+    $entity.css("width",300);
+    $entity.css("height",350);
+    $innerEntity.css("width",275);
+    $innerEntity.css("height",325);
+    
 }
 
 obb=Object.create(Obsever);

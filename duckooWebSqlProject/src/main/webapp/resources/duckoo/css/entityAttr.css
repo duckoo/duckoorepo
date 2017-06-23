@@ -45,11 +45,7 @@ i[target=fk]{
     background-color: lemonchiffon;
     
 }
-#attrBox {display: table; width:500px;}
-.modalTr {display: table-row;}
-.consCheckBox{width:620px; position:relative;}
-.datas, .modalTh {display: table-cell; padding: 10px;text-align: center; border-bottom: 1px solid #DDD; border-right: 1px solid #DDD;}
-.modalTh{font-weight:bold; font-size: 20px;}
+
 .stdTd{
 	background-color: white;
 }
