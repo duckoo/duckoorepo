@@ -28,25 +28,25 @@ var RelationShipManager = (function() {
 			configurable : false
 		});
 		newRela.init(opt);
-		
+		relationshipArr[newRela.name] = newRela;
 	}
 	function getRelationship(rName) {
 		return relationshipArr[rName];
 	}
+
 	
 	function getSource(target){
 		var key= Object.keys(relationshipArr);
 		 var source=[];
 		for(var i=0;i<key.length;i++){
-			
-			
 			var temp= relationshipArr[key[i]];
 			console.log("temp: ",temp);
 			if(temp.target===target)
 				source.push(temp);
 		}
 		return source;
-	}
+    }
+
 	return {
 		createRelationship : createRelationship,
 		getRelationship : getRelationship,

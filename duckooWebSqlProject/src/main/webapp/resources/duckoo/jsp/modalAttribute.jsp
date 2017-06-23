@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="/resources/duckoo/css/entityAttr.css?<%=request.getParameter("token")%>">
 
  <script id="attrAddForm" type="text/x-handlebars-template">
+
 <div class="modalTr" id={{id}}>
         <span class="datas">
             <select id="keyType_{{id}}">
@@ -92,6 +93,5 @@ $(document).on('click','#saveBtn',function(e){
     modalAttribute.Obserable.fire("saveBtn",{event:e,that:this});
     $("#myModal").modal("hide");
 });
-
 
 </script>

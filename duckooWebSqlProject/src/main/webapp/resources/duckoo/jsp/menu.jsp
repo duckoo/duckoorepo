@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <link rel="stylesheet" href="/resources/duckoo/css/menu.css?<%=request.getAttribute("token")%>">  
+ <link rel="stylesheet" href="/resources/duckoo/css/menu.css?<%=request.getParameter("token")%>">  
     <div id="pageTab">
 		<ul class="nav nav-tabs">
     		<li class="active"><a href="#"><i class="fa fa-table" aria-hidden="true"></i>&nbsp;ERD page</a></li>
@@ -16,8 +16,9 @@
 	
 
 	<div id="sideBar">
-	 <a class="menuClosebtn" onclick="closeSideBar()">&times;</a>
-	
+	 	<div class='sideBarHeader'>
+	 		<div class="menuClosebtn" onclick="closeSideBar()">&times;</div>
+		</div>
 	</div>
 
 
@@ -39,7 +40,9 @@
 
 
 	<div id="console">
-	<a class="menuClosebtn" onclick="closeConsole()">&times;</a>	
+		<div class="consoleHeader">
+			<div class="menuClosebtn" onclick="closeConsole()">&times;</div>	
+		</div>
 	</div>
 	
 	

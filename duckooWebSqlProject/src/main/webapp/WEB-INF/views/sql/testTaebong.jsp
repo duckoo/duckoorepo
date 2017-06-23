@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/resources/duckoo/css/mainModal.css">
 <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -22,10 +23,15 @@
 		crossorigin="anonymous"></script>
 <script type="text/javascript" src="/resources/duckoo/js/duckooPlumb.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/relationship.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/EntityControll.js?<%=token%>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.js"></script> 
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
+<<<<<<< HEAD
+=======
+<script type="text/javascript" src="/resources/duckoo/js/Observer.js?<%=token%>"></script>
+>>>>>>> branch 'master' of https://github.com/duckoo/duckoorepo
 
 </head>
 
@@ -43,36 +49,41 @@
 <jsp:param name="token" value="<%=token%>" />
 </jsp:include> 
 
+
+<jsp:include page="RelationModal.jsp">
+<jsp:param name="token" value="<%=token%>" />
+</jsp:include> 
+
+
 <script>
 jsPlumb.ready(function() {
 	 setInterval(function(){
-		 console.log("re: ");
-		repaint();
+		 console.log("re:");
+		jsPlumb.repaintEverything();
 	},1000/20);
 	
+	var mkFlag = false;
+	var tempRelation = {};
 	 EntityManager.createEntity({name:"e1",attr:[]},false);
 	 var en=EntityManager.getEntityByName("e1");
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isFk:true});
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
+	 en.setAttr({lName:"게시글번호",pName:"bno",datetype:"tt2",isPk:true,isFk:false});
+	 en.setAttr({lName:"글제목",pName:"title",datetype:"tt2",isFk:false});
+	 en.setAttr({lName:"글내용",pName:"content",datetype:"tt2"});
+	 en.setAttr({lName:"작성자",pName:"writer",datetype:"tt2"});
+	 en.setAttr({lName:"등록날자",pName:"regdate",datetype:"tt2"});
+	 
 	
-	 en.setAttr({lName:"sibal3",pName:"s_sibla222233",datetype:"tt22222"});
-	 en.setAttr({lName:"sibal3",pName:"s_sibla222233",datetype:"tt22222"});
-	 en.setAttr({lName:"sibal3",pName:"s_sibla222233",datetype:"tt22222"});
 	 EntityManager.showEntity("e1");
-	 EntityManager.createEntity({name:"e32232",attr:[]},true);
-	 $('.attrArea').niceScroll("#e1",{ horizrailenabled: true});
-	 /*
-	 var en=EntityManager.getEntityByName("e1");
-	 en.setAttr({lName:"king",pName:"s_sibla",datetype:"tt2",isPk:true,isFk:true});
-	 var attr=en.getAttr(0);
-	 console.log("att: ",attr);
-	 modalAttribute.addColumn(attr);
-	 $("#myModal").modal(); */
+	 EntityManager.createEntity({name:"e32232",attr:[]},false);
+	 var en2 = EntityManager.getEntityByName("e32232");
+	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"tt22222",isPk:true});
+	 en2.setAttr({lName:"글제목",pName:"title",datetype:"tt22222"});
+	 en2.setAttr({lName:"내용",pName:"content",datetype:"tt22222"});
+	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
+	 
+	EntityManager.showEntity("e32232");
+	
+	 
 });
 	
 </script>

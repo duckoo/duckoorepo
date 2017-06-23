@@ -34,6 +34,17 @@ body{
 	display:none;
 	transition: 0.5s;
 }
+.consoleHeader{
+	height: 37px;
+	width:100%;
+	border-bottom:1px solid black;
+}
+.consoleHeader:hover{
+	cursor:move;
+}
+#console:hover{
+	z-index:4;
+}
 #sideBar{
 	float:left; width:0px; height:650px; background-color:#d2d2d2; 
 	border-radius: 5px; border-style:solid; position:fixed;
@@ -42,6 +53,18 @@ body{
 	display:none;
 	transition: 0.5s;
 }
+#sideBar:hover{
+	z-index:4;
+}
+.sideBarHeader{
+	height:37px;
+	width:100%;
+	border-bottom:1px solid black;
+}
+.sideBarHeader:hover{
+	cursor:move;
+}
+
 #mainNaviBar{
 	margin-top:55px; margin-left:15px; width:200px; position:fixed; z-index:3;
 }
@@ -85,22 +108,19 @@ body{
   right: 0;
 }
 .menuClosebtn{
-	padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
     color: black;
     display: block;
     transition: 0.3s;
     text-align: right;
+    float: right;
+    width:20px;
 }
 .menuClosebtn:hover{
-	
 	color: red;
+	cursor:pointer;
 }
-
-
-
-
 .dropbtn {
     background-color: #4CAF50;
     color: white;

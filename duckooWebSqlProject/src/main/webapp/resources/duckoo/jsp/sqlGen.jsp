@@ -21,7 +21,6 @@
 
 ALTER TABLE {{name}}
 ADD CONSTRAINT PK_{{name}} PRIMARY KEY({{#getPk this}} {{/getPk}}) 
-
 {{#genFK this}}{{/genFK}}
 
 </script> 
