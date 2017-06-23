@@ -27,7 +27,6 @@
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
 
-
 </head>
 
 <body class="canvas" id="canvasDiv" style="width: 6000px; height: 6000px; border: 1px solid black;">

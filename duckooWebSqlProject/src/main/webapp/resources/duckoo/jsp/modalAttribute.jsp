@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="/resources/duckoo/css/entityAttr.css?<%=request.getParameter("token")%>">
 
  <script id="attrAddForm" type="text/x-handlebars-template">
-<div class="modalTr">
+<div class="modalTr" id={{id}}>
         <span class="datas">
             <select id="keyType_{{id}}">
             {{#select isPk isFk}}
@@ -42,9 +42,6 @@
 <script type="text/javascript" src="/resources/duckoo/js/modalAttribute.js?<%=request.getParameter("token")%>"></script>
 <script>
 $(document).on("click",".openConstraintBtn",function(e){
-	
-	
-	
 	
 	modalAttribute.Obserable.fire("openConstraintBtn",{event:e,that:this});
 	
