@@ -4,6 +4,7 @@ var relationfunction=(function(){
 	var elementArr=[];
 	var srcPKElement=[];
 	var tarPKElemnet=[];
+	
 	function prepareStatement(e){
 		if(flag){	
 			
@@ -25,8 +26,6 @@ var relationfunction=(function(){
 		    	
 		    	console.log("tempRelation : ",tempRelation);
 		    	
-		    	
-		    	
 		    	return;
 		     }
 		 }
@@ -40,18 +39,21 @@ var relationfunction=(function(){
 
 	 function collectSelectOption(EntityObject,isSource,relationType){
 		 console.log("entity :" ,EntityObject);
-		 pkAttrArray = [];
-		 
+		 var pkAttrArray = [];
 		 //console.log("the result of search :",EntityObject.search({isPk:true}));
-		 
-		 for(var i=0;i<EntityObject.attr.length;i++){
-			 if(EntityObject.attr[i].isPk){
-				 pkAttrArray.push(EntityObject.attr[i]);
-			 }
-		 }
+		if(tempRelation.relationLine=="identify"||isSource){
+			pkAttrArray = collectPKElement(EntityObject,pkAttrArray,isSource);
+			console.log("Collect comp : " ,pkAttrArray);
+		}
+		else if(tempRelation.relationLine=="nidentify"){
+			pkAttrArray =  collectStdElement(EntityObject,pkAttrArray,isSource);
+			console.log("Collect comp : " ,pkAttrArray);
+		}
+		
 		 if(isSource){
 			 srcPKElement = pkAttrArray;
-		 }else{
+		 }
+		 else{
 			 tarPKElement = pkAttrArray;
 		 }
 		 createSelectOption(pkAttrArray,isSource,relationType);
@@ -59,18 +61,63 @@ var relationfunction=(function(){
 	 }
 	 function createSelectOption(pkAttrArr,isSource,relationType){
 		 var targetLink;
+		 console.log("Attribute Collected : " , pkAttrArr)
 		 if(isSource){
 			 targetLink = $("#sourceCol"); 
-		 }else{
-			 targetLink = $("#targetCol");
-		 }
+		 
 		 targetLink.html("");
+		 var insideStr="";
 		 for(var i = 0;i<pkAttrArr.length;i++){
-			 targetLink.append("<option value="+pkAttrArr[i].pName+">"+pkAttrArr[i].pName+"</option>");
+			 insideStr += pkAttrArr[i].pName+"";
+			 insideStr +="+";
+			 }
+		 insideStr = insideStr.substring(0,insideStr.length-1);
+		 
+		 var str = "<option value="+insideStr+">"+insideStr+"</option>"
+		 
+
+		 targetLink.append(str);
+		 }else{
+			 targetSelectOption(pkAttrArr);
 		 }
 		 
 	 }
-	 
+	 function targetSelectOption(pkAttrArr){
+		 var targetLink = $("#targetInfo");
+		 targetLink.html("");
+		 
+		 for(var i =0;i<srcPKElement.length;i++){
+			 var str="";
+			 str+="<p>"+srcPKElement[i].pName+"과 매칭될 컬럼.</p>"
+			 str += "<select class = 'tarCol'>"
+				 
+				 for(var j=0;j<pkAttrArr.length;j++){
+					 
+					 str+="<option class='tarVal' value="+pkAttrArr[j].pName+">"+pkAttrArr[j].pName+"</option>"
+				 }
+			 str+="</select>"
+			 targetLink.append(str);
+		 }
+		 
+	 }
+	function collectPKElement(EntityObject,pkAttrArray,isSource){
+		for(var i=0;i<EntityObject.attr.length;i++){
+			 
+			  if(EntityObject.attr[i].isPk){
+				 pkAttrArray.push(EntityObject.attr[i]);
+			 }
+		 } 
+		return pkAttrArray;
+	}
+	function collectStdElement(EntityObject,pkAttrArray,isSource){
+		for(var i=0;i<EntityObject.attr.length;i++){
+			 
+			 if(!isSource&&(!EntityObject.attr[i].isPk)&&(!EntityObject.attr[i].isFk)){
+					pkAttrArray.push(EntityObject.attr[i]);
+				 }
+		 }
+		return pkAttrArray;
+	}
 	function changeFlagState(){
 		flag = (!flag);
 		return flag;
@@ -90,12 +137,17 @@ var relationfunction=(function(){
 		elementArr=[];
 		return tempEleArr;
 	}
+	function initiateElementArr(){
+		
+		elementArr=[];
+	}
 	 return {changeFlagState:changeFlagState,
 		 	getTempRelation:getTempRelation,
 		 	collectSelectOption:collectSelectOption,
 		 	getSrcPK:getSrcPK,
 		 	getTarPK:getTarPK,
-		 	getElementArr:getElementArr}
+		 	getElementArr:getElementArr,
+		 	initiateElementArr:initiateElementArr}
 	 
 	 
 	 

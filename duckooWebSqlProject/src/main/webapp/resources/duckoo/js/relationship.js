@@ -3,14 +3,14 @@ var RelationShipManager = (function() {
 		name : undefined,
 		source : undefined,
 		target : undefined,
-		RelationAttrName : [ {}, {} ],
+		RelationAttrName : [ [], [] ],
 		relationType:undefined,
 		relationLine:undefined,
 		init : function(opt) {
 			this.name = opt.name||undefined;
 			this.source = opt.source||undefined;
 			this.target = opt.target||undefined;
-			this.RelationAttrName = opt.RelationType||undefined;
+			this.RelationAttrName = opt.RelationAttrName||undefined;
 			this.relationType=opt.relationType||undefined;
 			this.relationLine = opt.relationLine||undefined;
 		}
@@ -29,10 +29,14 @@ var RelationShipManager = (function() {
 			configurable : false
 		});
 		newRela.init(opt);
-		
+		relationshipArr[newRela.name] = newRela;
 	}
 	function getRelationship(rName) {
 		return relationshipArr[rName];
+	}
+	function getRelationBySrcId(){
+		
+		
 	}
 	return {
 		createRelationship : createRelationship,

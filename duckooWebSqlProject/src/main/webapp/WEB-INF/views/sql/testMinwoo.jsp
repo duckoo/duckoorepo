@@ -64,7 +64,7 @@ jsPlumb.ready(function() {
 	 EntityManager.createEntity({name:"e1",attr:[]},false);
 	 var en=EntityManager.getEntityByName("e1");
 	 en.setAttr({lName:"게시글번호",pName:"bno",datetype:"tt2",isPk:true,isFk:false});
-	 en.setAttr({lName:"글제목",pName:"title",datetype:"tt2",isFk:false});
+	 en.setAttr({lName:"글제목",pName:"title",datetype:"tt2",isPk:true,isFk:false});
 	 en.setAttr({lName:"글내용",pName:"content",datetype:"tt2"});
 	 en.setAttr({lName:"작성자",pName:"writer",datetype:"tt2"});
 	 en.setAttr({lName:"등록날자",pName:"regdate",datetype:"tt2"});
@@ -85,36 +85,7 @@ jsPlumb.ready(function() {
 	
 	 
 	
-	 function disbindEntityEvent(){
-			 $("#canvasDiv").off("click",".entity");
-	 
-	 }
-	 function collectSelectOption(EntityObject,isSource){
-		 console.log("entity :" ,EntityObject);
-		 pkAttrArray = [];
-		 for(var i=0;i<EntityObject.attr.length;i++){
-			 if(EntityObject.attr[i].isPk){
-				 pkAttrArray.push(EntityObject.attr[i]);
-			 }
-		 }
-		 createSelectOption(pkAttrArray,isSource);
-	 }
-	 function createSelectOption(pkAttrArr,isSource){
-		 var targetLink;
-		 if(isSource){
-			 targetLink = $("#sourceCol");
-			 
-		 }else{
-			 targetLink = $("#targetCol");
-			 
-		 }
-		 targetLink.html("");
-		 for(var i = 0;i<pkAttrArr.length;i++){
-			 targetLink.append("<option value="+pkAttrArr[i].pName+">"+pkAttrArr[i].pName+"</option>");
-			 
-		 }
-		 
-	 }
+	
 
 	 /*
 	 var en=EntityManager.getEntityByName("e1");
