@@ -15,6 +15,7 @@ var EnitityView=(function(){
 
   function refresh(){ 	
 	 var str=this.genHtmlStr();
+	 console.log("str",str);
 	 var $this=$("#"+this.name);
 	   $this.html($(str).html());
 	}

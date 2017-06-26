@@ -31,7 +31,7 @@
 }
 .attrBox{
     width:80%;
-    height:321px;
+    height:295px;
     float:left;
     border-bottom-style:solid;
     border-left-style:solid;
@@ -40,7 +40,11 @@
     border-color: #787878;
     border-bottom-left-radius:10px;
     border-bottom-right-radius:10px;
-    overflow-y: scroll;
+    overflow-y: auto;
+}
+.addAttrBtnBox{
+	float: left;
+	margin-left:2%;
 }
 
 .tbl {
@@ -51,7 +55,7 @@
     position:relative;
 }
 .modalTr{
-    width:670px;
+    width:678px;
     height:50px;
     border-bottom: 1px solid white;
     position: relative;
@@ -62,7 +66,7 @@
     border-right: 2px solid white;
     position: relative;
     float:left;
-    width:109px;
+    width:113px;
     height: 49px;
     text-align: center;
     padding-top: 15px;
@@ -73,7 +77,7 @@
     border-right: 2px solid white;
     position: relative;
     float:left;
-    width:109px;
+    width:113px;
     height: 49px;
     text-align: center;
     padding-top: 15px;

@@ -76,7 +76,7 @@ jsPlumb.ready(function() {
 	 
 	 EntityManager.createEntity({name:"e32232",attr:[]},false);
 	 var en2 = EntityManager.getEntityByName("e32232");
-	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"tt22222",isPk:true});
+	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"tt22222",isPk:true,autoIncrement:true,notNull:true});
 	 en2.setAttr({lName:"글제목",pName:"title",datetype:"tt22222"});
 	 en2.setAttr({lName:"내용",pName:"contentㅁㄴㅇ리;ㅑㅂㅈㄷ겸ㄴㅇ러ㅗ",datetype:"tt22222"});
 	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
