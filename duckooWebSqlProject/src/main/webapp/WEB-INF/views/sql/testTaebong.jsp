@@ -28,10 +28,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.js"></script> 
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
-<<<<<<< HEAD
-=======
 <script type="text/javascript" src="/resources/duckoo/js/Observer.js?<%=token%>"></script>
->>>>>>> branch 'master' of https://github.com/duckoo/duckoorepo
+<script type="text/javascript" src="/resources/duckoo/js/view/dView.js?<%=request.getParameter("token")%>"></script>
 
 </head>
 
@@ -58,7 +56,7 @@
 <script>
 jsPlumb.ready(function() {
 	 setInterval(function(){
-		 console.log("re:");
+		 
 		jsPlumb.repaintEverything();
 	},1000/20);
 	
@@ -73,16 +71,18 @@ jsPlumb.ready(function() {
 	 en.setAttr({lName:"등록날자",pName:"regdate",datetype:"tt2"});
 	 
 	
-	 EntityManager.showEntity("e1");
+	 
+	 v(en).show();
+	 
 	 EntityManager.createEntity({name:"e32232",attr:[]},false);
 	 var en2 = EntityManager.getEntityByName("e32232");
-	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"tt22222",isPk:true});
+	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"tt22222",isPk:true,autoIncrement:true,notNull:true});
 	 en2.setAttr({lName:"글제목",pName:"title",datetype:"tt22222"});
-	 en2.setAttr({lName:"내용",pName:"content",datetype:"tt22222"});
+	 en2.setAttr({lName:"내용",pName:"contentㅁㄴㅇ리;ㅑㅂㅈㄷ겸ㄴㅇ러ㅗ",datetype:"tt22222"});
 	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
-	 
-	EntityManager.showEntity("e32232");
 	
+	 v(en2).show();
+
 	 
 });
 	

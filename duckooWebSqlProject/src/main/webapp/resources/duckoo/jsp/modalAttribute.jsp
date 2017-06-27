@@ -5,44 +5,47 @@
     <link rel="stylesheet" href="/resources/duckoo/css/entityAttr.css?<%=request.getParameter("token")%>">
 
  <script id="attrAddForm" type="text/x-handlebars-template">
-
-<div class="modalTr" id={{id}}>
-        <span class="datas">
-            <select id="keyType_{{id}}">
-            {{#select isPk isFk}}
-                <option data-pk="true" data-fk="false"  value="PK">PK</option>
-                <option data-pk="false" data-fk="true"  value="FK">FK</option>
-                <option data-pk="true" data-fk="true"  value="PKFK">PK+FK</option>
-                <option data-pk="false" data-fk="false"  value="None">None</option>    
-            {{/select}}
-            </select>
-        </span>
-        <span class="datas"><input id="lName_{{id}}" type='text' value={{lName}} maxlength="10"  style="width:100px;"></input></span>
-        <span class="datas"><input id="pName_{{id}}" type='text' value={{pName}}  maxlength="10" style="width:100px;"></input></span>
-        <span class="datas">
-            <select style='width: 100px; height:24px; float: left;' onchange='this.nextElementSibling.value=this.value'>
-             <option></option>
-             <option>int()</option>
-             <option>varchar()</option>
-            </select>
-            <input id="dataType_{{id}}" value={{datetype}} style='width: 85px; margin-left: -99px; margin-top: 1px; border: none; float: left;'/>
-        </span>
-        <span class="datas"><input type='text' maxlength="10"></input></span>
-        <span class="datas"><button class="openConstraintBtn" data-openCB="{{id}}">+</button></span>
-    </div>
-    <div class='modalTr consCheckBox' id="openDiv_{{id}}" style='border-bottom:2px solid black; border-top:2px solid black; display:none; transition:0.5s;'>
-        <span class='datas1' style='border-right:none;'></span>
-        <span class='datas1' style='border-right:none;'></span>
-        <span class='datas1' style='border-right:none;'></span>
-        <span class='datas1' style='border-right:none;'><input type='checkbox' name='Not Null' value='Not Null'>Not Null</input></span>
-        <span class='datas1' style='border-right:none;'><input type='checkbox' name='Autoincrement' value='Autoincrement'>Autoincrement</input></span>
-        <span class='datas1' style='border-right:none;'><input type='checkbox' name='Unique' value='Unique'>Unique</input></span>
-    </div>
+        <div class='modalTr' id={{id}} name="openAttrDelUpDiv_{{id}}">
+            <div class='datas'>
+				{{#if isPk}}
+					<p id="keyType_{{id}}">PK</p>
+				{{else}}
+					<p id="keyType_{{id}}">NONE</p>
+				{{/if}}	
+            </div>
+            <div class='datas'><p id="lName_{{id}}">{{lName}}</p></div>
+            <div class='datas'><p id="pName_{{id}}"{{pName}}>{{pName}}</p></div>
+            <div class='datas'><p id="dataType_{{id}}">{{datetype}}</p></div>
+            <div class='datas'><p id="default_{{id}}">{{defaultExp}}</p></div>
+            <div class='datas'><button class="openConstraintBtn" data-openCB="{{id}}"><i class="fa fa-chevron-down" aria-hidden="true"></i></button></div>
+        </div>
+        <div class='modalTr checkBox' id="openDiv_{{id}}" name='ConstraintCheckBox'>
+			{{#if notNull}}
+			<input onclick="return false;" type='checkbox' id="notNull_{{id}}"  name='Not Null' value='Not Null' checked>Not Null</input>
+            {{else}}
+			<input onclick="return false;" type='checkbox' id="notNull_{{id}}" name='Not Null' value='Not Null'>Not Null</input>
+            {{/if}}
+           	{{#if autoIncrement}}
+			<input onclick="return false;" type='checkbox' id="autoIncre_{{id}}" name='Autoincrement' value='Autoincrement' checked>Autoincrement</input>
+			{{else}}
+			<input onclick="return false;" type='checkbox' id="autoIncre_{{id}}" name='Autoincrement' value='Autoincrement'>Autoincrement</input>
+			{{/if}}
+			<input onclick="return false;" type='checkbox' id="uniqueVal_{{id}}" name='Unique' value='Unique'>Unique</input>
+        </div>
+		<div class='modalTr delUp' id="openAttrDelUpDiv_{{id}}" name='attrDelUpBtnBox'>
+			<button class='updateAttrBtn' data-updateAttrBtn="{{id}}">수정</button>
+			<button class='deleteAttrBtn'>삭제</button>
+		</div>
 </script> 
 <script type="text/javascript" src="/resources/duckoo/js/modal.js?<%=request.getParameter("token")%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/modalAttribute.js?<%=request.getParameter("token")%>"></script>
+<jsp:include page="addAttrModal.jsp"></jsp:include>
+<jsp:include page="updateAttrModal.jsp"></jsp:include>
 <script>
 $(document).on("click",".openConstraintBtn",function(e){
+
+	e.stopPropagation();
+    e.preventDefault();
 	
 	modalAttribute.Obserable.fire("openConstraintBtn",{event:e,that:this});
 	
@@ -56,6 +59,21 @@ $(document).on("click",".datas",function(e){
     */
    modalAttribute.Obserable.fire("click_trDatas",{event:e,that:this});
 });
+////////////////addColumn start///////////////////
+$(document).on("click",".addAttrBtn",function(e){
+    e.stopPropagation();
+    e.preventDefault();
+    $("#addAttrModalWindow").modal();
+});
+$(document).on("click","#addAttrFinalBtn",function(e){
+	e.stopPropagation();
+    e.preventDefault();
+    
+    modalAttribute.Obserable.fire("addAttrFinalBtn",{event:e,that:this});
+    $("#addAttrModalWindow").modal("hide");
+});
+//////////////////////addColumn end//////////////////////////
+
 
 $(document).on('click','.deleteAttrBtn',function(e){
 	e.stopPropagation();
@@ -68,16 +86,27 @@ $(document).on('click','.deleteAttrBtn',function(e){
      modalAttribute.Obserable.fire("delBtn",{event:e,that:this});     
 });
 
-$(document).on('click','.addAttrBtn',function(e){
-    e.stopPropagation();
+////////////////update column start///////////////////////////
+$(document).on("click",'.updateAttrBtn',function(e){
+	e.stopPropagation();
     e.preventDefault();
-    /* entity.setAttr({lName:"none",pName:"none",domainName:"none",datetype:"int"}); 
-    tagSetAttr(entity); */
-    console.log(modalAttribute);
-    modalAttribute.Obserable.fire("addBtn",{event:e,that:this});
+    modalAttribute.Obserable.fire("attrInputChange",{event:e,that:this});
+});
+$(document).on("click","#updateAttrFinalBtn",function(e){
+	e.stopPropagation();
+    e.preventDefault();
+    
+    modalAttribute.Obserable.fire("updateAttrFinalBtn",{event:e,that:this});
+    $("#updateAttrModalWindow").modal("hide");
 });
 
+
+
+////////////////update column end/////////////////////////////
+
+
 $(document).on('click','#saveBtn',function(e){
+	console.log("eeeeeee:",e);
 	/* tagGetAttr(entity);
     EntityManager.setEntity(entity); */
     /*

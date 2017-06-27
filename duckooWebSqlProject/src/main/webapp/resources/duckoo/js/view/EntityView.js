@@ -21,6 +21,8 @@ var EnitityView=(function(){
 		 var str=this.genHtmlStr();
 		$taget.append(str);
 		$("#"+this.name).draggable();
+		$("#"+this.name).draggable({handle:'.table_name'});
+
 	}
   function show(){ 
 		var $this=$("#"+this.name);

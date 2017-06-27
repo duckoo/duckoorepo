@@ -35,19 +35,30 @@ i[target=fk]{
     border: 1px solid #ddd;
     text-align: left;
     font-size: 12px;
-    width: 300px;
+    width: 120px;
     word-wrap:break-word;
 }
 .pkTd{
     background-color: rgba(255, 0, 0, 0.2);
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    width: 120px;
 }
 .fkTd{
     background-color: lemonchiffon;
-    
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    width: 120px;
 }
 
 .stdTd{
 	background-color: white;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+	width: 120px;
 }
 .pkTh{
 	background-color: white;
