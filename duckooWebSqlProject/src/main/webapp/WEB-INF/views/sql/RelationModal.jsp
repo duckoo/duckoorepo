@@ -96,8 +96,9 @@ $("#conform").on("click",function(e){
 	 var tempName = $("#tbl_name").val().trim();
 	 
 	 if(!EntityControll.isEntityExist(tempName)){
-	 	EntityManager.createEntity({name:tempName,attr:[]},false);
-	 	EntityManager.showEntity(tempName);
+	 	var entity=EntityManager.createEntity({name:tempName,attr:[]});
+	   v(entity).show();
+	 	
 	 	$("#tbl_nameModal").modal('hide');
 	 }
 	 else{

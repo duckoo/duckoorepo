@@ -1,8 +1,6 @@
 var $sideBar = $("#sideBar");
 	var $console = $("#console");
 	
-	
-	
 	$sideBar.resizable({
 		start: function() {
 			memo = $(this).css('transition');
