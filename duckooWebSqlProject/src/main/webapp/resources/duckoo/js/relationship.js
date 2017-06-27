@@ -46,11 +46,29 @@ var RelationShipManager = (function() {
 		}
 		return source;
     }
+	
+	////////////////test/////////////// 
+	function temp(attr_id){
+        var obj = Object.keys(relationshipArr);
+        for(var i=0;i<obj.length;i++){
+            for(var j=0;obj[i].RelationAttrName[1].length;j++){
+                if(obj[i].RelationAttrName[1][j]===attr_id){
+                    return obj[i];
+                }
+            }
+        }
+    };
+	
+	
+	////////////////test end/////////////
+	
+	
 
 	return {
 		createRelationship : createRelationship,
 		getRelationship : getRelationship,
-		getSource:getSource
+		getSource:getSource,
+		temp:temp
 	}
 
 })();

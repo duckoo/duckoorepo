@@ -8,7 +8,11 @@
         <div class='modalTr' id={{id}} name="openAttrDelUpDiv_{{id}}">
             <div class='datas'>
 				{{#if isPk}}
+					{{#if isFk}}
+					<p id="keyType_{{id}}">PK/FK</p>
+					{{else}}
 					<p id="keyType_{{id}}">PK</p>
+					{{/if}}
 				{{else}}
 					<p id="keyType_{{id}}">NONE</p>
 				{{/if}}	
@@ -41,6 +45,7 @@
 <script type="text/javascript" src="/resources/duckoo/js/modalAttribute.js?<%=request.getParameter("token")%>"></script>
 <jsp:include page="addAttrModal.jsp"></jsp:include>
 <jsp:include page="updateAttrModal.jsp"></jsp:include>
+<jsp:include page="confirmModal.jsp"></jsp:include>
 <script>
 $(document).on("click",".openConstraintBtn",function(e){
 
@@ -83,8 +88,15 @@ $(document).on('click','.deleteAttrBtn',function(e){
     entity.deleteAttr(Number(id));
      target.remove();
       */
-     modalAttribute.Obserable.fire("delBtn",{event:e,that:this});     
+    modalAttribute.Obserable.fire("delBtn",{event:e,that:this});     
 });
+$("#confirmYes").on("click",function(e){
+	e.stopPropagation();
+    e.preventDefault();
+	console.log("concocncocncocncocncoccn");
+    modalAttribute.Obserable.fire("confirmYes",{event:e,that:this});
+});
+///////////////////delete end//////////////////////////////////
 
 ////////////////update column start///////////////////////////
 $(document).on("click",'.updateAttrBtn',function(e){
