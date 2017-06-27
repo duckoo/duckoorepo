@@ -6,6 +6,7 @@ var RelationShipManager = (function() {
 		RelationAttrName : [ [], [] ],
 		relationType:undefined,
 		relationLine:undefined,
+		restrictType:undefined,
 		init : function(opt) {
 			this.name = opt.name||undefined;
 			this.source = opt.source||undefined;
@@ -13,6 +14,7 @@ var RelationShipManager = (function() {
 			this.RelationAttrName = opt.RelationAttrName||undefined;
 			this.relationType=opt.relationType||undefined;
 			this.relationLine = opt.relationLine||undefined;
+			this.restrictType = opt.restrictType||undefined;
 		}
 	// database 공부합시다.
 	}
@@ -23,9 +25,9 @@ var RelationShipManager = (function() {
 		var newRela = Object.create(relationship);
 		Object.defineProperty(relationshipArr, newRela.name, {
 			value : newRela,
-			writable : false,
+			writable : true,
 			enumerable : true,
-			configurable : false
+			configurable : true
 		});
 		newRela.init(opt);
 		relationshipArr[newRela.name] = newRela;
@@ -46,11 +48,38 @@ var RelationShipManager = (function() {
 		}
 		return source;
     }
+	function getRelation(relationName){
 
+		return relationshipArr[relationName];
+	}
+	function temp(attr_id){
+		var obj = Object.keys(relationshipArr);
+		for(var i=0;i<obj.length;i++){
+			for(var j=0;obj[i].RelationAttrName[1].length;j++){
+				if(obj[i].RelationAttrName[1][j]===attr_id){
+					return obj[i];
+				}
+			}
+		}
+	}
+	function getRelationBySrcId(srcid){
+		for(var i = 0;relationshipArr.length;i++){
+			if(relationshipArr[i].source==srcid){
+				return relationshipArr[i];
+				
+			}
+			
+		}
+		
+	}
+	
+	
 	return {
 		createRelationship : createRelationship,
 		getRelationship : getRelationship,
-		getSource:getSource
+		getSource:getSource,
+		getRelation:getRelation,
+		temp:temp
 	}
 
 })();

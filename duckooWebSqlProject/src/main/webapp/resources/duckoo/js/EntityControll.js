@@ -21,8 +21,33 @@ var EntityControll = (function(){
 		return true;
 	}
 	
+	//not use
+	function isAlreadyConnected(tempRelation){
+		
+		
+		console.log("connection founded",RelationShipManager.getRelation(tempRelation.name));
+		if(RelationShipManager.getRelation(tempRelation.name)){
+			return true;
+		}else{
+			return false;
+		}
+		
+	}
+	
+	function isChangeable(src_table_id,attr){
+		RelationShipManager.getRelationBySrcId();
+		
+		
+	}
+	//end
+	function isDualKey(attr_id,sourceId){
+		var obj = relationshipManager;
+		
+		
+	};
 	return {isEntityExist:isEntityExist,
 			isPkExist:isPkExist,
-			isEffectiveName:isEffectiveName};	
+			isEffectiveName:isEffectiveName,
+			isAlreadyConnected:isAlreadyConnected};	
 	
 })();

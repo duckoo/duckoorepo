@@ -15,6 +15,7 @@ var EnitityView=(function(){
 
   function refresh(){ 	
 	 var str=this.genHtmlStr();
+	 console.log("str",str);
 	 var $this=$("#"+this.name);
 	   $this.html($(str).html());
 	}
@@ -25,7 +26,7 @@ var EnitityView=(function(){
 		$taget.append(str);
 		console.log('name: ',this.name);
 		console.log("뭐지: ","#"+this.name);
-		$("#"+this.name).draggable();
+		$("#"+this.name).draggable({handle:'.table_name'});
 	}
    
   function show(){ 

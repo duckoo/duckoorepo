@@ -8,7 +8,7 @@ var renderManager=(function(){
 		var $target= opt.$target ||undefined;
 		console.log("line option :",opt.lineType);
 		var paintStyle = {  
-				strokeStyle: "#46F10F",
+				strokeStyle: "#F14343",
 				lineWidth: 5,
 				dashstyle:undefined
 		        };
@@ -20,6 +20,8 @@ var renderManager=(function(){
 			alert("잘못된 이름 ");
 			return;
 		}
+		
+		
 		var obj= jsPlumb.connect({
 		       source:$source, 
 		       target:$target,
@@ -33,9 +35,9 @@ var renderManager=(function(){
 		
 	   Object.defineProperty(lines,opt.id,{
 	         value:obj,
-	         writable:false,
+	         writable:true,
 	         enumerable:true,
-	         configurable:false
+	         configurable:true
 	    });
 	   
 	    //나중에 써먹어야된다.

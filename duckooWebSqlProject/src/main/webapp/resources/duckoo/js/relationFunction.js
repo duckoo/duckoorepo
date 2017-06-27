@@ -20,10 +20,9 @@ var relationfunction=(function(){
 		    	elementArr.push(id);
 		    	console.log("second :",elementArr);
 		    	$("#relationModal").modal();
-		    	tempRelation= {source:fid,target:id,name:id+""+fid};
+		    	tempRelation= {source:fid,target:id};
 		    
 		    	console.log("tempRelation : ",tempRelation);
-		    	
 
 		    	return;
 		     }

@@ -16,24 +16,46 @@
     border-color: #787878;
     border-radius:10px;
 }
-.attrBox{
-    width:74%;
-    height:100%;
-    float:left;
-    border-style:solid;
-    margin-left:20px;
+.attrBoxHeader{
+	width:80%;
+	height:49px;
+	float:left;
+	margin-left:2%;
     border-color: #787878;
-    border-radius:10px;
-    overflow-y: scroll;
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-left-style: solid;
+    overflow:hidden;
+}
+.attrBox{
+    width:80%;
+    height:295px;
+    float:left;
+    border-bottom-style:solid;
+    border-left-style:solid;
+    border-right-style:solid;
+    margin-left:2%;
+    border-color: #787878;
+    border-bottom-left-radius:10px;
+    border-bottom-right-radius:10px;
+    overflow-y: auto;
+}
+.addAttrBtnBox{
+	float: left;
+	margin-left:2%;
 }
 
 .tbl {
     border-collapse: collapse;
     width: 650px;
     height:100%;
+    float:left;
+    position:relative;
 }
 .modalTr{
-    width:670px;
+    width:678px;
     height:50px;
     border-bottom: 1px solid white;
     position: relative;
@@ -44,7 +66,7 @@
     border-right: 2px solid white;
     position: relative;
     float:left;
-    width:109px;
+    width:113px;
     height: 49px;
     text-align: center;
     padding-top: 15px;
@@ -55,15 +77,23 @@
     border-right: 2px solid white;
     position: relative;
     float:left;
-    width:109px;
+    width:113px;
     height: 49px;
     text-align: center;
     padding-top: 15px;
+    overflow:auto;
 
 }
 div[name=ConstraintCheckBox]{
     text-align: center;
     padding-top: 15px;
+    height:0px;
+    transition:0.5s;
+    display:none;
+}
+div[name=attrDelUpBtnBox]{
+	text-align:center;
+	padding-top: 15px;
     height:0px;
     transition:0.5s;
     display:none;
