@@ -78,7 +78,6 @@ background-color: red;
 
 $(document).ready(function(){
 	
-	
 
 	
 });

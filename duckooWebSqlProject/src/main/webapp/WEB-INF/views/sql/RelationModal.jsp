@@ -134,8 +134,9 @@ $("#conform").on("click",function(e){
 	 var tempName = $("#tbl_name").val().trim();
 	 
 	 if(!EntityControll.isEntityExist(tempName)){
-	 	EntityManager.createEntity({name:tempName,attr:[]},false);
-	 	EntityManager.showEntity(tempName);
+	 	var entity=EntityManager.createEntity({name:tempName,attr:[]});
+	   v(entity).show();
+	 	
 	 	$("#tbl_nameModal").modal('hide');
 	 }
 	 else{
@@ -285,7 +286,7 @@ function registRelationShipManager(tempRelation){
 	console.log("ttttttttttttttttttttttttttttttt :",RelationShipManager.getRelation("e1e32232"));
 	renderManager.connectDiv({$source:$("#"+tempRelation.source) ,$target:$("#"+tempRelation.target),id:tempRelation.source+" "+tempRelation.target,lineType:tempRelation.relationLine});
 	
-	console.log("get relationship name :",RelationShipManager.temp(1));
+	
 	v(EntityManager.getEntityByName(tempRelation.source)).refresh();
 	v(EntityManager.getEntityByName(tempRelation.target)).refresh();
 	
@@ -339,19 +340,39 @@ function autoGen(srcElementId,tarElementId,connectionType){
 		cloneArr.push(cloneAttr);
 		
 	}
-	console.log("the information of cloneArr :",cloneArr);
-	for(var j = 0;j<cloneArr.length;j++){
-  		EntityManager.setAttribute(tarElementId, cloneArr[j]);
+	
+	
+	
+	
+	
+	
+	if(EntityControll.isNameExist(cloneArr,relationfunction.getTempRelation())){
+		alert("이미 존재하는 이름입니다.");
+		return;
 	}
-	firstName = firstName.substring(0,firstName.length-1);
-	relationfunction.getTempRelation().name = firstName +"_"+firstName;
 	//tempRelation Attr이용해서 connect option 지정.
 	//renderManager.connectDiv({$source:$("#"+relationfunction.getTempRelation().source) ,$target:$("#"+relationfunction.getTempRelation().target),id:relationfunction.getTempRelation().source+" "+relationfunction.getTempRelation().target,lineType:relationfunction.getTempRelation().relationLine});
-	
+	else{
+		console.log("the information of cloneArr :",cloneArr);
+		for(var j = 0;j<cloneArr.length;j++){
+	  		EntityManager.setAttribute(tarElementId, cloneArr[j]);
+		}
+		
+		for(var i=0;i<cloneArr.length;i++){
+			lastName +=EntityManager.getEntityByName(relationfunction.getTempRelation().target).search({pName:cloneArr[i].pName})[0].id+"/";
+			
+		}
+		
+		firstName = firstName.substring(0,firstName.length-1);
+		lastName = lastName.substring(0,lastName.length-1);
+		relationfunction.getTempRelation().name = firstName +"_"+lastName;	
+		
+		
 	console.log(relationfunction.getTempRelation());
 	registRelationShipManager(relationfunction.getTempRelation());
 	
 	console.log("relation ship saved : ",RelationShipManager.getRelationship(relationfunction.getTempRelation().name));
+	}
 }
 
 

@@ -23,7 +23,7 @@
 		crossorigin="anonymous"></script>
 <script type="text/javascript" src="/resources/duckoo/js/duckooPlumb.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/relationship.js?<%=token%>"></script>
-<script type="text/javascript" src="/resources/duckoo/js/EntityControll.js?<%=token%>"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.js"></script> 
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -53,7 +53,7 @@
 <jsp:param name="token" value="<%=token%>" />
 </jsp:include> 
 
-
+<script type="text/javascript" src="/resources/duckoo/js/EntityControll.js?<%=token%>"></script>
 <script>
 jsPlumb.ready(function() {
 	 setInterval(function(){
@@ -78,7 +78,7 @@ jsPlumb.ready(function() {
 	 EntityManager.createEntity({name:"e32232",attr:[]},false);
 	 var en2 = EntityManager.getEntityByName("e32232");
 	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"tt22222",isPk:true});
-	 en2.setAttr({lName:"글제목",pName:"title",datetype:"tt22222"});
+	
 	 en2.setAttr({lName:"내용",pName:"content",datetype:"tt22222"});
 	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
 	 

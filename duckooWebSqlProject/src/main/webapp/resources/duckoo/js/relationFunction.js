@@ -148,7 +148,4 @@ var relationfunction=(function(){
 		 	getElementArr:getElementArr,
 		 	initiateElementArr:initiateElementArr}
 	 
-
-	 
-	 
 })();

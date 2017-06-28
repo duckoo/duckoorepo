@@ -8,36 +8,29 @@ var EnitityView=(function(){
 		else str+="68px";
 		return str;
 	});
-
   function genHtmlStr(){ 
 	   return entityTemplate(this);
    } 
-
   function refresh(){ 	
 	 var str=this.genHtmlStr();
-	 console.log("str",str);
 	 var $this=$("#"+this.name);
 	   $this.html($(str).html());
 	}
   function renderToHTML($taget){
-		console.log("this",this);
 		 if(!$taget)$taget=$("body");
 		 var str=this.genHtmlStr();
 		$taget.append(str);
-		console.log('name: ',this.name);
-		console.log("뭐지: ","#"+this.name);
+		$("#"+this.name).draggable();
 		$("#"+this.name).draggable({handle:'.table_name'});
+
 	}
-   
   function show(){ 
 		var $this=$("#"+this.name);
-		console.log($this);
 		$this.css("display","block");
 		if($this.length===0){
 			this.renderToHTML();
 		}
 	}
-
   function hide(){
 	 var $this=$("#"+this.name);
 	 $this.css("display","none");

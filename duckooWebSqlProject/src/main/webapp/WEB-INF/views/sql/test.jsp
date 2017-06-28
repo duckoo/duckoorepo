@@ -28,7 +28,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
 
 <script type="text/javascript" src="/resources/duckoo/js/Observer.js?<%=token%>"></script>  
-<script type="text/javascript" src="/resources/duckoo/js/view/dView.js?<%=request.getParameter("token")%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/view/dView.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/util/kAOP.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/util/mappingSpyContainer.js?<%=token%>"></script>
+
+
+
+
 
 
 </head>
@@ -50,6 +56,7 @@
 <jsp:param name="token" value="<%=token%>" />
 </jsp:include> 
 
+
 <script>
 jsPlumb.ready(function() {
 	 
@@ -57,7 +64,7 @@ jsPlumb.ready(function() {
 	   jsPlumb.repaintEverything();
 	},1000/20);
 	
-	 EntityManager.createEntity({name:"e1"});
+	  EntityManager.createEntity({name:"e1"});
 	 var en=EntityManager.getEntityByName("e1");
 	
 	 
@@ -66,11 +73,7 @@ jsPlumb.ready(function() {
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"int",datelength:12,isPk:true,isFk:true});
 	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"int",datelength:13,isPk:true,isFk:true});
 
-	/*  console.log("en: ",en);
-	var fac = dView.get("entity");
-	fac.inject(en);
-	en.show();
-	 */
+	
 	v(en).show();
 	/* console.log("fac: ",fac);
 	fac.inject(en)
@@ -80,15 +83,45 @@ jsPlumb.ready(function() {
 	fac.show.call(en);
 	console.log()
 	 */
-	
+/* 	
 	 RelationShipManager.createRelationship({name:"r1",source:"test", target:"e1" ,RelationAttrName:[ ["1","2"],["3","4"] ] })
+	 */
+/* var kp=	 new kAOP();	 
+	 	 kp.before(SqlFactory,"get",function(){
+		 console.log("AOP TEST ",this);
+	 }) */
 	 
-	var genSql=SqlFactory.get("mysql");
+	/* var genSql=SqlFactory.get("mysql");
 	var sql = genSql.genCreateTableDDL(en);
-	 console.log("sql: ",sql); 
+	 console.log("sql: ",sql);  */
 
+
+	/* var obj={
+     name:"name",
+      kyb:{1:"dd",2:"ss"},
+      zz:[1,2,3,4,5]
+	}
+	spyContainer(obj); */
+	/*  obj.name.observe(function(pt){
+		 console.log("arg: ",pt)
+			console.log("observe---------------");
+	})
+	obj.name.change(); */
+	
+	/* console.log("why ",obj.name("sibal"));
+	 */
 	 
-	 
+	// obj.kyb("1","564");
+	/*  console.log(obj.kyb("1"));
+	 console.log("key 1: ",obj.kyb("1")); */
+	/* console.log("z: ", obj.zz(1,"ssss"));
+    console.log("z: ", obj.zz(1,"222"));        
+    console.log("z: ", obj.zz(1)); 
+    
+  //  console.log("name: ", obj.name("siba"));  
+    console.log("name: ", obj.name());  
+     */
+ //   console.log("why2: ",obj.name("sibal"));
 //  observer ex....
 /*  EntityManager.createEntity({name:"e1"},true); 
  var observer=Object.create(Obsever);
@@ -100,7 +133,7 @@ jsPlumb.ready(function() {
  } 
   EntityManager.Obserable.setEventObserver("click",observer);
   EntityManager.Obserable.setEventObserver("scaleUpBtn_click",observer);  */ 
-  
+     
   
   
 }); 

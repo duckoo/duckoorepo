@@ -50,7 +50,11 @@
 			<div id='pk_{{name}}' style='width:100%;height:100%;'>
 				{{#each attr}}
 					{{#if isPk}}
+						{{#if isFk}}
+						<div class="pkDiv"><i class="fa fa-key" target='pk' aria-hidden="true"></i><i class="fa fa-key" target='fk' aria-hidden="true"></i>{{lName}}</div>
+						{{else}}
 						<div class="pkDiv"><i class="fa fa-key" target='pk' aria-hidden="true"></i>{{lName}}</div>
+						{{/if}}
 					{{else if isFk}}
 						<div class="fk"><i class="fa fa-key" target='fk' aria-hidden="true"></i>{{lName}}</div>
 					{{/if}}

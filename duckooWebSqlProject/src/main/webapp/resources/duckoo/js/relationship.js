@@ -48,16 +48,27 @@ var RelationShipManager = (function() {
 		}
 		return source;
     }
+
 	function getRelation(relationName){
+
+	
 
 		return relationshipArr[relationName];
 	}
-	function temp(attr_id){
+	function temp(pName){
 		var obj = Object.keys(relationshipArr);
+		console.log("루프 obj : ",pName);
+		var targetElement;
+		var srcElement;
+		var tartarElement;
 		for(var i=0;i<obj.length;i++){
-			for(var j=0;obj[i].RelationAttrName[1].length;j++){
-				if(obj[i].RelationAttrName[1][j]===attr_id){
-					return obj[i];
+			srcElement = relationshipArr[obj[i]].name.split("_")[0];
+			targetElement = relationshipArr[obj[i]].name.split("_")[1];
+			tartarElement = targetElement.split("/");
+			for(var j=0;j<tartarElement.length;j++){
+				console.log("타르타르타르타르타르타르:",tartarElement[j]);
+				if(tartarElement[j] == pName){
+					return relationshipArr[obj[i]];
 				}
 			}
 		}

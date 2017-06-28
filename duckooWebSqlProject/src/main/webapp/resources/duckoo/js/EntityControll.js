@@ -45,9 +45,25 @@ var EntityControll = (function(){
 		
 		
 	};
+	
+	function isNameExist(cloneArr,tempRelation){
+		
+		for(var i=0;i<cloneArr.length;i++){
+			var obj = EntityManager.getEntityByName(tempRelation.target).search({pName:cloneArr[i].pName});
+			
+			if(obj.length!=0){
+				return true;
+			}
+			else{
+				return false;
+			}
+
+		}
+	}
 	return {isEntityExist:isEntityExist,
 			isPkExist:isPkExist,
 			isEffectiveName:isEffectiveName,
-			isAlreadyConnected:isAlreadyConnected};	
+			isAlreadyConnected:isAlreadyConnected,
+			isNameExist:isNameExist};	
 	
 })();
