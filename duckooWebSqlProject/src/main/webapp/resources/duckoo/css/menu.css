@@ -29,10 +29,10 @@ body{
 	border-bottom:medium;
 	margin-top:3px;
 }
-#console{
+.console{
 	float:left; width:0px; height:250px; border-style: solid; position:fixed; margin-top:714px;
 	z-index:9000; background-color: whitesmoke; border-radius:10px;
-	display:none;
+ 	display:none;
 	transition: 0.5s;
 }
 .consoleHeader{
@@ -43,10 +43,10 @@ body{
 .consoleHeader:hover{
 	cursor:move;
 }
-#console:hover{
+.console:hover{
 	z-index:9000;
 }
-#sideBar{
+.sideBar{
 	float:left; width:0px; height:650px; background-color:#d2d2d2; 
 	border-radius: 5px; border-style:solid; position:fixed;
 	margin-top:49px;
@@ -54,7 +54,7 @@ body{
 	display:none;
 	transition: 0.5s;
 }
-#sideBar:hover{
+.sideBar:hover{
 	z-index:4;
 }
 .sideBarHeader{

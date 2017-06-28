@@ -76,13 +76,6 @@ background-color: red;
 
 <script>
 
-$(document).ready(function(){
-	
-
-	
-});
-
-
 </script>
 
 </body>

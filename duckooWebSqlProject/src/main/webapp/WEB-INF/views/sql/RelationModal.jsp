@@ -109,6 +109,15 @@
 
 <script type="text/javascript" src="/resources/duckoo/js/relationFunction.js?<%=22%>"></script>
 <script>
+
+var $document=$document || $(document); 
+
+$document.on("click","#makeTableBtn",function(e){
+	$("#tbl_nameModal").modal({backdrop:'static'});
+});
+
+	
+	
 function checkRes(chk){
     var obj = $(".resOption");
     for(var i=0; i<obj.length; i++){
@@ -116,7 +125,8 @@ function checkRes(chk){
             obj[i].checked = false;
         }
     }
-}
+} 
+
 function checkOpt(chk){
     var obj = $(".option");
     for(var i=0; i<obj.length; i++){
@@ -125,10 +135,7 @@ function checkOpt(chk){
         }
     }
 }
-$("#makeTableBtn").on("click",function(e){
-	 $("#tbl_nameModal").modal({backdrop:'static'});
-	 
-});
+
 $("#conform").on("click",function(e){
 	 
 	 var tempName = $("#tbl_name").val().trim();
@@ -141,12 +148,10 @@ $("#conform").on("click",function(e){
 	 }
 	 else{
 		 console.log("중복.");
-		 
 	 }
-	 
 });
 
-$("#makeRelationBtn").on("click",function(e){
+$document.on("click","#makeRelationBtn",function(e){
  	e.stopPropagation();
 	e.preventDefault();
 	
@@ -343,9 +348,6 @@ function autoGen(srcElementId,tarElementId,connectionType){
 	
 	
 	
-	
-	
-	
 	if(EntityControll.isNameExist(cloneArr,relationfunction.getTempRelation())){
 		alert("이미 존재하는 이름입니다.");
 		return;
@@ -428,7 +430,6 @@ function checkBoxInitiate(optionValueClass){
         	obj[i].checked = true;
         }
     }
-	
 	
 	
 };
