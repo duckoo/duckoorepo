@@ -73,6 +73,9 @@ var RelationShipManager = (function() {
 			}
 		}
 	}
+	
+	
+	
 	function getRelationBySrcId(srcid){
 		for(var i = 0;relationshipArr.length;i++){
 			if(relationshipArr[i].source==srcid){

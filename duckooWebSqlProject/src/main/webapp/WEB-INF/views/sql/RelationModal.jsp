@@ -107,14 +107,22 @@
     </div>
 </div>
 
-<script type="text/javascript" src="/resources/duckoo/js/relationFunction.js?<%=22%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/relationFunction.js?<%=request.getParameter("token")%>"></script>
+
+<script type="text/javascript" src="/resources/duckoo/js/node/AttrNode.js?<%=request.getParameter("token")%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/node/AttrNodeManager.js?<%=request.getParameter("token")%>"></script>
+
+<script type="text/javascript" src="/resources/duckoo/js/relation/Relation.js?<%=request.getParameter("token")%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/relation/RelationManager.js?<%=request.getParameter("token")%>"></script>
+
+
 <script>
-<<<<<<< HEAD
 var $document=$document || $(document); 
 
-
 $document.on("click","#makeTableBtn",function(e){
-=======
+		 $("#tbl_nameModal").modal({backdrop:'static'});
+});
+
 function checkRes(chk){
     var obj = $(".resOption");
     for(var i=0; i<obj.length; i++){
@@ -131,14 +139,6 @@ function checkOpt(chk){
         }
     }
 }
-$("#makeTableBtn").on("click",function(e){
->>>>>>> branch 'master' of https://github.com/duckoo/duckoorepo
-	 $("#tbl_nameModal").modal({backdrop:'static'});
-<<<<<<< HEAD
-=======
-	 
->>>>>>> branch 'master' of https://github.com/duckoo/duckoorepo
-});
 
 $("#conform").on("click",function(e){
 	 
@@ -151,7 +151,7 @@ $("#conform").on("click",function(e){
 	 	$("#tbl_nameModal").modal('hide');
 	 }
 	 else{
-		 console.log("중복.");
+		 alert("중복.");
 	 }
 });
 
@@ -162,10 +162,10 @@ $document.on("click","#makeRelationBtn",function(e){
 	relationfunction.initiateElementArr();
 	var icon = $(this);
 	  
-	console.log("rf:",relationfunction)
+	//console.log("rf:",relationfunction)
 	
 	var mkFlag=relationfunction.changeFlagState();
-	console.log("rf:",mkFlag);
+	//console.log("rf:",mkFlag);
 	var color="#5cb85c";
 	if(mkFlag)
 	  color="#FF0066";
@@ -198,8 +198,8 @@ $("#nidf").on("click",function(e){
 $("#relSave").on("click",function(e){
 	e.stopPropagation();
 	e.preventDefault();
-	console.log(relationfunction.getSrcPK());
-	console.log(relationfunction.getTarPK());
+	//console.log(relationfunction.getSrcPK());
+	//console.log(relationfunction.getTarPK());
 	
 	var targetName= MatchName().split("+");
 	var firstName = "";
@@ -213,7 +213,7 @@ $("#relSave").on("click",function(e){
         autoFlag= false;
         }
      });
-	console.log("autoFlag",autoFlag);
+	//console.log("autoFlag",autoFlag);
 	if(autoFlag){
 		autoGen(relationfunction.getTempRelation().source,relationfunction.getTempRelation().target,relationfunction.getTempRelation().relationLine);
 	}
@@ -224,7 +224,7 @@ $("#relSave").on("click",function(e){
 		return;
 	}
 	else if(EntityControll.isPkExist(relationfunction.getSrcPK(),relationfunction.getTarPK())){
-	console.log($("#sourceCol option:selected").val());
+	//console.log($("#sourceCol option:selected").val());
 	
 	relationfunction.getTempRelation().relationAttr=[$("#sourceCol option:selected").val(),MatchName()];
 	
@@ -239,8 +239,8 @@ $("#relSave").on("click",function(e){
      //현재 pk의 데이터 타입을 Fk데이터 타입에 대입시켜버림 그냥 검증에서 데이터 타입 안맞으면 안들어가게 하는게 나을거같음.
      for(var i= 0; i<targetName.length;i++){
      	var getFKAttr = EntityManager.getEntityByName(relationfunction.getTempRelation().target).search({pName:targetName[i]})[0];
-     	console.log("target's FK attribute : ",getFKAttr);
-     	console.log("the clone of src Attr :" , EntityManager.getEntityByName(relationfunction.getTempRelation().source).search({pName:relationfunction.getSrcPK()[i].pName})[0]);
+     	//console.log("target's FK attribute : ",getFKAttr);
+     	//console.log("the clone of src Attr :" , EntityManager.getEntityByName(relationfunction.getTempRelation().source).search({pName:relationfunction.getSrcPK()[i].pName})[0]);
      	getFKAttr.datetype = EntityManager.getEntityByName(relationfunction.getTempRelation().source).search({pName:relationfunction.getSrcPK()[i].pName})[0].clone().datetype;
      	
      	firstName += EntityManager.getEntityByName(relationfunction.getTempRelation().source).search({pName:relationfunction.getSrcPK()[i].pName})[0].id;
@@ -258,12 +258,12 @@ $("#relSave").on("click",function(e){
 	//tempRelation Attr이용해서 connect option 지정.
 	
 	
-	console.log(relationfunction.getTempRelation());
+	//console.log(relationfunction.getTempRelation());
 	
 	
 	registRelationShipManager(relationfunction.getTempRelation());
 	
-	console.log("relation ship saved : ",RelationShipManager.getRelationship(relationfunction.getTempRelation().name));
+	//console.log("relation ship saved : ",RelationShipManager.getRelationship(relationfunction.getTempRelation().name));
 	
 	}
 	else{
@@ -276,11 +276,13 @@ $("#relSave").on("click",function(e){
 	$("#identified").modal('hide');
 });
 function registRelationShipManager(tempRelation){
-	console.log(tempRelation.restrictType);
+	//console.log(tempRelation.restrictType);
 	if(typeof tempRelation.restrictType==="undefined"){
 		restrictSelect();
 		
 	}
+	
+	var  relation= new Relation(tempRelation);
 	/* if(EntityControll.isAlreadyConnected(relationfunction.getTempRelation())){
 		console.log("redefine errors catch")
 		alert("이미 관계가 하나 이상 존재홥니다. 관계를 제거하고 다시 시도해 주십시오");
@@ -288,12 +290,26 @@ function registRelationShipManager(tempRelation){
 	} */
 	var firstName;
 	var lastName;
-	var tempRelAtt = tempRelation.relationAttr;
-	var srcAttArr = tempRelAtt[0].split("+");
-	var tarAttArr = tempRelAtt[1].split("+");
-	tempRelation.RelationAttrName = [srcAttArr,tarAttArr];
-	RelationShipManager.createRelationship(relationfunction.getTempRelation());
-	console.log("ttttttttttttttttttttttttttttttt :",RelationShipManager.getRelation("e1e32232"));
+	var tempRelAtt = tempRelation.name;
+	var srcAttArr = tempRelAtt.split("_")[0].split("/");
+	var tarAttArr = tempRelAtt.split("_")[1].split("/");
+	//console.log("tetetetetetetetetetetette : ",srcAttArr,tarAttArr);
+
+	
+	for(var i=0,len=tarAttArr.length;i<len ;i++ ){
+		var src= new AttrNode({id:srcAttArr[i],val:srcAttArr[i]});
+		var tag= new AttrNode({id:tarAttArr[i],val:tarAttArr[i]});
+		 attrNodeManager.link(src,tag);
+		 relation.addNode(srcAttArr[i],tarAttArr[i]);
+	}
+    relationManager.add(relation);
+    
+    
+	//console.log("저장됨? : ",relationManager.get(tempRelation.name));	
+	//console.log(" attrNodeManager------------- : ",attrNodeManager);
+	
+	//RelationShipManager.createRelationship(relationfunction.getTempRelation());
+	//console.log("ttttttttttttttttttttttttttttttt :",RelationShipManager.getRelation("e1e32232"));
 	renderManager.connectDiv({$source:$("#"+tempRelation.source) ,$target:$("#"+tempRelation.target),id:tempRelation.source+" "+tempRelation.target,lineType:tempRelation.relationLine});
 	
 	
@@ -306,13 +322,13 @@ function MatchName(){
 	var tempSelectedValue = [];
 	var resultStr="";
 	var domTarget = $(".tarCol option:selected");
-	console.log("selected dom target : ",domTarget);
+	//console.log("selected dom target : ",domTarget);
 	for(var i = 0;i<domTarget.length;i++){
 		tempSelectedValue.push(domTarget[i].value);
 		resultStr += domTarget[i].value+"+";
 	}
-	console.log("collecting Target's FK option :", tempSelectedValue);
-	console.log("the result of String name : ",resultStr.substring(0,resultStr.length-1));
+	//console.log("collecting Target's FK option :", tempSelectedValue);
+	//console.log("the result of String name : ",resultStr.substring(0,resultStr.length-1));
 	
 	
 	return resultStr.substring(0,resultStr.length-1);
@@ -322,15 +338,15 @@ function MatchName(){
 
 //id.
 function autoGen(srcElementId,tarElementId,connectionType){
-	console.log("src 엘리먼트 :",srcElementId);
-	console.log("tar 엘리먼트 :",tarElementId);
+	//console.log("src 엘리먼트 :",srcElementId);
+	//console.log("tar 엘리먼트 :",tarElementId);
 	relationfunction.getTempRelation().relationAttr=[$("#sourceCol option:selected").val(),$("#sourceCol option:selected").val()];
 	var tempString = $("#sourceCol option:selected").val();
 	var firstName = "";
 	var lastName = "";
 	
 	var tempArr = tempString.split("+");
-	console.log("names of selected pk's : ",tempArr)
+	//console.log("names of selected pk's : ",tempArr)
 	
 	var cloneArr = [];
     $(".option").each(function() {
@@ -363,7 +379,7 @@ function autoGen(srcElementId,tarElementId,connectionType){
 	//tempRelation Attr이용해서 connect option 지정.
 	//renderManager.connectDiv({$source:$("#"+relationfunction.getTempRelation().source) ,$target:$("#"+relationfunction.getTempRelation().target),id:relationfunction.getTempRelation().source+" "+relationfunction.getTempRelation().target,lineType:relationfunction.getTempRelation().relationLine});
 	else{
-		console.log("the information of cloneArr :",cloneArr);
+		//console.log("the information of cloneArr :",cloneArr);
 		for(var j = 0;j<cloneArr.length;j++){
 	  		EntityManager.setAttribute(tarElementId, cloneArr[j]);
 		}
@@ -378,10 +394,10 @@ function autoGen(srcElementId,tarElementId,connectionType){
 		relationfunction.getTempRelation().name = firstName +"_"+lastName;	
 		
 		
-	console.log(relationfunction.getTempRelation());
+	//console.log(relationfunction.getTempRelation());
 	registRelationShipManager(relationfunction.getTempRelation());
 	
-	console.log("relation ship saved : ",RelationShipManager.getRelationship(relationfunction.getTempRelation().name));
+	//console.log("relation ship saved : ",RelationShipManager.getRelationship(relationfunction.getTempRelation().name));
 	}
 }
 
@@ -391,10 +407,10 @@ $(".genOption").on("click",function(e){
 	genVal= (genVal==="true")?false:true;
 	
 	
-	console.log("first flag",genVal);
+	//console.log("first flag",genVal);
 	
 	$(this).val(genVal);
-	console.log("change complete? :",$(this).val());
+	//console.log("change complete? :",$(this).val());
 	if(!genVal){
 		$("#targetInfo").css("visibility","hidden");
 		
@@ -428,7 +444,7 @@ function restrictSelect(){
 
 function checkBoxInitiate(optionValueClass){
 	var obj = $("."+optionValueClass);
-	console.log("restrict option array:",obj);
+	//console.log("restrict option array:",obj);
     for(var i=0; i<obj.length; i++){
     		
         if(i!=0){
