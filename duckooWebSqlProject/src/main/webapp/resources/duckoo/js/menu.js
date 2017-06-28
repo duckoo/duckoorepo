@@ -1,4 +1,4 @@
-var $sideBar = $("#sideBar");
+/*var $sideBar = $("#sideBar");
 	var $console = $("#console");
 	
 	$sideBar.resizable({
@@ -39,8 +39,6 @@ var $sideBar = $("#sideBar");
 		document.getElementById("sideBar").style.display="none";
 	}
 
-	
-	
 	$console.resizable({
 		start: function() {
 			memo = $(this).css('transition');
@@ -65,7 +63,6 @@ var $sideBar = $("#sideBar");
 	function consoleOpen(){
 		document.getElementById("console").style.display="block";
 		setTimeout("openConsoleAnimation()",100);
-			
 	}
 	function openConsoleAnimation(){
 		document.getElementById("console").style.width = "70%";
@@ -77,3 +74,4 @@ var $sideBar = $("#sideBar");
 	function closeConsoleAnimation(){
 		document.getElementById("console").style.display="none";
 	}
+*/

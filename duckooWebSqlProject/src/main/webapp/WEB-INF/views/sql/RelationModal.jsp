@@ -84,13 +84,13 @@
 
 <script type="text/javascript" src="/resources/duckoo/js/relationFunction.js?<%=22%>"></script>
 <script>
+var $document=$document || $(document); 
 
 
-$("#makeTableBtn").on("click",function(e){
+$document.on("click","#makeTableBtn",function(e){
 	 $("#tbl_nameModal").modal({backdrop:'static'});
-	 
-	 
 });
+
 $("#conform").on("click",function(e){
 	 
 	 var tempName = $("#tbl_name").val().trim();
@@ -103,12 +103,10 @@ $("#conform").on("click",function(e){
 	 }
 	 else{
 		 console.log("중복.");
-		 
 	 }
-	 
 });
 
-$("#makeRelationBtn").on("click",function(e){
+$document.on("click","#makeRelationBtn",function(e){
  	e.stopPropagation();
 	e.preventDefault();
 	
@@ -125,6 +123,7 @@ $("#makeRelationBtn").on("click",function(e){
 	icon.css("background-color",color);
 
 });
+
 
 $("#idf").on("click",function(e){
 		e.stopPropagation();
