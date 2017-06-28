@@ -6,7 +6,7 @@ var renderManager=(function(){
 		
 		var $source= opt.$source ||undefined;
 		var $target= opt.$target ||undefined;
-		console.log("line option :",opt.lineType);
+		//console.log("line option :",opt.lineType);
 		var paintStyle = {  
 				strokeStyle: "#F14343",
 				lineWidth: 5,
@@ -46,14 +46,14 @@ var renderManager=(function(){
 	   var x=obj.getAttachedElements()[1].endpoint.x;
 	   var y=obj.getAttachedElements()[1].endpoint.y;
 	   
-	   console.log("rect: ",rectSor );
+	   /*console.log("rect: ",rectSor );
 	   console.log("pt On rect: ",projectPointInRect(rectSor,{x:x,y:y}));
 	   
 	   console.log("js: ",obj.getAttachedElements()[1].elementId);
 	    console.log("js: ",obj.getAttachedElements()[1].endpoint.y);
 	    console.log("js: ",obj.getAttachedElements()[1].endpoint.x); 
 	    console.log("js: ",obj.getAttachedElements()[1].endpoint);
-	    console.log("ep:",obj.getAttachedElements()[1].canvas.innerHTML);
+	    console.log("ep:",obj.getAttachedElements()[1].canvas.innerHTML);*/
 	    
 	    obj.getAttachedElements()[1].canvas.innerHTML="<img src='/resources/zaku/img/TestIMage.jpg'></img>";
 	    jsPlumb.repaintEverything();
@@ -110,8 +110,8 @@ function projectPointInRect(rect,pt){ // 어느정도  근사된 점에서 사�
 			idx=i;
 		}
 	}
-	console.log("td:",tempD);
-	console.log("idx",idx);
+	//console.log("td:",tempD);
+	//console.log("idx",idx);
 	return arr[idx];
 }
 
@@ -120,7 +120,7 @@ function getDivToRect(name){
 	// 충돌 검사할때 모든 엔티티 검사해야하는데
 	// 찾을때 jqurey로 찾으면 객체가 너무 비대해져서 느려질거같다.
 	 var div= document.getElementById(name);
-	 console.log(div);
+	 //console.log(div);
 	 var left = div.offsetLeft;
 	 var top= div.offsetTop;
 	 var width=div.offsetWidth;
@@ -134,6 +134,6 @@ function getDivToRect(name){
 			 x:x,y:y,width:width,height:height,
 			 left:left,	top:top,right:right,bottom:bottom
 	 };
-	 console.log("center",pt);
+	 //console.log("center",pt);
 	 return pt;
 }

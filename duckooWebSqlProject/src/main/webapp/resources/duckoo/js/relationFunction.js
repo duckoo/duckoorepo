@@ -1,3 +1,5 @@
+
+
 var relationfunction=(function(){
 	var flag = false;
 	var tempRelation = undefined;
@@ -12,17 +14,17 @@ var relationfunction=(function(){
 		 	if(elementArr.length==0){
 			
 				elementArr.push(id);
-				console.log("firstArr :",elementArr);
+				//console.log("firstArr :",elementArr);
 				return;
 		 	}
 		 	else if(elementArr[0]!==id){
 		    	var fid= elementArr[0];//relationship 이용해서  modal작업끝나고 랜더링
 		    	elementArr.push(id);
-		    	console.log("second :",elementArr);
+		    	//console.log("second :",elementArr);
 		    	$("#relationModal").modal();
 		    	tempRelation= {source:fid,target:id};
 		    
-		    	console.log("tempRelation : ",tempRelation);
+		    	//console.log("tempRelation : ",tempRelation);
 
 		    	return;
 		     }
@@ -36,16 +38,16 @@ var relationfunction=(function(){
 	  
 
 	 function collectSelectOption(EntityObject,isSource,relationType){
-		 console.log("entity :" ,EntityObject);
+		 //console.log("entity :" ,EntityObject);
 		 var pkAttrArray = [];
 		 //console.log("the result of search :",EntityObject.search({isPk:true}));
 		if(tempRelation.relationLine=="identify"||isSource){
 			pkAttrArray = collectPKElement(EntityObject,pkAttrArray,isSource);
-			console.log("Collect comp : " ,pkAttrArray);
+			//console.log("Collect comp : " ,pkAttrArray);
 		}
 		else if(tempRelation.relationLine=="nidentify"){
 			pkAttrArray =  collectStdElement(EntityObject,pkAttrArray,isSource);
-			console.log("Collect comp : " ,pkAttrArray);
+			//console.log("Collect comp : " ,pkAttrArray);
 		}
 		
 		 if(isSource){
@@ -59,7 +61,7 @@ var relationfunction=(function(){
 	 }
 	 function createSelectOption(pkAttrArr,isSource,relationType){
 		 var targetLink;
-		 console.log("Attribute Collected : " , pkAttrArr)
+		 //console.log("Attribute Collected : " , pkAttrArr)
 		 if(isSource){
 			 targetLink = $("#sourceCol"); 
 		 

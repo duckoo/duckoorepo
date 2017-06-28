@@ -9,84 +9,58 @@
 <% Random random = new Random(); 
     int token= random.nextInt();
 %> 		 		
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/resources/duckoo/css/mainModal.css">
-<script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/1.7.2/jquery.jsPlumb.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-		integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-		crossorigin="anonymous"></script>
-<script type="text/javascript" src="/resources/duckoo/js/duckooPlumb.js?<%=token%>"></script>
-<script type="text/javascript" src="/resources/duckoo/js/relationship.js?<%=token%>"></script>
-<script type="text/javascript" src="/resources/duckoo/js/EntityControll.js?<%=token%>"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.js"></script> 
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
-<script type="text/javascript" src="/resources/duckoo/js/Observer.js?<%=token%>"></script>
-<script type="text/javascript" src="/resources/duckoo/js/view/dView.js?<%=request.getParameter("token")%>"></script>
+
+<script type="text/javascript" src="/resources/duckoo/js/node/AttrNode.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/node/AttrNodeManager.js?<%=token%>"></script>
 
 </head>
 
-<body class="canvas" id="canvasDiv" style="width: 6000px; height: 6000px; border: 1px solid black;">
-
-<jsp:include page="/resources/duckoo/jsp/entity.jsp">
-<jsp:param name="token" value="<%=token%>" />
-</jsp:include> 
-
-<jsp:include page="/resources/duckoo/jsp/modalAttribute.jsp">
-<jsp:param name="token" value="<%=token%>" />
-</jsp:include> 
-
-<jsp:include page="/resources/duckoo/jsp/menu.jsp">
-<jsp:param name="token" value="<%=token%>" />
-</jsp:include> 
-
-
-<jsp:include page="RelationModal.jsp">
-<jsp:param name="token" value="<%=token%>" />
-</jsp:include> 
+<body>
 
 
 <script>
-jsPlumb.ready(function() {
-	 setInterval(function(){
-		 
-		jsPlumb.repaintEverything();
-	},1000/20);
-	
-	var mkFlag = false;
-	var tempRelation = {};
-	 EntityManager.createEntity({name:"e1",attr:[]},false);
-	 var en=EntityManager.getEntityByName("e1");
-	 en.setAttr({lName:"게시글번호",pName:"bno",datetype:"tt2",isPk:true,isFk:false});
-	 en.setAttr({lName:"글제목",pName:"title",datetype:"tt2",isFk:false});
-	 en.setAttr({lName:"글내용",pName:"content",datetype:"tt2"});
-	 en.setAttr({lName:"작성자",pName:"writer",datetype:"tt2"});
-	 en.setAttr({lName:"등록날자",pName:"regdate",datetype:"tt2"});
-	 
-	
-	 
-	 v(en).show();
-	 
-	 EntityManager.createEntity({name:"e32232",attr:[]},false);
-	 var en2 = EntityManager.getEntityByName("e32232");
-	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"tt22222",isPk:true,autoIncrement:true,notNull:true});
-	 en2.setAttr({lName:"글제목",pName:"title",datetype:"tt22222"});
-	 en2.setAttr({lName:"내용",pName:"contentㅁㄴㅇ리;ㅑㅂㅈㄷ겸ㄴㅇ러ㅗ",datetype:"tt22222"});
-	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
-	
-	 v(en2).show();
+var attMan=new AttrNodeManager();
+var o1= new AttrNode({id:1,val:{name:"1"}});
+var o2= new AttrNode({id:2,val:{name:"2"}});
+var o3=new AttrNode({id:3,val:{name:"3"}});
+var o4=new AttrNode({id:4,val:{name:"4"}});
 
-	 
-});
-	
-</script>
-   
+attMan.add(o1);
+attMan.add(o2);
+attMan.add(o3);
+attMan.add(o4);
+
+
+attMan.link(o1,o2);
+attMan.link(o2,o3);
+attMan.link(o3,o4);
+
+attMan.del(3);
+
+attMan.update(1,function(){
+	console.log(this.id);
+})
+
+
+
+/* attMan.update(2,function(){
+//	console.log(this.id);
+	this.val.name="sibal";
+	//console.log(this.val.name);
+})
+attMan.update(1,function(){
+//	console.log(this.id);
+	console.log(this.val.name);
+})
+ */
+
+
+
+ 
+ 
+ 
+ 
+
+</script>   
   </body>
 </html>
