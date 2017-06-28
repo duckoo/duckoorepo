@@ -20,7 +20,8 @@
                         <select id="keyTypeUp" class="teststtstst">
                             <option data-pk="true" data-fk="false"  value="PK">PK</option>
                             <option data-pk="false" data-fk="false"  value="None">None</option>
-                            <option data-pk="true" data-fk="true" value="PKFK">PK/FK</option>    
+                            <option data-pk="true" data-fk="true" value="PKFK">PK/FK</option>
+                            <option data-pk="false" data-fk="true" value="FK">FK</option>    
                         </select>
                     </div>
                 </div>

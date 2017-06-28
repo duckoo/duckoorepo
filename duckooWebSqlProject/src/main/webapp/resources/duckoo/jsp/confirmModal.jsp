@@ -9,7 +9,7 @@
           <h4 class="modal-title">컬럼삭제확인</h4>
         </div>
         <div class="cmodal-body" style="width:100%">
-          <p>외래키 컬럼 삭제시 해당 관계도 함께 삭제됩니다. 삭제하시겠습니까?</p>
+          <p>관계와 복합외래키가 모두 삭제됩니다. 삭제하시겠습니까?</p>
         </div>
         <div class="modal-footer">
           <button type="button" id="confirmYes" class="btn btn-success" data-dismiss="modal">예</button>

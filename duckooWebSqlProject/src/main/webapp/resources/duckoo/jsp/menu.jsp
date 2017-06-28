@@ -9,7 +9,7 @@
     		<div id="menuBar">
 			<h5 style="float:left; font-weight:bold;">&nbsp;&nbsp;저장되었습니다.&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-check" aria-hidden="true"></i></h5>
 			<button class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="bottom" title="DB에 테이블을 생성합니다."><span>Insert DB</span></button>
-			<button class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="top" title="JAVA로 VO코드를 생성합니다."><span>Generate-Code</span></button>
+			<button class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="bottom" title="JAVA VO코드를 생성합니다."><span>Generate-Code</span></button>
 			</div>
     	</ul>
 	</div>
@@ -26,7 +26,7 @@
 		<button id="makeTableBtn" class="btn btn-success" style="margin-top:5px; margin-left:5px;" type="button" data-toggle="tooltip" data-placement="bottom" title="테이블생성">
 	 		<i class="fa fa-table" aria-hidden="true"></i>
 	 	</button>
-		<button id="makeRelationBtn" class="btn btn-success" style="margin-top:5px;" type="button" data-toggle="tooltip" data-placement="top" title="관계생성">
+		<button id="makeRelationBtn" class="btn btn-success" style="margin-top:5px;" type="button" data-toggle="tooltip" data-placement="bottom" title="관계생성">
 			<i class="fa fa-long-arrow-down" aria-hidden="true"></i>
 		</button>
 		<div class="dropdown btn btn-success" style="float:left;">

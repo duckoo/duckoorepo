@@ -13,6 +13,8 @@
 					{{else}}
 					<p id="keyType_{{id}}">PK</p>
 					{{/if}}
+				{{else if isFk}}
+					<p id="keyType_{{id}}">FK</p>
 				{{else}}
 					<p id="keyType_{{id}}">NONE</p>
 				{{/if}}	

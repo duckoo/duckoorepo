@@ -1,6 +1,6 @@
 var $sideBar = $("#sideBar");
 	var $console = $("#console");
-	
+	$('[data-toggle="tooltip"]').tooltip();	
 	$sideBar.resizable({
 		start: function() {
 			memo = $(this).css('transition');

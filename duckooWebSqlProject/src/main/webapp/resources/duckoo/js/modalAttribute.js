@@ -86,11 +86,13 @@ function attrInputChange(e){
     var notNull = $("#notNull_"+id).is(":checked");
     var autoIncre = $("#autoIncre_"+id).is(":checked");
     var unique = $("#uniqueVal_"+id).is(":checked");
-    console.log(id,keyType,lName,pName,dataType,defaultVal,notNull,autoIncre,unique);
+    console.log("텍스트인풋으로 가져와보자:",id,keyType,lName,pName,dataType,defaultVal,notNull,autoIncre,unique);
     if(keyType==="PK"){
     	$("#keyTypeUp").val("PK").prop("selected", true);	
     }else if(keyType==="PK/FK"){
     	$("#keyTypeUp").val("PKFK").prop("selected", true);
+    }else if(keyType==="FK"){
+    	$("#keyTypeUp").val("FK").prop("selected", true);
     }
     else{
     	$("#keyTypeUp").val("None").prop("selected", true);
@@ -109,6 +111,30 @@ function attrInputChange(e){
 obb=Object.create(Obsever);
 obb.init("attrInputChange2",attrInputChange);
 Obserable.setEventObserver("attrInputChange",obb);
+
+function updateAttrFinalBtn(e){
+	var $that = $(e.that);
+	console.log("that: ",$that);
+	var id= $that.attr("data-id");
+	console.log("ididid",Number(id));
+	var attr =  entity.getAttr(Number(id));
+	console.log("uafb attr : ",attr);
+	attr.isPk = $("#keyTypeUp option:selected").val()==="PK"?true:false; 
+    attr.lName = $("#lNameUp").val();
+    attr.pName = $("#pNameUp").val();
+    attr.dataType = $("#dataTypeUp").val();
+    attr.defaultVal = $("#defaultValUp").val();
+    attr.notNull = $("#notNullUp").is(":checked");
+    attr.autoIncrement = $("#autoIncreUp").is(":checked");
+    
+    
+    console.log("uafb attr : ",attr);
+    ////////////relation update method add!!!!!!!!!!!!!!!!!!!!!!!!
+	
+}
+obb=Object.create(Obsever);
+obb.init("updateAttrFinalBtn2",updateAttrFinalBtn);
+Obserable.setEventObserver("updateAttrFinalBtn",obb);
 
 function delBtn(e){
 	 if(!target)return;
@@ -142,22 +168,21 @@ function confirms(keyType, pName){
 function confirmYes(){
 	
 	var id = target.attr("id");
-	console.log("ididididididididididididdidididi:",id);
 	
+	var ids = RelationShipManager.temp(id).name.split("_")[1].split("/");
+	
+	console.log("릴레이션네임:",ids);
 	var pName = document.getElementById("pName_"+id).innerHTML;
 	
-	entity.deleteAttr(Number(id));
-	var $openAttrDelUpDiv= $("#openAttrDelUpDiv_"+id);
-	var $openDiv = $("openDiv_"+id);
-	$openAttrDelUpDiv.remove();
-	$openDiv.remove();
-	target.remove();
+	for(var i=0;i<ids.length;i++){
+		entity.deleteAttr(Number(ids[i]));
+		document.getElementById("openAttrDelUpDiv_"+ids[i]).remove();
+		document.getElementById("openDiv_"+ids[i]).remove();
+		document.getElementById(ids[i]).remove();		
+	};
+	$("#confrimModal").modal('hide');	
 	
-	console.log("전전전전전전전전전전",RelationShipManager.getRelationship("e32232e1"));
-	
-	console.log("릴레이션릴레이션:",RelationShipManager.temp(id));
-	console.log("후후후후후훟후ㅜ후",RelationShipManager.getRelationship("e32232e1"));
-	//relation delete method add!!!!!!!!!!!!!!!!!!!!!!!
+		
 };
 obb=Object.create(Obsever);
 obb.init("confirmYes2",confirmYes);
@@ -181,30 +206,6 @@ function addAttrFinalBtn(e){
 obb=Object.create(Obsever);
 obb.init("addAttrFinalBtn2",addAttrFinalBtn);
 Obserable.setEventObserver("addAttrFinalBtn",obb);
-
-
-function updateAttrFinalBtn(e){
-	var $that = $(e.that);
-	console.log("that: ",$that);
-	var id= $that.attr("data-id");
-	console.log("ididid",Number(id));
-	var attr =  entity.getAttr(Number(id));
-	console.log("uafb attr : ",attr);
-	attr.isPk = $("#keyTypeUp selected:selected").val()==="PK"?true:false; 
-    attr.lName = $("#lNameUp").val();
-    attr.pName = $("#pNameUp").val();
-    attr.dataType = $("#dataTypeUp").val();
-    attr.defaultVal = $("#defaultValUp").val();
-    attr.notNull = $("#notNullUp").is(":checked");
-    attr.autoIncrement = $("#autoIncreUp").is(":checked");
-    
-    ////////////relation update method add!!!!!!!!!!!!!!!!!!!!!!!!
-	
-}
-obb=Object.create(Obsever);
-obb.init("updateAttrFinalBtn2",updateAttrFinalBtn);
-Obserable.setEventObserver("updateAttrFinalBtn",obb);
-
 
 function saveBtn(e){
 	console.log("entitytytytyty:",entity);
