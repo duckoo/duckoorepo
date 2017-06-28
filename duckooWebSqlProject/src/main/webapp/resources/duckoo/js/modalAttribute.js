@@ -89,7 +89,10 @@ function attrInputChange(e){
     console.log(id,keyType,lName,pName,dataType,defaultVal,notNull,autoIncre,unique);
     if(keyType==="PK"){
     	$("#keyTypeUp").val("PK").prop("selected", true);	
-    }else{
+    }else if(keyType==="PK/FK"){
+    	$("#keyTypeUp").val("PKFK").prop("selected", true);
+    }
+    else{
     	$("#keyTypeUp").val("None").prop("selected", true);
     }
     var $updateAttrModalWindow=$("#updateAttrModalWindow");
@@ -110,20 +113,59 @@ Obserable.setEventObserver("attrInputChange",obb);
 function delBtn(e){
 	 if(!target)return;
 	  var id=target.attr("id");
-	  console.log("id",id);
-	 entity.deleteAttr(Number(id));
-	 var $openAttrDelUpDiv= $("#openAttrDelUpDiv_"+id);
-	 var $openDiv = $("openDiv_"+id);
-	 $openAttrDelUpDiv.remove();
-	 $openDiv.remove();
-	 target.remove();
+	 
+	  var keyType = document.getElementById("keyType_"+id).innerHTML;
+	  var pName=document.getElementById("pName_"+id).innerHTML;
+	  
+	  confirms(keyType, pName);
+	  
 };
 obb=Object.create(Obsever);
 obb.init("delBtn2",delBtn);
 Obserable.setEventObserver("delBtn",obb);
 
+function confirms(keyType, pName){
+	if(keyType==="FK"||keyType==="PK/FK"){
+		$("#confrimModal").modal();
+		
+	} else {
+		var id=target.attr("id");
+		entity.deleteAttr(Number(id));
+		var $openAttrDelUpDiv= $("#openAttrDelUpDiv_"+id);
+		var $openDiv = $("openDiv_"+id);
+		$openAttrDelUpDiv.remove();
+		$openDiv.remove();
+		target.remove();
+	}
+};
+
+function confirmYes(){
+	
+	var id = target.attr("id");
+	console.log("ididididididididididididdidididi:",id);
+	
+	var pName = document.getElementById("pName_"+id).innerHTML;
+	
+	entity.deleteAttr(Number(id));
+	var $openAttrDelUpDiv= $("#openAttrDelUpDiv_"+id);
+	var $openDiv = $("openDiv_"+id);
+	$openAttrDelUpDiv.remove();
+	$openDiv.remove();
+	target.remove();
+	
+	console.log("전전전전전전전전전전",RelationShipManager.getRelationship("e32232e1"));
+	
+	console.log("릴레이션릴레이션:",RelationShipManager.temp(id));
+	console.log("후후후후후훟후ㅜ후",RelationShipManager.getRelationship("e32232e1"));
+	//relation delete method add!!!!!!!!!!!!!!!!!!!!!!!
+};
+obb=Object.create(Obsever);
+obb.init("confirmYes2",confirmYes);
+Obserable.setEventObserver("confirmYes",obb);
+
+
 function addAttrFinalBtn(e){
-	var keyType=$("#keyType option:selected").val()==="PK"?true:false;
+	var isPk=$("#keyType option:selected").val()==="PK"?true:false;
     var lName = $("#lName").val();
     var pName = $("#pName").val();
     var dataType = $("#dataType").val();
@@ -133,7 +175,7 @@ function addAttrFinalBtn(e){
     var autoIncre = $("#autoIncre").is(":checked");
     var uniqueVal = $("#uniqueVal").is(":checked");
     console.log(lName,pName,dataType,defaultVal,notNull,autoIncre,uniqueVal);
-	entity.setAttr({keyType:keyType, lName:lName,pName:pName,domainName:"none",datetype:dataType,notNull:notNull,autoIncrement:autoIncre,uniqueVal:uniqueVal});
+	entity.setAttr({isPk:isPk, lName:lName,pName:pName,domainName:"none",datetype:dataType,notNull:notNull,autoIncrement:autoIncre,uniqueVal:uniqueVal});
     tagSetAttr(entity);
 }
 obb=Object.create(Obsever);
@@ -155,8 +197,9 @@ function updateAttrFinalBtn(e){
     attr.defaultVal = $("#defaultValUp").val();
     attr.notNull = $("#notNullUp").is(":checked");
     attr.autoIncrement = $("#autoIncreUp").is(":checked");
-     
-	//tagGetAttr(id);
+    
+    ////////////relation update method add!!!!!!!!!!!!!!!!!!!!!!!!
+	
 }
 obb=Object.create(Obsever);
 obb.init("updateAttrFinalBtn2",updateAttrFinalBtn);
@@ -206,11 +249,7 @@ function tagSetAttr(){
 		 $tbl.append(columnTemplate(attr[i]));
 	}
 };
-function tagGetAttr(id){
-	var attr = entity.getAttr(Number(id));
-	
-	
-};
+
 function setModal(enti,modal){
 	entity=enti;
 	modal.setViewPort(body);
