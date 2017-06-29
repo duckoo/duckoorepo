@@ -1,6 +1,6 @@
 var Attribute=(function(){
 	var counter=(function(){
-		   var count=0;
+		   var count=1;
 		   return function(){return count++;}
 	 })();	
 ////////////////////////////////////////////////////

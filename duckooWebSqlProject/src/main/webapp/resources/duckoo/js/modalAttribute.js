@@ -119,18 +119,43 @@ function updateAttrFinalBtn(e){
 	console.log("ididid",Number(id));
 	var attr =  entity.getAttr(Number(id));
 	console.log("uafb attr : ",attr);
-	attr.isPk = $("#keyTypeUp option:selected").val()==="PK"?true:false; 
-    attr.lName = $("#lNameUp").val();
+	
+	var keyType = $("#keyTypeUp option:selected").val();
+	if(keyType==="PK"){
+		attr.isPk = true;
+		attr.isFk = false;
+	}else if(keyType==="FK"){
+		attr.isPk = false;
+		attr.isFk = true;
+	}else if(keyType==="None"){
+		attr.isPk = false;
+		attr.isFk = false;
+		console.log("난다고래래래래래래래래래래래래래래ㅐ래랠래래ㅐ래랠");
+	}else{
+		attr.isPk = true;
+		attr.isFk = true;	
+	}	
+	attr.lName = $("#lNameUp").val();
     attr.pName = $("#pNameUp").val();
-    attr.dataType = $("#dataTypeUp").val();
+    attr.datetype = $("#dataTypeUp").val();
     attr.defaultVal = $("#defaultValUp").val();
     attr.notNull = $("#notNullUp").is(":checked");
     attr.autoIncrement = $("#autoIncreUp").is(":checked");
     
     
-    console.log("uafb attr : ",attr);
-    ////////////relation update method add!!!!!!!!!!!!!!!!!!!!!!!!
-	
+    
+    
+    var attr1= attr.clone();
+    delete attr1["isPk"];
+    delete attr1["isFk"];
+    delete attr1["notNull"];
+    delete attr1["autoIncrement"];
+    
+    console.log("uafb attr : ",attr1);
+    
+    attrNodeManager.updateTourAll(String(id),{datetype:attr.datetype});
+    attrNodeManager.updateTourChild(String(id),attr1);
+    attrNodeManager.keyTypeTour(String(id),{isPk:attr.isPk,isFk:attr.isFk});
 }
 obb=Object.create(Obsever);
 obb.init("updateAttrFinalBtn2",updateAttrFinalBtn);
@@ -170,18 +195,9 @@ function confirmYes(){
 	var id = target.attr("id");
 	
 	console.log("에이티티알메니저:",attrNodeManager);
+	attrNodeManager.deleteTour(Number(id));
+	console.log("delete Atfer:",attrNodeManager);
 	
-	attrNodeManager.relationTour(Number(id),function(imyourman){
-		var count=relationManager.get(imyourman).decreaseCount();
-	    console.log("czsdfgasdfasdf: ",count);
-		if(count===0){
-			jsPlumb.detach(renderManager.getConnecter(relationManager.get(imyourman).id));
-		 }
-	});
-	
-	attrNodeManager.unRelationParent(id);//
-	
-	attrNodeManager.del(id);//
 	
 	entity.deleteAttr(Number(id));
 	var $openAttrDelUpDiv= $("#openAttrDelUpDiv_"+id);

@@ -1,3 +1,5 @@
+
+/*
 var RelationShipManager = (function() {
 	var relationship = {
 		name : undefined,
@@ -97,3 +99,4 @@ var RelationShipManager = (function() {
 	}
 
 })();
+*/
