@@ -55,9 +55,15 @@ var attrNodeManager=(function(){
 			idArr.push(this.id);
 		});
 		
+		
+		
 		idArr.forEach(function(idx){
+			console.log("디스쩜에이알알:",this.arr[idx]);
+		    var en=EntityManager.getEntityByName(this.arr[Number(idx)].entity);
+		    en.deleteAttr(Number(idx));
+		    console.log("en:::::",en);
 			 delete manager.arr[idx];
-		})
+		}.bind(this));
 	}
 	
 	AttrNodeManager.prototype.link=function(pid,cid){
@@ -81,11 +87,14 @@ var attrNodeManager=(function(){
 	}
 	
 	AttrNodeManager.prototype.relationTour=function(startId,fn){
+		console.log("들어왔냐 에이티티알 매니저에!!!!!!!?");
 		function tour(){
 			var p= this.parent.reId;
+			console.log("PPPPPPPP:",p);
 			var t= this.reId;
 			var iRarr = MyArrayUtil.intersection(p,t);
 			iRarr.forEach(function(id){ fn(id); })
+			console.log("iRarr:", iRarr);
 		}
 		this.update(startId,tour);
 	}

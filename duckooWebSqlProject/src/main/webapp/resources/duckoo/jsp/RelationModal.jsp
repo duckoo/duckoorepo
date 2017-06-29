@@ -304,8 +304,12 @@ function registRelationShipManager(tempRelation){
 		var tId=tarAttArr[i];
 		var src= attrNodeManager.get(sId);
 		// 일단
+		src.entity=tempRelation.source;
+		
 		src.relIdPush(tempRelation.id);
 		var tag= attrNodeManager.get(tId);
+		tag.entity=tempRelation.target;
+		
 		tag.relIdPush(tempRelation.id);
 		attrNodeManager.link(sId,tId);
 	}
@@ -318,16 +322,7 @@ function registRelationShipManager(tempRelation){
 	
 	
 	
-	attrNodeManager.relationTour(srcAttArr[0],function(id){
-		console.log("id;;;;",id)
-		var count=relationManager.get(id).decreaseCount();
-	    console.log("c: ",count);
-		if(count===0){
-			 /*관계선 삭제.*/
-		 }
-	});
-	attrNodeManager.unRelationParent(srcAttArr[0]);
-	attrNodeManager.del(srcAttArr[0]);
+	
 	
 	
 	
