@@ -24,7 +24,6 @@ var MyArrayUtil=(function(){
 	  return retA1;
 	}
 	
-	
 	return{
 		intersection:intersection,
 		minu:minu
