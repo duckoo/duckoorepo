@@ -31,6 +31,11 @@
 <script type="text/javascript" src="/resources/duckoo/js/Observer.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/view/dView.js?<%=request.getParameter("token")%>"></script>
 
+<script type="text/javascript" src="/resources/duckoo/js/util/Count.js?<%=request.getParameter("token")%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/util/MyArrayUtil.js?<%=token%>"></script>
+
+
+
 
 </head>
 
@@ -49,7 +54,7 @@
 </jsp:include> 
 
 
-<jsp:include page="RelationModal.jsp">
+<jsp:include page="/resources/duckoo/jsp/RelationModal.jsp">
 <jsp:param name="token" value="<%=token%>" />
 </jsp:include> 
 

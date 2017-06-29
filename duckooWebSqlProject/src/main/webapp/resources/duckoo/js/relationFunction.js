@@ -1,11 +1,16 @@
 
 
+
+
 var relationfunction=(function(){
 	var flag = false;
 	var tempRelation = undefined;
 	var elementArr=[];
 	var srcPKElement=[];
 	var tarPKElemnet=[];
+	var relId  =new Count();
+	
+	
 	
 	function prepareStatement(e){
 		if(flag){	
@@ -146,7 +151,7 @@ var relationfunction=(function(){
 		 	collectSelectOption:collectSelectOption,
 		 	getSrcPK:getSrcPK,
 		 	getTarPK:getTarPK,
-
+		 	relId:relId,
 		 	getElementArr:getElementArr,
 		 	initiateElementArr:initiateElementArr}
 	 

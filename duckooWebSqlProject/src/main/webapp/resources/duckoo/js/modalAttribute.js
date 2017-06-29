@@ -169,7 +169,7 @@ function confirmYes(){
 	
 	var id = target.attr("id");
 	
-	var ids = RelationShipManager.temp(id).name.split("_")[1].split("/");
+	var ids = 
 	
 	console.log("릴레이션네임:",ids);
 	var pName = document.getElementById("pName_"+id).innerHTML;
@@ -180,6 +180,9 @@ function confirmYes(){
 		document.getElementById("openDiv_"+ids[i]).remove();
 		document.getElementById(ids[i]).remove();		
 	};
+	
+	
+	
 	$("#confrimModal").modal('hide');	
 	
 		
