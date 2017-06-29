@@ -58,6 +58,11 @@
 <jsp:param name="token" value="<%=token%>" />
 </jsp:include> 
 
+<jsp:include page="/resources/duckoo/jsp/sqlGen.jsp">
+<jsp:param name="token" value="<%=token%>" />
+</jsp:include> 
+
+
 <script type="text/javascript" src="/resources/duckoo/js/EntityControll.js?<%=token%>"></script>
 <script>
 jsPlumb.ready(function() {

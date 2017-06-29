@@ -9,7 +9,6 @@ var attrNodeManager=(function(){
 		this.arr[node.id]=node;
 	}
 	
-
 	
 	AttrNodeManager.prototype.unLink=function(id){// 검증안됨..
 		var pare= this.arr[id].parent;
@@ -73,6 +72,7 @@ var attrNodeManager=(function(){
 		})(startId);
 	}
 	
+	
 	AttrNodeManager.prototype.relationTour=function(startId,fn){
 		console.log("들어왔냐 에이티티알 매니저에!!!!!!!?");
 		function tour(){
@@ -85,6 +85,7 @@ var attrNodeManager=(function(){
 		}
 		this.update(startId,tour);
 	}
+	
 	
 	AttrNodeManager.prototype.unRelationParent=function(id){ //부모와 인연을 끊는다..
 		   var pare= this.arr[id].parent;

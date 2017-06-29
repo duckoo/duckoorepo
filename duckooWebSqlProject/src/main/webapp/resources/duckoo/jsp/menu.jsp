@@ -11,7 +11,7 @@
     		<div id="menuBar">
 			<h5 style="float:left; font-weight:bold;">&nbsp;&nbsp;저장되었습니다.&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-check" aria-hidden="true"></i></h5>
 			<button class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="bottom" title="DB에 테이블을 생성합니다."><span>Insert DB</span></button>
-			<button class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="bottom" title="JAVA VO코드를 생성합니다."><span>Generate-Code</span></button>
+			<button id="genTest" class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="bottom" title="JAVA VO코드를 생성합니다."><span>Generate-Code</span></button>
 			</div>
     	</ul>
 	</div>
@@ -108,6 +108,8 @@ $document.on("click","#sideBarCloseBtn",function(e){
     e.preventDefault();
 	sidebarCon.close();
 })
+
+
 
 
 </script>
