@@ -9,9 +9,22 @@ var attrNodeManager=(function(){
 		this.arr[node.id]=node;
 	}
 	
-	AttrNodeManager.prototype.unLink=function(id){
-		var parent= this.get(id).parent;
-		var pArr=parent.getChild();
+	AttrNodeManager.prototype.unRelationParent=function(id){ //검증안됨
+	   var pare= this.arr[id].parent;
+		if(!pare){
+			return;
+		}
+		this.unLink(id);
+		var inArr= MyArrayUtil.minu(this.arr[id].reId,pare.reId);
+		pare.reId=MyArrayUtil.minu(pare.reId,inArr);
+		this.arr[id].reId=MyArrayUtil.minu(this.arr[id].reId,inArr);
+	}
+	
+	AttrNodeManager.prototype.unLink=function(id){// 검증안됨..
+		var pare= this.arr[id].parent;
+		console.log("p:: ",pare)
+		if(!pare)return;
+		var pArr=pare.getChild();
 		var idx =0;
 		pArr.some(function(n){
 	        if(n.id===id){
@@ -20,12 +33,14 @@ var attrNodeManager=(function(){
 	        }
 			 idx++;
 		})
-		
 		this.get(id).parent=undefined;	
 	}
 	
 	
 	AttrNodeManager.prototype.get=function(id){
+		if(!this.arr[id]){
+			 this.arr[id]= new AttrNode({id:id});
+		}
 		return this.arr[id];
 	}
 	
@@ -40,24 +55,20 @@ var attrNodeManager=(function(){
 			idArr.push(this.id);
 		});
 		
+		
+		
 		idArr.forEach(function(idx){
+			console.log("디스쩜에이알알:",this.arr[idx]);
+		    var en=EntityManager.getEntityByName(this.arr[Number(idx)].entity);
+		    en.deleteAttr(Number(idx));
+		    console.log("en:::::",en);
 			 delete manager.arr[idx];
-		})
+		}.bind(this));
 	}
 	
-	
 	AttrNodeManager.prototype.link=function(pid,cid){
-		var pNode =this.get(pid.id);
-		if(!pNode){
-			pNode=new AttrNode({id:pid.id,val:pid.val});
-			this.add(pNode);
-		}
-		var cNode= this.get(cid.id);
-		if(!cNode){
-			cNode= new AttrNode({id:cid.id,val:cid.val});
-			this.add(cNode);
-		}
-		
+		var pNode =this.get(pid);
+		var cNode= this.get(cid);
 		cNode.setParent(pNode);
 		pNode.addChild(cNode);
 	}
@@ -75,6 +86,18 @@ var attrNodeManager=(function(){
 		})(startId);
 	}
 	
+	AttrNodeManager.prototype.relationTour=function(startId,fn){
+		console.log("들어왔냐 에이티티알 매니저에!!!!!!!?");
+		function tour(){
+			var p= this.parent.reId;
+			console.log("PPPPPPPP:",p);
+			var t= this.reId;
+			var iRarr = MyArrayUtil.intersection(p,t);
+			iRarr.forEach(function(id){ fn(id); })
+			console.log("iRarr:", iRarr);
+		}
+		this.update(startId,tour);
+	}
 	
 	
 	

@@ -13,13 +13,16 @@
 <script type="text/javascript" src="/resources/duckoo/js/node/AttrNode.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/node/AttrNodeManager.js?<%=token%>"></script>
 
+<script type="text/javascript" src="/resources/duckoo/js/util/MyArrayUtil.js?<%=token%>"></script>
+
+
 </head>
 
 <body>
 
 
 <script>
-var attMan=new AttrNodeManager();
+/* var attMan=new AttrNodeManager();
 var o1= new AttrNode({id:1,val:{name:"1"}});
 var o2= new AttrNode({id:2,val:{name:"2"}});
 var o3=new AttrNode({id:3,val:{name:"3"}});
@@ -40,8 +43,7 @@ attMan.del(3);
 attMan.update(1,function(){
 	console.log(this.id);
 })
-
-
+ */
 
 /* attMan.update(2,function(){
 //	console.log(this.id);
@@ -54,10 +56,10 @@ attMan.update(1,function(){
 })
  */
 
-
-
+var a1=[1,2,3,4,5];
+var a2=[3,4,7,8,5];
  
- 
+ console.log("arr: ", MyArrayUtil.intersection(a1,a2));
  
  
 

@@ -151,7 +151,7 @@ obb.init("delBtn2",delBtn);
 Obserable.setEventObserver("delBtn",obb);
 
 function confirms(keyType, pName){
-	if(keyType==="FK"||keyType==="PK/FK"){
+	if(keyType==="FK"||keyType==="PK/FK"||keyType==="PK"){
 		$("#confrimModal").modal();
 		
 	} else {
@@ -169,17 +169,29 @@ function confirmYes(){
 	
 	var id = target.attr("id");
 	
-	var ids = RelationShipManager.temp(id).name.split("_")[1].split("/");
+	console.log("에이티티알메니저:",attrNodeManager);
 	
-	console.log("릴레이션네임:",ids);
-	var pName = document.getElementById("pName_"+id).innerHTML;
+	attrNodeManager.relationTour(Number(id),function(imyourman){
+		var count=relationManager.get(imyourman).decreaseCount();
+	    console.log("czsdfgasdfasdf: ",count);
+		if(count===0){
+			jsPlumb.detach(renderManager.getConnecter(relationManager.get(imyourman).id));
+		 }
+	});
 	
-	for(var i=0;i<ids.length;i++){
-		entity.deleteAttr(Number(ids[i]));
-		document.getElementById("openAttrDelUpDiv_"+ids[i]).remove();
-		document.getElementById("openDiv_"+ids[i]).remove();
-		document.getElementById(ids[i]).remove();		
-	};
+	attrNodeManager.unRelationParent(id);//
+	
+	attrNodeManager.del(id);//
+	
+	entity.deleteAttr(Number(id));
+	var $openAttrDelUpDiv= $("#openAttrDelUpDiv_"+id);
+	var $openDiv = $("openDiv_"+id);
+	$openAttrDelUpDiv.remove();
+	$openDiv.remove();
+	target.remove();
+	
+	
+	
 	$("#confrimModal").modal('hide');	
 	
 		
@@ -224,22 +236,9 @@ obb=Object.create(Obsever);
 obb.init("saveBtn2",saveBtn);
 Obserable.setEventObserver("saveBtn",obb);
 
-function makeToSelected(value,options){
-	var $el = $('<select />').html( options.fn(this) );
-    $el.find('[value="' + value + '"]').attr({'selected':'selected'});
-    return $el.html();
-}
-Handlebars.registerHelper('select', function(isPK,isFK, options ){
-	var value="";
-	value+=isPK?"PK":"";
-	value+=isFK?"FK":"";
-	if(value==="")value="None";
-    return makeToSelected(value,options);
-});
 
-Handlebars.registerHelper('selectBasic', function(value, options ){
-    return makeToSelected(value,options);
-});
+
+
 
 function tagSetAttr(){
 	var attr= entity.getAttr();
@@ -257,6 +256,7 @@ function setModal(enti,modal){
 	 tagSetAttr();
 	 console.log("tlwkr");
 }
+
 
 return {
 	    setModal:setModal,

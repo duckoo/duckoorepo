@@ -62,7 +62,7 @@ var renderManager=(function(){
 	    
 	}
 	//function setE
-	
+
 	
 	function getConnecter(id){
 		return lines[id];
@@ -73,7 +73,8 @@ var renderManager=(function(){
 	}
 	return {
 		connectDiv:connectDiv,
-		repaintEverything:repaintEverything
+		repaintEverything:repaintEverything,
+		getConnecter:getConnecter
 	}
 })();
 

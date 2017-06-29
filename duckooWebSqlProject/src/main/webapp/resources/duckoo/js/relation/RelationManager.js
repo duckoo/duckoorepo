@@ -3,17 +3,14 @@ var relationManager=(function(){
 		this.arr={};
 	}
 	RelationManager.prototype.add=function(relation){
-		if(!relation.name)return;
-		 this.arr[relation.name]=relation;
+		if(!relation.id)return;
+		 this.arr[relation.id]=relation;
 	}
-	
-	RelationManager.prototype.get=function(name){
-		return this.arr[name];
+	RelationManager.prototype.get=function(id){
+		return this.arr[id];
 	}
-
-	RelationManager.prototype.del=function(name){
-		if(this.arr[name]) delete this.arr[name];
+	RelationManager.prototype.del=function(id){
+		if(this.arr[id]) delete this.arr[id];
 	}
-	
 	return new RelationManager();
 })();

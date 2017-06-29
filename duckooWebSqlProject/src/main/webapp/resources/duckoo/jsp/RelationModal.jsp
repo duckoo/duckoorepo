@@ -107,11 +107,7 @@
     </div>
 </div>
 
-<<<<<<< HEAD
-<script type="text/javascript" src="/resources/duckoo/js/relationFunction.js?<%=22%>"></script>
-<script>
 
-=======
 <script type="text/javascript" src="/resources/duckoo/js/relationFunction.js?<%=request.getParameter("token")%>"></script>
 
 <script type="text/javascript" src="/resources/duckoo/js/node/AttrNode.js?<%=request.getParameter("token")%>"></script>
@@ -289,7 +285,7 @@ function registRelationShipManager(tempRelation){
 		
 	}
 	
-	var  relation= new Relation(tempRelation);
+	tempRelation.id = relationfunction.relId.gen();
 	/* if(EntityControll.isAlreadyConnected(relationfunction.getTempRelation())){
 		console.log("redefine errors catch")
 		alert("이미 관계가 하나 이상 존재홥니다. 관계를 제거하고 다시 시도해 주십시오");
@@ -301,23 +297,42 @@ function registRelationShipManager(tempRelation){
 	var srcAttArr = tempRelAtt.split("_")[0].split("/");
 	var tarAttArr = tempRelAtt.split("_")[1].split("/");
 	//console.log("tetetetetetetetetetetette : ",srcAttArr,tarAttArr);
-
+	tempRelation.count = srcAttArr.length;
 	
 	for(var i=0,len=tarAttArr.length;i<len ;i++ ){
-		var src= new AttrNode({id:srcAttArr[i],val:srcAttArr[i]});
-		var tag= new AttrNode({id:tarAttArr[i],val:tarAttArr[i]});
-		 attrNodeManager.link(src,tag);
-		 relation.addNode(srcAttArr[i],tarAttArr[i]);
+		var sId=srcAttArr[i];
+		var tId=tarAttArr[i];
+		var src= attrNodeManager.get(sId);
+		// 일단
+		src.entity=tempRelation.source;
+		
+		src.relIdPush(tempRelation.id);
+		var tag= attrNodeManager.get(tId);
+		tag.entity=tempRelation.target;
+		
+		tag.relIdPush(tempRelation.id);
+		attrNodeManager.link(sId,tId);
 	}
-    relationManager.add(relation);
+      console.log("제대로 들어갔냐: ",attrNodeManager);
+	
+	var  relation= new Relation(tempRelation);
+	
+	relationManager.add(relation);
     
-    
+	
+	
+	
+	
+	
+	
+	
+	
 	//console.log("저장됨? : ",relationManager.get(tempRelation.name));	
 	//console.log(" attrNodeManager------------- : ",attrNodeManager);
 	
 	//RelationShipManager.createRelationship(relationfunction.getTempRelation());
 	//console.log("ttttttttttttttttttttttttttttttt :",RelationShipManager.getRelation("e1e32232"));
-	renderManager.connectDiv({$source:$("#"+tempRelation.source) ,$target:$("#"+tempRelation.target),id:tempRelation.source+" "+tempRelation.target,lineType:tempRelation.relationLine});
+	renderManager.connectDiv({$source:$("#"+tempRelation.source) ,$target:$("#"+tempRelation.target),id:tempRelation.id,lineType:tempRelation.relationLine});
 	
 	
 	v(EntityManager.getEntityByName(tempRelation.source)).refresh();
