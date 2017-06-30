@@ -76,10 +76,11 @@ function getAttr(id){
 		var thatAttr= this.getAttr(opt.id);//id???
 		if(thatAttr){
 			thatAttr.setAttribute(opt);
-		   return;
+		   return thatAttr;
 		}
 		var newAttr=Attribute.creteInstance(opt);
 		this.attr.push(newAttr);
+		return newAttr;
  }
 
 // 이거 다시 확인해보자...

@@ -43,6 +43,7 @@ function click_trDatas(e){
 	for(var i=0;i<columnCount; i+=3){
 		 var $preCol = $("#"+columnArr[i].getAttribute("id"));
 		 var $hideDiv = $("#"+$preCol.attr("name"));
+		 $preCol.css("background-color","");
 		 if($preCol.attr("id")===curColumn.attr("id")){
 			 
 		 }else{
@@ -255,7 +256,7 @@ Obserable.setEventObserver("confirmYes",obb);
 
 function addAttrFinalBtn(e){
 	var isPk=$("#keyType option:selected").val()==="PK"?true:false;
-    var lName = $("#lName").val();
+	var lName = $("#lName").val();
     var pName = $("#pName").val();
     var dataType = $("#datetype option:selected").val();
     var defaultVal = $("#defaultVal").val();
@@ -263,9 +264,21 @@ function addAttrFinalBtn(e){
     var notNull = $("#notNull").is(":checked");
     var autoIncre = $("#autoIncre").is(":checked");
     var uniqueVal = $("#uniqueVal").is(":checked");
-    console.log(lName,pName,dataType,defaultVal,notNull,autoIncre,uniqueVal);
-	entity.setAttr({isPk:isPk,datelength:datelength, lName:lName,pName:pName,domainName:"none",datetype:dataType,notNull:notNull,autoIncrement:autoIncre,uniqueVal:uniqueVal});
+
+	//entity.setAttr({isPk:isPk,datelength:datelength, lName:lName,pName:pName,domainName:"none",datetype:dataType,notNull:notNull,autoIncrement:autoIncre,uniqueVal:uniqueVal});
+
+    var attr={isPk:isPk, lName:lName,pName:pName,domainName:"none",datetype:dataType,datelength:datelength,notNull:notNull,autoIncrement:autoIncre,uniqueVal:uniqueVal};
+
     tagSetAttr(entity);
+   
+    var pkArr= entity.search({isPk:true});
+    var newAttr = entity.setAttr(attr).clone();
+    if(isPk) {
+    	 console.log("cAttr: ",newAttr);
+    	 attrNodeManager.addNodeTour(pkArr[0].id,newAttr);
+    }
+    entity.sortAttribute();
+    v(entity).refresh();
     v(entity).entitySizing();
 }
 obb=Object.create(Obsever);

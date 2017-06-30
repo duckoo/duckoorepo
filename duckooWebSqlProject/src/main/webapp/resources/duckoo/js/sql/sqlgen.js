@@ -19,26 +19,22 @@ Handlebars.registerHelper("isNotNull", function(ispk,notnull) {
     return ret;
 });
 
-Handlebars.registerHelper("genFK", function(that) {
-  	var reArr=RelationShipManager.getSource(that.name);
-  	console.log("tName",that.name);
-  	console.log("re: ",reArr);
+Handlebars.registerHelper("genFK", function(that) { //검증 안함......
+    var attr=that.search({isFk:true});
     var sql="";
-    for(var i=0,len =reArr.length;i<len;i++){
-    	console.log("source ",reArr[i].RelationAttrName);
-    	
-    	var sf = arrTofileArea(reArr[i].RelationAttrName[0]);
-      	console.log("sf: ",sf);
-    	
-        var tf = arrTofileArea(reArr[i].RelationAttrName[1]);
-        var fxconName="FK_"+that.name +"_"+reArr[i].source+""+i;
-    	sql +="ALTER TABLE "+that.name+"  ADD  CONSTRAINT "+fxconName+" FOREIGN KEY ("+tf+") REFERENCES "+reArr[i].source+"("+sf+") \n";
-    }
+    attr.forEach(function(att){
+    	var pNode=attrNodeManager.get(att.id).parent;
+    	var pEntity= EntityManager.getEntityByName(pNode.entity);
+    	var pPname= pEntity.getAttr(Number(pNode.id)).pName;
+    	var tf=att.pName;
+    	var tE=pEntity.name;
+    	var fxconName="FK_"+that.name +"_"+att.pName+"_"+pNode.id;
+    	 sql+="ALTER TABLE "+that.name+"  ADD  CONSTRAINT "+fxconName+" FOREIGN KEY ("+tf+") REFERENCES "+tE+"("+pPname+") \n\n";
+    });
     return sql;
 });
 
 function arrTofileArea(arr){
-	console.log("atArea: ",arr);
 	var str=arr[0];
 	for(var i=1,len = arr.length;i<len ;i++){
 		str+=","+arr[i];
@@ -47,7 +43,6 @@ function arrTofileArea(arr){
 }
 
 Handlebars.registerHelper("getPk", function(that) {
-    console.log(that);
  var pkArr= that.search({isPk:true});
        var str=pkArr[0].pName;
     for(var i=1,len=pkArr.length;i<len;i++){
@@ -57,8 +52,6 @@ Handlebars.registerHelper("getPk", function(that) {
 });
 
 Handlebars.registerHelper("getDefault", function(exp) {
-	console.log("exp",exp)
-	
 	if(exp){
 		return " DEFAULT "+ exp;
 	}

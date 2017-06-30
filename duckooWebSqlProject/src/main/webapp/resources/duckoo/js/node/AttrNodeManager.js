@@ -9,7 +9,6 @@ var attrNodeManager=(function(){
 		this.arr[node.id]=node;
 	}
 	
-
 	
 	AttrNodeManager.prototype.unLink=function(id){// 검증안됨..
 		var pare= this.arr[id].parent;
@@ -45,10 +44,9 @@ var attrNodeManager=(function(){
 		});
 		
 		idArr.forEach(function(idx){
-			console.log("디스쩜에이알알:",this.arr[idx]);
 		    var en=EntityManager.getEntityByName(this.arr[Number(idx)].entity);
-		    en.deleteAttr(Number(idx));
 		    console.log("en:::::",en);
+		    en.deleteAttr(Number(idx));
 			 delete manager.arr[idx];
 			 v(en).refresh();
 			 v(en).entitySizing();
@@ -75,18 +73,69 @@ var attrNodeManager=(function(){
 		})(startId);
 	}
 	
+	AttrNodeManager.prototype.addNodeTour=function(startId,attr){
+		var manager= this;
+		var relationIdArr =manager.get(startId).reId;
+		 (function addPk(relArr,attr){
+			var nearRelation=[];
+			var manager= this;
+			var originalId = attr.id;
+			var targetAttrId  = [];
+			var relationIdArr =relArr;
+			for(var i=0;i<relationIdArr.length;i++){
+				relationManager.get(relationIdArr[i]).increaseCount(); // 관계에 관여하는 속성 증가
+				nearRelation.push(relationManager.get(relationIdArr[i]));
+			}// 가까운 관계구한다.
+			if(nearRelation.length===0)return;
+				var sourEntity= nearRelation[0].source;
+				var sourceNode= attrNodeManager.get(originalId);
+				sourceNode.entity=sourEntity;
+				
+				for(var i=0;i<nearRelation.length;i++){
+					var tempEntity = EntityManager.getEntityByName(nearRelation[i].target);
+					attr.id=undefined;
+					attr.isFk=true;
+					attr.isPk=false;
+					if(nearRelation[i].relationLine==="identify"){
+						attr.isPk = true;
+					}
+					//tempEntity.setAttr(attr); // 가까운 관계에 엔티티에 속성추가.
+					var tempArr = tempEntity.getAttr();
+					var id =tempEntity.setAttr(attr).id;
+					 targetAttrId.push(id);
+					var newNode= attrNodeManager.get(id);
+					newNode.entity=tempEntity.name;
+					attrNodeManager.link(originalId,id);
+					console.log("link....",attrNodeManager)
+					newNode.reId=relationIdArr;
+				    var pk= tempEntity.search({isPk:true});
+				    var childReId=attrNodeManager.get(pk[0].id).reId;
+				   childReId = MyArrayUtil.minu(childReId,relationIdArr);
+				   /////태현이꼽사리
+				   tempEntity.sortAttribute();
+				   v(tempEntity).refresh();
+				   v(tempEntity).entitySizing();
+				   //////겐세이끝
+					if(pk.length && nearRelation[i].relationLine==="identify"){
+						attr.id=id;
+					   addPk(childReId,attr);
+					}
+				}
+		 })(relationIdArr,attr);
+	}	
+	
 	AttrNodeManager.prototype.relationTour=function(startId,fn){
-		console.log("들어왔냐 에이티티알 매니저에!!!!!!!?");
+		console.log("relationTour");
 		function tour(){
 			var p= this.parent.reId;
-			console.log("PPPPPPPP:",p);
 			var t= this.reId;
 			var iRarr = MyArrayUtil.intersection(p,t);
-			iRarr.forEach(function(id){ fn(id); })
+			iRarr.forEach(function(id){ console.log("this...",this);  fn.call(this,id);}.bind(this));
 			console.log("iRarr:", iRarr);
 		}
 		this.update(startId,tour);
 	}
+	
 	
 	AttrNodeManager.prototype.unRelationParent=function(id){ //부모와 인연을 끊는다..
 		   var pare= this.arr[id].parent;
@@ -180,7 +229,6 @@ var attrNodeManager=(function(){
 		this.update(id,function(){
 			target.push(this.id);
 		});
-		console.log("ㄷ이이이이이스스스ㅡ,... ",target);
 		target.forEach(function(cid){
 			var node = this.arr[cid];
 			attr.id=Number(cid);
@@ -189,9 +237,6 @@ var attrNodeManager=(function(){
 		}.bind(this));
 		
 	}
-	
-	
-	
 	
 	
 	AttrNodeManager.prototype.updateTourAll=function(id,attr){

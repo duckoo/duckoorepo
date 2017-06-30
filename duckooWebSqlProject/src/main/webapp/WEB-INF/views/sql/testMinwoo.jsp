@@ -60,6 +60,11 @@
 <jsp:param name="token" value="<%=token%>" />
 </jsp:include> 
 
+<jsp:include page="/resources/duckoo/jsp/sqlGen.jsp">
+<jsp:param name="token" value="<%=token%>" />
+</jsp:include> 
+
+
 <script type="text/javascript" src="/resources/duckoo/js/EntityControll.js?<%=token%>"></script>
 <script>
 jsPlumb.ready(function() {
@@ -85,11 +90,12 @@ jsPlumb.ready(function() {
 	 EntityManager.createEntity({name:"e32232",attr:[]},false);
 	 var en2 = EntityManager.getEntityByName("e32232");
 	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"int",datelength:10,isPk:true});
-	
+
 	 en2.setAttr({lName:"내용",pName:"content",datetype:"varchar",datelength:500});
 	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
 	 
 	 v(en2).show();
+	 
 	
 	 
 

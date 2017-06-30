@@ -28,9 +28,6 @@ var kAOP=(function(){
 		}
 	 }
  
- 
- 
- 
   return kAOP; 
 })();
 
