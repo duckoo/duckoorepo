@@ -106,6 +106,7 @@
 		 $entity.html($( EntityManager.getEntityByName(entityId).genHtml()).html());*/		    
 		 
 		    var $innerEntity = $("[data-innerEntity='"+entityId+"']");
+		 	
 		    $entity.css("width",300);
 		    $entity.css("height",350);
 		    $innerEntity.css("width",275);

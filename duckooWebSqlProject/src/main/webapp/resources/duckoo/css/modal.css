@@ -1,5 +1,8 @@
 @CHARSET "UTF-8";
 <style>
+.asdfasdf{
+	width:12312312;
+}
 .modal{
     width:1200px;
     height:700px;
@@ -8,13 +11,14 @@
     height:400px;
      width:100%;
 }
-.sideBar{
+.modalSideBar{
     width:17%;
     height:100%;
     float:left;
     border-style: solid;
     border-color: #787878;
     border-radius:10px;
+    display:block;
 }
 .attrBoxHeader{
 	width:80%;

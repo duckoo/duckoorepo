@@ -50,6 +50,8 @@ var attrNodeManager=(function(){
 		    en.deleteAttr(Number(idx));
 		    console.log("en:::::",en);
 			 delete manager.arr[idx];
+			 v(en).refresh();
+			 v(en).entitySizing();
 		}.bind(this));
 	}
 	
@@ -147,6 +149,8 @@ var attrNodeManager=(function(){
 			   en.setAttr(keyType);
 			  console.log("enitity:2 ",en);
 			   manager.unRelationParent(Number(_id));
+			   v(en).refresh();
+			   v(en).entitySizing();
 		}.bind(this));
 
 	}
@@ -181,6 +185,7 @@ var attrNodeManager=(function(){
 			var node = this.arr[cid];
 			attr.id=Number(cid);
 			EntityManager.getEntityByName(node.entity).setAttr(attr);
+			v(EntityManager.getEntityByName(node.entity)).refresh();
 		}.bind(this));
 		
 	}

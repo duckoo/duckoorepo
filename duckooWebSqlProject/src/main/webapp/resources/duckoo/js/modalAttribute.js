@@ -23,14 +23,44 @@ var entity=undefined;
 
 var Obserable= DObserable.createObserable();
 
-
+Handlebars.registerHelper('ifDate', function(datetype, options) {
+	  if(datetype === "date"||datetype === "datetime"||datetype === "timestamp") {
+	    return options.fn(this);
+	  }
+	  return options.inverse(this);
+	});
 
 
 function click_trDatas(e){
-	
-	 $("div").css("background-color","");
+	 //var $div = $("div");
+	 //$div.css("background-color","");
+	 
 	 var $that=$(e.that);  
-	 $that.parent().css("background-color","#269abc");
+	 var curColumn = $that.parent();
+	 var columnArr = $that.parent().parent().children();
+	 var columnCount = $that.parent().parent().children().length;
+	
+	for(var i=0;i<columnCount; i+=3){
+		 var $preCol = $("#"+columnArr[i].getAttribute("id"));
+		 var $hideDiv = $("#"+$preCol.attr("name"));
+		 if($preCol.attr("id")===curColumn.attr("id")){
+			 
+		 }else{
+			 if($hideDiv.css("display")==='block'){
+				 console.log("col:",$preCol);
+				 console.log("hiden:",$hideDiv);
+				 $preCol.css("background-color","");
+				 $hideDiv.css("height","0px");
+				 $hideDiv.css("padding-top","0px");
+				 //setTimeout(function(){$hideDiv.css("display","none");},270); 안먹힘....
+				 $hideDiv.css("display","none");
+				 console.log("none?:",$hideDiv.css("display"));
+			 }
+		 }
+	 };
+	 
+	 
+	 curColumn.css("background-color","#269abc");
 	 
 	 target = $that.parent();
 	 var $hiddenBtnDiv = $("#"+$that.parent().attr("name"));
@@ -81,26 +111,34 @@ function attrInputChange(e){
     var keyType = $("#keyType_"+id).text();
     var lName = $("#lName_"+id).text();
     var pName = $("#pName_"+id).text();
-    var dataType = $("#dataType_"+id).text();
+    var dataType = $("#dataType_"+id).text().split("(")[0].trim();
+    
+    if(dataType=="date"||dataType=="datetime"||dataType=="timestamp"){
+    	var datalength = "";
+    } else {
+    	var datalength = $("#dataType_"+id).text().split("(")[1].replace(")","").trim();
+    }
     var defaultVal = $("#default_"+id).text();
     var notNull = $("#notNull_"+id).is(":checked");
     var autoIncre = $("#autoIncre_"+id).is(":checked");
     var unique = $("#uniqueVal_"+id).is(":checked");
-    console.log("텍스트인풋으로 가져와보자:",id,keyType,lName,pName,dataType,defaultVal,notNull,autoIncre,unique);
+    
+    var $KeyTypeUp=$("#keyTypeUp");
+    
     if(keyType==="PK"){
-    	$("#keyTypeUp").val("PK").prop("selected", true);	
+    	$KeyTypeUp.val("PK").prop("selected", true);	
     }else if(keyType==="PK/FK"){
-    	$("#keyTypeUp").val("PKFK").prop("selected", true);
+    	$KeyTypeUp.val("PKFK").prop("selected", true);
     }else if(keyType==="FK"){
-    	$("#keyTypeUp").val("FK").prop("selected", true);
-    }
-    else{
-    	$("#keyTypeUp").val("None").prop("selected", true);
+    	$KeyTypeUp.val("FK").prop("selected", true);
+    }else{
+    	$KeyTypeUp.val("None").prop("selected", true);
     }
     var $updateAttrModalWindow=$("#updateAttrModalWindow");
     $("#lNameUp").val(lName);
     $("#pNameUp").val(pName);
-    $("#dataTypeUp").val(dataType);
+    $("#datetypeUp").val(dataType).prop("selected", true);
+    $("#datelengthUp").val(datalength);
     $("#defaultValUp").val(defaultVal);
     $("#notNullUp").attr("checked",notNull);
     $("#autoIncreUp").attr("checked",autoIncre);
@@ -142,9 +180,6 @@ function updateAttrFinalBtn(e){
     attr.notNull = $("#notNullUp").is(":checked");
     attr.autoIncrement = $("#autoIncreUp").is(":checked");
     
-    
-    
-    
     var attr1= attr.clone();
     delete attr1["isPk"];
     delete attr1["isFk"];
@@ -156,6 +191,7 @@ function updateAttrFinalBtn(e){
     attrNodeManager.updateTourAll(String(id),{datetype:attr.datetype});
     attrNodeManager.updateTourChild(String(id),attr1);
     attrNodeManager.keyTypeTour(String(id),{isPk:attr.isPk,isFk:attr.isFk});
+    
 }
 obb=Object.create(Obsever);
 obb.init("updateAttrFinalBtn2",updateAttrFinalBtn);
@@ -207,7 +243,7 @@ function confirmYes(){
 	target.remove();
 	
 	
-	
+	v(entity).entitySizing();
 	$("#confrimModal").modal('hide');	
 	
 		
@@ -221,15 +257,16 @@ function addAttrFinalBtn(e){
 	var isPk=$("#keyType option:selected").val()==="PK"?true:false;
     var lName = $("#lName").val();
     var pName = $("#pName").val();
-    var dataType = $("#dataType").val();
+    var dataType = $("#datetype option:selected").val();
     var defaultVal = $("#defaultVal").val();
-    
+    var datelength = $("#datelength").val();
     var notNull = $("#notNull").is(":checked");
     var autoIncre = $("#autoIncre").is(":checked");
     var uniqueVal = $("#uniqueVal").is(":checked");
     console.log(lName,pName,dataType,defaultVal,notNull,autoIncre,uniqueVal);
-	entity.setAttr({isPk:isPk, lName:lName,pName:pName,domainName:"none",datetype:dataType,notNull:notNull,autoIncrement:autoIncre,uniqueVal:uniqueVal});
+	entity.setAttr({isPk:isPk,datelength:datelength, lName:lName,pName:pName,domainName:"none",datetype:dataType,notNull:notNull,autoIncrement:autoIncre,uniqueVal:uniqueVal});
     tagSetAttr(entity);
+    v(entity).entitySizing();
 }
 obb=Object.create(Obsever);
 obb.init("addAttrFinalBtn2",addAttrFinalBtn);
@@ -243,10 +280,7 @@ function saveBtn(e){
     v(entity).refresh();
    
     var $innerEntity = $("[data-innerEntity='"+entity.name+"']");
-    $entity.css("width",300);
-    $entity.css("height",350);
-    $innerEntity.css("width",275);
-    $innerEntity.css("height",325);
+    v(entity).entitySizing();
 }
 obb=Object.create(Obsever);
 obb.init("saveBtn2",saveBtn);

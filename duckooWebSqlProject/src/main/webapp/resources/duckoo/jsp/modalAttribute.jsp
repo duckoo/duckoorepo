@@ -21,7 +21,13 @@
             </div>
             <div class='datas'><p id="lName_{{id}}">{{lName}}</p></div>
             <div class='datas'><p id="pName_{{id}}"{{pName}}>{{pName}}</p></div>
-            <div class='datas'><p id="dataType_{{id}}">{{datetype}}</p></div>
+            <div class='datas'><p id="dataType_{{id}}">{{datetype}}
+			{{#ifDate datetype}}
+				</p></div>
+			{{else}}
+				({{datelength}})
+				</p></div>
+			{{/ifDate}}
             <div class='datas'><p id="default_{{id}}">{{defaultExp}}</p></div>
             <div class='datas'><button class="openConstraintBtn" data-openCB="{{id}}"><i class="fa fa-chevron-down" aria-hidden="true"></i></button></div>
         </div>

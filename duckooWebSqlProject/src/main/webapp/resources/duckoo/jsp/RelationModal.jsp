@@ -249,7 +249,7 @@ $("#relSave").on("click",function(e){
      	firstName += EntityManager.getEntityByName(relationfunction.getTempRelation().source).search({pName:relationfunction.getSrcPK()[i].pName})[0].id;
      	lastName += getFKAttr.id;
      	
-     	if(relationfunction.getTempRelation.relationLine=="identify"){
+     	if(relationfunction.getTempRelation().relationLine=="identify"){
      		getFKAttr.isFk = true;
      	}else{
      		getFKAttr.isFk = true;
@@ -337,6 +337,9 @@ function registRelationShipManager(tempRelation){
 	
 	v(EntityManager.getEntityByName(tempRelation.source)).refresh();
 	v(EntityManager.getEntityByName(tempRelation.target)).refresh();
+	v(EntityManager.getEntityByName(tempRelation.source)).entitySizing();
+	v(EntityManager.getEntityByName(tempRelation.target)).entitySizing();
+	
 	
 }
 

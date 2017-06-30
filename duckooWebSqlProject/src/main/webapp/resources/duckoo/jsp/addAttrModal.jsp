@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.Random" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% Random random = new Random(); 
     int token= random.nextInt();
 %> 	
@@ -41,16 +42,25 @@
                 <div class='addRow'>
                     <div class="ctitle">데이터타입</div>
                     <div class="ccontent">
-                        <div class="select-editable">
-                            <select onchange="this.nextElementSibling.value=this.value">
-                                <option value=""></option>
-                                <option value="int()">int()</option>
-                                <option value="varchar()">varchar()</option>
-                            </select>
-                            <input id="dataType" type="text" name="format" value=""/>
-                        </div>
+                         <select id="datetype">
+                              <option value=""></option>
+                              <option value="int">int</option>
+                              <option value="varchar">varchar</option>
+                              <option value="text">text</option>
+                              <option value="binary">binary</option>
+                              <option value="varbinary">varbinary</option>
+                              <option value="blob">blob</option>
+                              <option value="date">date</option>
+                              <option value="datetime">datetime</option>
+                              <option value="timestamp">timestamp</option>
+                         </select>	 
                     </div>
+                    <div class="ctitle" style="margin-left:15px;">데이터길이</div>
+                    <div class="ccontent">
+               			 <input id="datelength" type='text' style="width:100px; border-top-style:solid;border-top-color:#c8c8c8; border-left-style:solid;border-left-color:#c8c8c8;"></input>         
+                    </div>   
                 </div>
+                
          
                 <div class='addRow'>
                     <div class="ctitle">기본값</div>

@@ -31,6 +31,9 @@
 	 	<div class='sideBarHeader'>
 	 		<div class="menuClosebtn" id="sideBarCloseBtn" >&times;</div>
 		</div>
+		<div class="sideBarBody">
+			
+		</div>
 	</div>
 </script>
 	

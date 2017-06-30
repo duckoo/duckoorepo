@@ -65,7 +65,10 @@ body{
 .sideBarHeader:hover{
 	cursor:move;
 }
-
+.sideBarBody{
+	width:100%;
+	height:610px;
+}
 #mainNaviBar{
 	margin-top:55px; margin-left:15px; width:200px; position:fixed; z-index:3;
 }

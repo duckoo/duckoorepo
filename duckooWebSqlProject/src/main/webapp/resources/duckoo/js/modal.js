@@ -8,7 +8,7 @@ $("body").append(
       "    <h4 class='modal-title'>애트리뷰트 속성</h4>"+
      "   </div>"+
       "  <div class='modal-body'>"+
-      "      <div class='sideBar'>"+
+      "      <div class='modalSideBar'>"+
        "             <div class='attrMenu' tabindex='-1'>"+
         "                    컬럼속성"+
          "           </div>"+

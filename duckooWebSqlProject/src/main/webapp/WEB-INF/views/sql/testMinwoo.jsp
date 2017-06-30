@@ -37,6 +37,8 @@
 
 
 
+
+
 </head>
 
 <body class="canvas" id="canvasDiv" style="width: 6000px; height: 6000px; border: 1px solid black;">
@@ -70,11 +72,11 @@ jsPlumb.ready(function() {
 	var tempRelation = {};
 	 EntityManager.createEntity({name:"e1",attr:[]},false);
 	 var en=EntityManager.getEntityByName("e1");
-	 en.setAttr({lName:"게시글번호",pName:"bno",datetype:"tt2",isPk:true,isFk:false});
-	 en.setAttr({lName:"글제목",pName:"title",datetype:"tt2",isPk:true,isFk:false});
-	 en.setAttr({lName:"글내용",pName:"content",datetype:"tt2"});
-	 en.setAttr({lName:"작성자",pName:"writer",datetype:"tt2"});
-	 en.setAttr({lName:"등록날자",pName:"regdate",datetype:"tt2"});
+	 en.setAttr({lName:"게시글번호",pName:"bno",datetype:"int",datelength:10,isPk:true,isFk:false});
+	 en.setAttr({lName:"글제목",pName:"title",datetype:"varchar",datelength:300,isPk:true,isFk:false});
+	 en.setAttr({lName:"글내용",pName:"content",datetype:"varchar",datelength:2000});
+	 en.setAttr({lName:"작성자",pName:"writer",datetype:"varchar",datelength:100});
+	 en.setAttr({lName:"등록날자",pName:"regdate",datetype:"timestamp"});
 	 
 	
 	 v(en).show();
@@ -82,9 +84,9 @@ jsPlumb.ready(function() {
 	 
 	 EntityManager.createEntity({name:"e32232",attr:[]},false);
 	 var en2 = EntityManager.getEntityByName("e32232");
-	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"tt22222",isPk:true});
+	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"int",datelength:10,isPk:true});
 	
-	 en2.setAttr({lName:"내용",pName:"content",datetype:"tt22222"});
+	 en2.setAttr({lName:"내용",pName:"content",datetype:"varchar",datelength:500});
 	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
 	 
 	 v(en2).show();
