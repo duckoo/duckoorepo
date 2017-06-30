@@ -126,24 +126,6 @@ $document.on("click","#makeTableBtn",function(e){
 	$("#tbl_nameModal").modal({backdrop:'static'});
 });
 
-function checkRes(chk){
-    var obj = $(".resOption");
-    for(var i=0; i<obj.length; i++){
-        if(obj[i] != chk){
-            obj[i].checked = false;
-        }
-    }
-} 
-
-function checkOpt(chk){
-    var obj = $(".option");
-    for(var i=0; i<obj.length; i++){
-        if(obj[i] != chk){
-            obj[i].checked = false;
-        }
-    }
-}
-
 $("#conform").on("click",function(e){
 	 
 	 var tempName = $("#tbl_name").val().trim();
@@ -166,10 +148,10 @@ $document.on("click","#makeRelationBtn",function(e){
 	relationfunction.initiateElementArr();
 	var icon = $(this);
 	  
-	//console.log("rf:",relationfunction)
+	console.log("rf:",relationfunction)
 	
 	var mkFlag=relationfunction.changeFlagState();
-	//console.log("rf:",mkFlag);
+	console.log("rf:",mkFlag);
 	var color="#5cb85c";
 	if(mkFlag)
 	  color="#FF0066";
@@ -182,7 +164,7 @@ $("#idf").on("click",function(e){
 		e.preventDefault();
 		relationfunction.getTempRelation().relationLine = "identify";
 		$("#relationModal").modal("hide");
-		$("#identified").modal();
+		$("#identified").modal({backdrop:'static'});
 		var tempArr = relationfunction.getElementArr();
 		relationfunction.collectSelectOption(EntityManager.getEntityByName(tempArr[0]) , true , relationfunction.getTempRelation().relationLine);
 		relationfunction.collectSelectOption(EntityManager.getEntityByName(tempArr[1]), false ,relationfunction.getTempRelation().relationLine);
@@ -192,7 +174,7 @@ $("#nidf").on("click",function(e){
 	e.preventDefault();
 	relationfunction.getTempRelation().relationLine = "nidentify";
 	$("#relationModal").modal("hide");
-	$("#identified").modal();
+	$("#identified").modal({backdrop:'static'});
 	var tempArr = relationfunction.getElementArr();
 	relationfunction.collectSelectOption(EntityManager.getEntityByName(tempArr[0]),true,relationfunction.getTempRelation().relationLine);
 	relationfunction.collectSelectOption(EntityManager.getEntityByName(tempArr[1]),false,relationfunction.getTempRelation().relationLine);
@@ -204,7 +186,7 @@ $("#relSave").on("click",function(e){
 	//console.log(relationfunction.getSrcPK());
 	//console.log(relationfunction.getTarPK());
 	
-	var targetName= MatchName().split("+");
+	var targetName= relationfunction.MatchName().split("+");
 	var firstName = "";
 	var lastName = "";
 	var autoFlag = false;  
@@ -218,18 +200,17 @@ $("#relSave").on("click",function(e){
      });
 	//console.log("autoFlag",autoFlag);
 	if(autoFlag){
-		autoGen(relationfunction.getTempRelation().source,relationfunction.getTempRelation().target,relationfunction.getTempRelation().relationLine);
+		relationfunction.autoGen(relationfunction.getTempRelation().source,relationfunction.getTempRelation().target,relationfunction.getTempRelation().relationLine);
 	}
 	else if(!EntityControll.isEffectiveName(targetName)){
 		alert("중복된 컬럼이 등록되었습니다 다시시도하세요.");
 		$("#identified").modal('hide');
 		$("#makeRelationBtn").trigger("click");
 		return;
-	}
-	else if(EntityControll.isPkExist(relationfunction.getSrcPK(),relationfunction.getTarPK())){
+	}else if(EntityControll.isPkExist(relationfunction.getSrcPK(),relationfunction.getTarPK())){
 	//console.log($("#sourceCol option:selected").val());
 	
-	relationfunction.getTempRelation().relationAttr=[$("#sourceCol option:selected").val(),MatchName()];
+	relationfunction.getTempRelation().relationAttr=[$("#sourceCol option:selected").val(),relationfunction.MatchName()];
 	
      $(".option").each(function() {
    	  
@@ -238,8 +219,7 @@ $("#relSave").on("click",function(e){
        	relationfunction.getTempRelation().relationType = ($(this).val());
         }
         checkBoxInitiate("option");
-     });
-     //현재 pk의 데이터 타입을 Fk데이터 타입에 대입시켜버림 그냥 검증에서 데이터 타입 안맞으면 안들어가게 하는게 나을거같음.
+     });   
      for(var i= 0; i<targetName.length;i++){
      	var getFKAttr = EntityManager.getEntityByName(relationfunction.getTempRelation().target).search({pName:targetName[i]})[0];
      	//console.log("target's FK attribute : ",getFKAttr);
@@ -249,177 +229,31 @@ $("#relSave").on("click",function(e){
      	firstName += EntityManager.getEntityByName(relationfunction.getTempRelation().source).search({pName:relationfunction.getSrcPK()[i].pName})[0].id;
      	lastName += getFKAttr.id;
      	
-     	if(relationfunction.getTempRelation.relationLine=="identify"){
+     	if(relationfunction.getTempRelation().relationLine=="identify"){
      		getFKAttr.isFk = true;
+     		
+     		console.log("trans element pk,fk",getFKAttr)
      	}else{
      		getFKAttr.isFk = true;
      		getFKAttr.isPk = false;
      	}
      	relationfunction.getTempRelation().name = firstName +"_"+lastName;
+     	console.log("pk error is correct? : " ,relationfunction.getTempRelation());
      }
-     
-	//tempRelation Attr이용해서 connect option 지정.
+
 	
-	
-	//console.log(relationfunction.getTempRelation());
-	
-	
-	registRelationShipManager(relationfunction.getTempRelation());
+	relationfunction.registRelationShipManager();
 	
 	//console.log("relation ship saved : ",RelationShipManager.getRelationship(relationfunction.getTempRelation().name));
 	
-	}
-	else{
+	}else{
 		alert("대응되는 Attribute를 찾을 수 없습니다. 자동생성은 AutoGenerete를 체크하세요");
-		
 	}
 	
 	$("#makeRelationBtn").trigger("click");
 	
 	$("#identified").modal('hide');
 });
-function registRelationShipManager(tempRelation){
-	//console.log(tempRelation.restrictType);
-	if(typeof tempRelation.restrictType==="undefined"){
-		restrictSelect();
-		
-	}
-	
-	tempRelation.id = relationfunction.relId.gen();
-	/* if(EntityControll.isAlreadyConnected(relationfunction.getTempRelation())){
-		console.log("redefine errors catch")
-		alert("이미 관계가 하나 이상 존재홥니다. 관계를 제거하고 다시 시도해 주십시오");
-		return;
-	} */
-	var firstName;
-	var lastName;
-	var tempRelAtt = tempRelation.name;
-	var srcAttArr = tempRelAtt.split("_")[0].split("/");
-	var tarAttArr = tempRelAtt.split("_")[1].split("/");
-	//console.log("tetetetetetetetetetetette : ",srcAttArr,tarAttArr);
-	tempRelation.count = srcAttArr.length;
-	
-	for(var i=0,len=tarAttArr.length;i<len ;i++ ){
-		var sId=srcAttArr[i];
-		var tId=tarAttArr[i];
-		var src= attrNodeManager.get(sId);
-		// 일단
-		src.entity=tempRelation.source;
-		
-		src.relIdPush(tempRelation.id);
-		var tag= attrNodeManager.get(tId);
-		tag.entity=tempRelation.target;
-		
-		tag.relIdPush(tempRelation.id);
-		attrNodeManager.link(sId,tId);
-	}
-      console.log("제대로 들어갔냐: ",attrNodeManager);
-	
-	var  relation= new Relation(tempRelation);
-	
-	relationManager.add(relation);
-    
-	
-	
-	
-	
-	
-	
-	
-	
-	//console.log("저장됨? : ",relationManager.get(tempRelation.name));	
-	//console.log(" attrNodeManager------------- : ",attrNodeManager);
-	
-	//RelationShipManager.createRelationship(relationfunction.getTempRelation());
-	//console.log("ttttttttttttttttttttttttttttttt :",RelationShipManager.getRelation("e1e32232"));
-	renderManager.connectDiv({$source:$("#"+tempRelation.source) ,$target:$("#"+tempRelation.target),id:tempRelation.id,lineType:tempRelation.relationLine});
-	
-	
-	v(EntityManager.getEntityByName(tempRelation.source)).refresh();
-	v(EntityManager.getEntityByName(tempRelation.target)).refresh();
-	
-}
-
-function MatchName(){
-	var tempSelectedValue = [];
-	var resultStr="";
-	var domTarget = $(".tarCol option:selected");
-	//console.log("selected dom target : ",domTarget);
-	for(var i = 0;i<domTarget.length;i++){
-		tempSelectedValue.push(domTarget[i].value);
-		resultStr += domTarget[i].value+"+";
-	}
-	//console.log("collecting Target's FK option :", tempSelectedValue);
-	//console.log("the result of String name : ",resultStr.substring(0,resultStr.length-1));
-	
-	
-	return resultStr.substring(0,resultStr.length-1);
-}
-
-
-
-//id.
-function autoGen(srcElementId,tarElementId,connectionType){
-	//console.log("src 엘리먼트 :",srcElementId);
-	//console.log("tar 엘리먼트 :",tarElementId);
-	relationfunction.getTempRelation().relationAttr=[$("#sourceCol option:selected").val(),$("#sourceCol option:selected").val()];
-	var tempString = $("#sourceCol option:selected").val();
-	var firstName = "";
-	var lastName = "";
-	
-	var tempArr = tempString.split("+");
-	//console.log("names of selected pk's : ",tempArr)
-	
-	var cloneArr = [];
-    $(".option").each(function() {
-  	  
-       if($(this).is(':checked')){
-      	
-      	relationfunction.getTempRelation().relationType = ($(this).val());
-      	
-       }
-    }); 
-	//배열로나옴
-	for(var i=0;i<tempArr.length;i++){
-		var cloneAttr = EntityManager.getEntityByName(srcElementId).search({pName:tempArr[i]})[0].clone();
-		firstName +=EntityManager.getEntityByName(srcElementId).search({pName:tempArr[i]})[0].clone().id+"/";
-		cloneAttr.isFk = true;
-		if(connectionType=="nidentify"){cloneAttr.isPk=false;}
-		cloneArr.push(cloneAttr);
-		
-	}
-	
-	
-	
-	if(EntityControll.isNameExist(cloneArr,relationfunction.getTempRelation())){
-		alert("이미 존재하는 이름입니다.");
-		return;
-	}
-	//tempRelation Attr이용해서 connect option 지정.
-	//renderManager.connectDiv({$source:$("#"+relationfunction.getTempRelation().source) ,$target:$("#"+relationfunction.getTempRelation().target),id:relationfunction.getTempRelation().source+" "+relationfunction.getTempRelation().target,lineType:relationfunction.getTempRelation().relationLine});
-	else{
-		//console.log("the information of cloneArr :",cloneArr);
-		for(var j = 0;j<cloneArr.length;j++){
-	  		EntityManager.setAttribute(tarElementId, cloneArr[j]);
-		}
-		
-		for(var i=0;i<cloneArr.length;i++){
-			lastName +=EntityManager.getEntityByName(relationfunction.getTempRelation().target).search({pName:cloneArr[i].pName})[0].id+"/";
-			
-		}
-		
-		firstName = firstName.substring(0,firstName.length-1);
-		lastName = lastName.substring(0,lastName.length-1);
-		relationfunction.getTempRelation().name = firstName +"_"+lastName;	
-		
-		
-	//console.log(relationfunction.getTempRelation());
-	registRelationShipManager(relationfunction.getTempRelation());
-	
-	//console.log("relation ship saved : ",RelationShipManager.getRelationship(relationfunction.getTempRelation().name));
-	}
-}
-
 
 $(".genOption").on("click",function(e){
 	var genVal = $(this).val();
@@ -440,7 +274,7 @@ $(".genOption").on("click",function(e){
 	
 })
 $("#optSelect").on("click",function(e){
-	$("#optionSelect").modal();
+	$("#optionSelect").modal({backdrop:'static'});
 	 
 	
 	
@@ -450,6 +284,24 @@ $("#optSave").on("click",function(e){
 	restrictSelect();
 
 });
+
+function checkRes(chk){
+    var obj = $(".resOption");
+    for(var i=0; i<obj.length; i++){
+        if(obj[i] != chk){
+            obj[i].checked = false;
+        }
+    }
+} 
+
+function checkOpt(chk){
+    var obj = $(".option");
+    for(var i=0; i<obj.length; i++){
+        if(obj[i] != chk){
+            obj[i].checked = false;
+        }
+    }
+}
 function restrictSelect(){
 	 $(".resOption").each(function() {
 	  	  
@@ -464,17 +316,15 @@ function restrictSelect(){
 function checkBoxInitiate(optionValueClass){
 	var obj = $("."+optionValueClass);
 	//console.log("restrict option array:",obj);
-    for(var i=0; i<obj.length; i++){
-    		
-        if(i!=0){
-            obj[i].checked = false;
-        }
-        else{
-        	obj[i].checked = true;
-        }
-    }
-	
-	
+   for(var i=0; i<obj.length; i++){
+   		
+       if(i!=0){
+           obj[i].checked = false;
+       }
+       else{
+       	obj[i].checked = true;
+       }
+   }
 };
 
 </script>

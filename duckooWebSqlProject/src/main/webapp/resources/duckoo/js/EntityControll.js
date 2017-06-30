@@ -51,10 +51,10 @@ var EntityControll = (function(){
 		for(var i=0;i<cloneArr.length;i++){
 			var obj = EntityManager.getEntityByName(tempRelation.target).search({pName:cloneArr[i].pName});
 			
-			if(obj.length!=0){
+			if(obj.length!=0){//이미 같은 이름이 있다.
 				return true;
 			}
-			else{
+			else{//없다.
 				return false;
 			}
 
