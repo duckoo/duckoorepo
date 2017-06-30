@@ -85,14 +85,8 @@ jsPlumb.ready(function() {
 	 v(en).show();
 	 
 	 
-	 EntityManager.createEntity({name:"e32232",attr:[]},false);
-	 var en2 = EntityManager.getEntityByName("e32232");
-	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"tt22222",isPk:true});
 	
-	 en2.setAttr({lName:"내용",pName:"content",datetype:"tt22222"});
-	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
 	 
-	 v(en2).show();
 	
 	 
 

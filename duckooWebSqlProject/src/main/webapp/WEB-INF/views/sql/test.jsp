@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/resources/duckoo/css/mainModal.css">
 <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -22,17 +23,19 @@
 		crossorigin="anonymous"></script>
 <script type="text/javascript" src="/resources/duckoo/js/duckooPlumb.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/relationship.js?<%=token%>"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.js"></script> 
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
+<script type="text/javascript" src="/resources/duckoo/js/Observer.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/view/dView.js?<%=request.getParameter("token")%>"></script>
 
-<script type="text/javascript" src="/resources/duckoo/js/Observer.js?<%=token%>"></script>  
-<script type="text/javascript" src="/resources/duckoo/js/view/dView.js?<%=token%>"></script>
-<script type="text/javascript" src="/resources/duckoo/js/util/kAOP.js?<%=token%>"></script>
-
+<script type="text/javascript" src="/resources/duckoo/js/util/Count.js?<%=request.getParameter("token")%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/util/MyArrayUtil.js?<%=token%>"></script>
 
 </head>
+
 <body class="canvas" id="canvasDiv" style="width: 6000px; height: 6000px; border: 1px solid black;">
 
 <jsp:include page="/resources/duckoo/jsp/entity.jsp">
@@ -45,94 +48,65 @@
 
 <jsp:include page="/resources/duckoo/jsp/menu.jsp">
 <jsp:param name="token" value="<%=token%>" />
-</jsp:include>  
+</jsp:include> 
 
+
+<jsp:include page="/resources/duckoo/jsp/RelationModal.jsp">
+<jsp:param name="token" value="<%=token%>" />
+</jsp:include> 
 
 <jsp:include page="/resources/duckoo/jsp/sqlGen.jsp">
 <jsp:param name="token" value="<%=token%>" />
 </jsp:include> 
 
 
+<script type="text/javascript" src="/resources/duckoo/js/EntityControll.js?<%=token%>"></script>
 <script>
 jsPlumb.ready(function() {
-	 
-	setInterval(function(){
-	   jsPlumb.repaintEverything();
+	 setInterval(function(){
+		 console.log("re:");
+		jsPlumb.repaintEverything();
 	},1000/20);
 	
-	  EntityManager.createEntity({name:"e1"});
+	var mkFlag = false;
+	var tempRelation = {};
+	 EntityManager.createEntity({name:"e1",attr:[]},false);
 	 var en=EntityManager.getEntityByName("e1");
+	 en.setAttr({lName:"게시글번호",pName:"bno",datetype:"tt2",isPk:true,isFk:false});
+	 en.setAttr({lName:"글제목",pName:"title",datetype:"tt2",isPk:true,isFk:false});
+	 en.setAttr({lName:"글내용",pName:"content",datetype:"tt2"});
+	 en.setAttr({lName:"작성자",pName:"writer",datetype:"tt2"});
+	 en.setAttr({lName:"등록날자",pName:"regdate",datetype:"tt2"});
 	
+	 v(en).show();
 	 
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"int",datelength:10,isPk:true,isFk:true});
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"int",datelength:11,isFk:true});
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"int",datelength:12,isPk:true,isFk:true});
-	 en.setAttr({lName:"sibal",pName:"s_sibla",datetype:"int",datelength:13,isPk:true,isFk:true});
-
+	 EntityManager.createEntity({name:"e32232",attr:[]},false);
+	 var en2 = EntityManager.getEntityByName("e32232");
+	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"tt22222",isPk:true});
 	
-	v(en).show();
-	/* console.log("fac: ",fac);
-	fac.inject(en)
-	console.log("show",en.show);
-	console.log(": ",en);
-	en.show.call(en);
-	fac.show.call(en);
-	console.log()
-	 */
-/* 	
-	 RelationShipManager.createRelationship({name:"r1",source:"test", target:"e1" ,RelationAttrName:[ ["1","2"],["3","4"] ] })
-	 */
-/* var kp=	 new kAOP();	 
-	 	 kp.before(SqlFactory,"get",function(){
-		 console.log("AOP TEST ",this);
-	 }) */
+	 en2.setAttr({lName:"내용",pName:"content",datetype:"tt22222"});
+	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
 	 
-	/* var genSql=SqlFactory.get("mysql");
-	var sql = genSql.genCreateTableDDL(en);
-	 console.log("sql: ",sql);  */
-
-
-	/* var obj={
-     name:"name",
-      kyb:{1:"dd",2:"ss"},
-      zz:[1,2,3,4,5]
-	}
-	spyContainer(obj); */
-	/*  obj.name.observe(function(pt){
-		 console.log("arg: ",pt)
-			console.log("observe---------------");
-	})
-	obj.name.change(); */
+	 v(en2).show();
 	
-	/* console.log("why ",obj.name("sibal"));
-	 */
+	 EntityManager.createEntity({name:"qrwe",attr:[]},false);
+	 var en3 = EntityManager.getEntityByName("qrwe");
+	 en3.setAttr({lName:"dfafadwere",pName:"rno2",datetype:"tt22222",isPk:true});
+	
+	 en3.setAttr({lName:"내용",pName:"content2",datetype:"tt22222"});
+	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
 	 
-	// obj.kyb("1","564");
-	/*  console.log(obj.kyb("1"));
-	 console.log("key 1: ",obj.kyb("1")); */
-	/* console.log("z: ", obj.zz(1,"ssss"));
-    console.log("z: ", obj.zz(1,"222"));        
-    console.log("z: ", obj.zz(1)); 
-    
-  //  console.log("name: ", obj.name("siba"));  
-    console.log("name: ", obj.name());  
-     */
- //   console.log("why2: ",obj.name("sibal"));
-//  observer ex....
-/*  EntityManager.createEntity({name:"e1"},true); 
- var observer=Object.create(Obsever);
- observer.init("entityclick",function(opt){
-	console.log(opt); 
- });
-  observer.fx=function(opt){
-	 console.log("hi");
- } 
-  EntityManager.Obserable.setEventObserver("click",observer);
-  EntityManager.Obserable.setEventObserver("scaleUpBtn_click",observer);  */ 
-     
-  
-  
-}); 
+	 v(en3).show();
+	 EntityManager.createEntity({name:"werqrew",attr:[]},false);
+	 var en4 = EntityManager.getEntityByName("werqrew");
+	 en4.setAttr({lName:"sdfafasdfd",pName:"rno3",datetype:"tt22222",isPk:true});
+	
+	 en4.setAttr({lName:"내용",pName:"content3",datetype:"tt22222"});
+	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
+	 
+	 v(en4).show();
+
+});
 	
 </script>
    

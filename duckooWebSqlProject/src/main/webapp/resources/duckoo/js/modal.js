@@ -26,12 +26,7 @@ $("body").append(
 	
  function setViewPort(str){
 	 $(".contents").html(str);
-	 
-	 
-	 
  }
- 
- 
  
 return{setViewPort:setViewPort};
 })();
