@@ -142,6 +142,9 @@ var relationfunction=(function(){
 	function initiateElementArr(){
 		elementArr=[];
 	}
+	function setTempRelation(relation){
+		tempRelation = relation;
+	}
 	
 	function registRelationShipManager(){
 		
@@ -179,7 +182,7 @@ var relationfunction=(function(){
 		
 		relationManager.add(relation);
 	    
-
+		console.log("tempRelation???",tempRelation);
 		//console.log("저장됨? : ",relationManager.get(tempRelation.name));	
 		
 		renderManager.connectDiv({$source:$("#"+tempRelation.source) ,$target:$("#"+tempRelation.target),id:tempRelation.id,lineType:tempRelation.relationLine});
@@ -194,8 +197,7 @@ var relationfunction=(function(){
 	
 	
 	function autoGen(srcElementId,tarElementId,connectionType){
-		//console.log("src 엘리먼트 :",srcElementId);
-		//console.log("tar 엘리먼트 :",tarElementId);
+
 		
 		var tempString = $("#sourceCol option:selected").val();
 		var firstName = "";
@@ -247,19 +249,14 @@ var relationfunction=(function(){
 			tempRelation.name = firstName +"_"+lastName;	
 			firstName = firstName.substring(0,firstName.length-1);
 			lastName = lastName.substring(0,lastName.length-1);
-			//targetAttrNames= targetAttrNames.substring(0,targetAttrNames.length-1);
-			//console.log("target Attr Names :",targetAttrNames);
-			//tempRelation.relationAttr=[$("#sourceCol option:selected").val(),];
-			//console.log(relationfunction.getTempRelation().relationAttr);
-		//console.log(relationfunction.getTempRelation());
+
 		
 			
 			
 		registRelationShipManager(tempRelation);
 		initiateTempRelation();
 		
-		//console.log("relation ship saved : ",RelationShipManager.getRelationship(relationfunction.getTempRelation().name));
-		
+	
 	}
 	function MatchName(){
 		var tempSelectedValue = [];
@@ -302,6 +299,7 @@ var relationfunction=(function(){
 		 	initiateElementArr:initiateElementArr,
 		 	autoGen:autoGen,
 		 	MatchName:MatchName,
-		 	initiateTempRelation:initiateTempRelation}
+		 	initiateTempRelation:initiateTempRelation,
+		 	setTempRelation:setTempRelation}
 	 
 })();

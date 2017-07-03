@@ -40,8 +40,12 @@ var EntityControll = (function(){
 		
 	}
 	//end
-	function isDualKey(attr_id,sourceId){
-		var obj = relationshipManager;
+	function isDualKey(entity){
+		if(entity.search({isPk:true}).length==1){
+			return false;
+		}else{
+			return true;
+		}
 		
 		
 	};
@@ -64,6 +68,7 @@ var EntityControll = (function(){
 			isPkExist:isPkExist,
 			isEffectiveName:isEffectiveName,
 			isAlreadyConnected:isAlreadyConnected,
+			isDualKey:isDualKey,
 			isNameExist:isNameExist};	
 	
 })();

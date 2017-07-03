@@ -25,3 +25,18 @@ ADD CONSTRAINT PK_{{name}} PRIMARY KEY({{#getPk this}} {{/getPk}})
 
 </script> 
 <script type="text/javascript" src="/resources/duckoo/js/sql/sqlgen.js?<%=request.getParameter("token")%>"></script>
+<script type="text/javascript">
+var $document =$document ||$(document);
+
+$document.on("click","#genTest",function(e){
+	console.log("hi");
+	 var entityArr= EntityManager.getEntityByName();
+	 var key= Object.keys(entityArr);
+	 var genSql=SqlFactory.get("mysql");
+	 for(var i=0,len=key.length;i<len;i++){
+	    var sql = genSql.genCreateTableDDL(entityArr[key[i]]);
+			 console.log("sql: ",sql);
+	 }
+});
+
+</script>

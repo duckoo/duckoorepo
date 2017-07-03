@@ -10,7 +10,7 @@ var Relation=(function(){
          this.count=opt.count || 0;
          this.relationLine= opt.relationLine || undefined;
          this.restrictType = opt.restrictType || {};
-         
+         this.relationType = opt.relationType || undefined;
          
          //this.nodes= opt.nodes || [ [] , [] ];
 	}

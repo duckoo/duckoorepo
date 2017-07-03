@@ -55,5 +55,5 @@ var Attribute=(function(){
 	   newIn.init(opt);
 		return newIn;
 	}
- return {creteInstance:creteInstance};	
+ return {creteInstance:creteInstance,clone:clone};	
 })();
