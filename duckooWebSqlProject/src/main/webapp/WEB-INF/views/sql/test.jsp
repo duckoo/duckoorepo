@@ -60,6 +60,9 @@
 </jsp:include> 
 
 
+
+
+
 <script type="text/javascript" src="/resources/duckoo/js/EntityControll.js?<%=token%>"></script>
 <script>
 jsPlumb.ready(function() {
@@ -68,7 +71,7 @@ jsPlumb.ready(function() {
 		jsPlumb.repaintEverything();
 	},1000/20);
 	
-	var mkFlag = false;
+/* 	var mkFlag = false;
 	var tempRelation = {};
 	 EntityManager.createEntity({name:"e1",attr:[]},false);
 	 var en=EntityManager.getEntityByName("e1");
@@ -83,12 +86,10 @@ jsPlumb.ready(function() {
 	 EntityManager.createEntity({name:"e32232",attr:[]},false);
 	 var en2 = EntityManager.getEntityByName("e32232");
 	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"tt22222",isPk:true});
-	
 	 en2.setAttr({lName:"내용",pName:"content",datetype:"tt22222"});
 	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
 	 
 	 v(en2).show();
-	
 	 EntityManager.createEntity({name:"qrwe",attr:[]},false);
 	 var en3 = EntityManager.getEntityByName("qrwe");
 	 en3.setAttr({lName:"dfafadwere",pName:"rno2",datetype:"tt22222",isPk:true});
@@ -100,31 +101,43 @@ jsPlumb.ready(function() {
 	 EntityManager.createEntity({name:"werqrew",attr:[]},false);
 	 var en4 = EntityManager.getEntityByName("werqrew");
 	 en4.setAttr({lName:"sdfafasdfd",pName:"rno3",datetype:"tt22222",isPk:true});
-	
 	 en4.setAttr({lName:"내용",pName:"content3",datetype:"tt22222"});
 	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
-	 
-	 v(en4).show();
+	 v(en4).show(); */
 	 ///////////////////
+	 function makeName(attr1,attr2){
+       var str1=""+attr1[0];
+       var str2=""+attr2[0];
+       for(var i=1,len=attr1.length;i<len;i++){
+    	   str1+="/"+attr1[i];
+    	   str2+="/"+attr2[i];
+       }
+		return str1+"_"+str2;
+	 }
 	 
-	 EntityManager.createEntity({name:"고객등급",attr:[]});
-	 var customGrade=EntityManager.getEntityByName("고객등급");
-	 customGrade.setAttr({lName:"등급코드",pName:"cgNo",datetype:"INTEGER",datelength:"7",notNull:true,isPk:true,autoIncrement:true})
+	 
+	 
+	
+	var customGrade=EntityManager.createEntity({name:"고객등급",attr:[]});
+	var pk1=customGrade.setAttr({lName:"등급코드",pName:"cgNo",datetype:"INTEGER",datelength:"7",notNull:true,isPk:true,autoIncrement:true})
 	 customGrade.setAttr({lName:"코드명",pName:"cgName",datetype:"VARCHAR",datelength:"32",notNull:true})
 	 
-	 EntityManager.createEntity({name:"고객",attr:[]});
-	 var custom=EntityManager.getEntityByName("고객");
+	var custom= EntityManager.createEntity({name:"고객",attr:[]});
 	 custom.setAttr({lName:"고객번호",pName:"cno",datetype:"INTEGER",datelength:"7",notNull:true,isPk:true,autoIncrement:true})
-	 
-     var relation = {source:"고객등급",target:"고객",relationType:"OneToMany",relationLine:"identify",restrictType:"cascade", name:en.search({pName:"bno"})[0].id +"_"+en2.search({pName:"rno"})[0].id};
-     
-     relationfunction.setTempRelation(relation); 
-    
-     v(en).show();
-     v(en2).show();
-    
-    relationfunction.registRelationShipManager();
+	var fk1=custom.setAttr({lName:"고객등급코드",pName:"cgNo",datetype:"INTEGER",datelength:"7",notNull:true,isPk:true,isFk:true})
+	 custom.setAttr({lName:"성명",pName:"name",datetype:"VARCHAR",datelength:"32",notNull:true})
+	 custom.setAttr({lName:"주소",pName:"adress",datetype:"VARCHAR",datelength:"32"});
+	 custom.setAttr({lName:"전화번호",pName:"phoneNumber",datetype:"VARCHAR",datelength:"32"});
+	 custom.setAttr({lName:"성별",pName:"gender",datetype:"VARCHAR",datelength:"9"});
 
+	 //re
+	 var relation = {source:"고객등급",target:"고객",relationType:"OneToMany",relationLine:"identify",restrictType:"cascade", name:makeName([pk1],[fk1])};
+     relationfunction.setTempRelation(relation); 
+     relationfunction.registRelationShipManager();
+
+     v(customGrade).show();
+     v(custom).show();
+     
 });
 	
 </script>
