@@ -46,16 +46,29 @@ var memberMaker = (function(){
 		var relationStr = "";
 	
 			for(var i=0;i<childNodes.length;i++){
-				relationStr += "\t@"+rm.get(childNodes[i].reId[0]).relationType+"(fetch=FetchType.LAZY"+(rm.get(childNodes[i].reId[0]).restrictType==="cascade"?",cascade = CascadeType.ALL":"")+")"+"\n";
+				if(rm.get(childNodes[i].reId[0]).relationType=="OneToMany"){
+					relationStr += "\t@"+rm.get(childNodes[i].reId[0]).relationType+"(fetch=FetchType.LAZY"+(rm.get(childNodes[i].reId[0]).restrictType==="cascade"?",cascade = CascadeType.ALL":"")+")"+"\n";
+				}
 				relationStr += "\t@JoinColumn(name="+childNodes[i].entity.search({id:Number(childNodes[i].id)}).pName+")"+"\n";
-				relationStr +="\tprivate "+rm.get(childNodes[i].reId[0]).target+" example1"+";\n";
+				
+				relationStr +="\tprivate List<"+rm.get(childNodes[i].reId[0]).target+"> example1"+";\n";
 			}
 
 			
 
 		return relationStr;
 	}
-	
+	memberMaker.prototype.makeOneToMany = function(relationType,restrictType,src_tbl_name,target_tbl_name){
+		var str = "\t"+relationType+"(mappedBy="+src_tbl_name (restrictType==="cascade"?",cascade = CascadeType.ALL":"")+")"+"\n";
+		
+		
+	}
+	memberMaker.prototype.makeOneToOne = function(){
+		
+	}
+	memberMaker.prototype.makeManyToOne = function(){
+		
+	}
 	return memberMaker;
 })();
 

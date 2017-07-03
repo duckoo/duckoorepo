@@ -4,7 +4,7 @@
 	width:0px;
 }
 .entity {
-    width:175px; height:125px; margin-top:50px; margin-left:50px;
+    width:175px; height:125px; margin-top:50px; margin-left:10px;
     -webkit-transition: width 0.5s, height 0.5s; /* For Safari 3.1 to 6.0 */
     transition: width 0.5s, height 0.5s;
 }
@@ -31,10 +31,6 @@
     cursor:pointer;
     font-size:20px;
 }
-  .select-editable { position:relative; background-color:white; border:solid grey 1px;  width:120px; height:18px; }
-  .select-editable select { position:absolute; top:0px; left:0px; font-size:14px; border:none; width:120px; margin:0; }
-  .select-editable input { position:absolute; top:0px; left:0px; width:100px; padding:1px; font-size:12px; border:none; }
-  .select-editable select:focus, .select-editable input:focus { outline:none; }
 
 #canvasDiv{
 	background-image: url(http://freedevelopertutorials.azurewebsites.net/wp-content/uploads/2015/06/grid.png);
