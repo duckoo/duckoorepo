@@ -42,6 +42,8 @@ var attrNodeManager=(function(){
 		    var en=EntityManager.getEntityByName(this.arr[Number(idx)].entity);
 		    en.deleteAttr(Number(idx));
 			 delete manager.arr[idx];
+			 v(en).refresh();
+			 v(en).entitySizing();
 		}.bind(this));
 	}
 	
@@ -100,7 +102,11 @@ var attrNodeManager=(function(){
 				    var pk= tempEntity.search({isPk:true});
 				    var childReId=attrNodeManager.get(pk[0].id).reId;
 				   childReId = MyArrayUtil.minu(childReId,relationIdArr);
-				    
+				   /////태현이꼽사리
+				   tempEntity.sortAttribute();
+				   v(tempEntity).refresh();
+				   v(tempEntity).entitySizing();
+				   //////겐세이끝
 					if(pk.length && nearRelation[i].relationLine==="identify"){
 						attr.id=id;
 					   addPk(childReId,attr);
@@ -170,6 +176,8 @@ var attrNodeManager=(function(){
 			   keyType.id=Number(_id);
 			   en.setAttr(keyType);
 			   manager.unRelationParent(Number(_id));
+			   v(en).refresh();
+			   v(en).entitySizing();
 		}.bind(this));
 	}
 	
@@ -199,6 +207,7 @@ var attrNodeManager=(function(){
 			var node = this.arr[cid];
 			attr.id=Number(cid);
 			EntityManager.getEntityByName(node.entity).setAttr(attr);
+			v(EntityManager.getEntityByName(node.entity)).refresh();
 		}.bind(this));
 	}
 	

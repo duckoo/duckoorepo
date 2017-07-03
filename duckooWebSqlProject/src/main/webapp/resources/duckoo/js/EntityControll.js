@@ -40,8 +40,12 @@ var EntityControll = (function(){
 		
 	}
 	//end
-	function isDualKey(attr_id,sourceId){
-		var obj = relationshipManager;
+	function isDualKey(entity){
+		if(entity.search({isPk:true}).length==1){
+			return false;
+		}else{
+			return true;
+		}
 		
 		
 	};
@@ -51,10 +55,10 @@ var EntityControll = (function(){
 		for(var i=0;i<cloneArr.length;i++){
 			var obj = EntityManager.getEntityByName(tempRelation.target).search({pName:cloneArr[i].pName});
 			
-			if(obj.length!=0){
+			if(obj.length!=0){//이미 같은 이름이 있다.
 				return true;
 			}
-			else{
+			else{//없다.
 				return false;
 			}
 
@@ -64,6 +68,7 @@ var EntityControll = (function(){
 			isPkExist:isPkExist,
 			isEffectiveName:isEffectiveName,
 			isAlreadyConnected:isAlreadyConnected,
+			isDualKey:isDualKey,
 			isNameExist:isNameExist};	
 	
 })();

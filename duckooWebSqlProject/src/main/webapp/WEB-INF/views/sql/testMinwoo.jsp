@@ -32,7 +32,10 @@
 <script type="text/javascript" src="/resources/duckoo/js/view/dView.js?<%=request.getParameter("token")%>"></script>
 
 <script type="text/javascript" src="/resources/duckoo/js/util/Count.js?<%=request.getParameter("token")%>"></script>
-<script type="text/javascript" src="/resources/duckoo/js/util/MyArrayUtil.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/jpaDomain/classMaker.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/jpaDomain/memberMaker.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/jpaDomain/Maps.js?<%=token%>"></script>
+
 
 
 
@@ -75,17 +78,55 @@ jsPlumb.ready(function() {
 	var tempRelation = {};
 	 EntityManager.createEntity({name:"e1",attr:[]},false);
 	 var en=EntityManager.getEntityByName("e1");
-	 en.setAttr({lName:"게시글번호",pName:"bno",datetype:"tt2",isPk:true,isFk:false});
-	 en.setAttr({lName:"글제목",pName:"title",datetype:"tt2",isPk:true,isFk:false});
-	 en.setAttr({lName:"글내용",pName:"content",datetype:"tt2"});
-	 en.setAttr({lName:"작성자",pName:"writer",datetype:"tt2"});
-	 en.setAttr({lName:"등록날자",pName:"regdate",datetype:"tt2"});
+<<<<<<< HEAD
+	 en.setAttr({lName:"게시글번호",pName:"bno",datetype:"INT()",isPk:true,isFk:false});
+	 en.setAttr({lName:"글제목",pName:"title",datetype:"varchar()",isFk:false});
+	 en.setAttr({lName:"글내용",pName:"content",datetype:"varchar()"});
+	 en.setAttr({lName:"작성자",pName:"writer",datetype:"varchar"});
+	 en.setAttr({lName:"등록날자",pName:"regdate",datetype:"varchar"});
+=======
+	 en.setAttr({lName:"게시글번호",pName:"bno",datetype:"int",datelength:10,isPk:true,isFk:false});
+	 en.setAttr({lName:"글제목",pName:"title",datetype:"varchar",datelength:300,isPk:true,isFk:false});
+	 en.setAttr({lName:"글내용",pName:"content",datetype:"varchar",datelength:2000});
+	 en.setAttr({lName:"작성자",pName:"writer",datetype:"varchar",datelength:100});
+	 en.setAttr({lName:"등록날자",pName:"regdate",datetype:"timestamp"});
+>>>>>>> branch 'master' of https://github.com/duckoo/duckoorepo
 	 
+	 
+	 EntityManager.createEntity({name:"e2",attr:[]},false);
+	 var en2=EntityManager.getEntityByName("e2");
+	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"varchar",isPk:true,isFk:false});
+	 en2.setAttr({lName:"댓글제목",pName:"title",datetype:"varchar"});
+	 en2.setAttr({lName:"댓글내용",pName:"content",datetype:"varchar"});
+	 en2.setAttr({lName:"댓글작성자",pName:"writer",datetype:"varchar"});
+	 en2.setAttr({lName:"댓글등록날자",pName:"regdate",datetype:"varchar"});
+	  
+	 
+	 
+	 var relation = {source:"e1",target:"e2",relationType:"OneToMany",relationLine:"identify",restrictType:"cascade", name:en.search({pName:"bno"})[0].id +"_"+en2.search({pName:"rno"})[0].id};
+	 
+	 relationfunction.setTempRelation(relation);
 	
 	 v(en).show();
+	 v(en2).show();
 	 
-	 
+<<<<<<< HEAD
 	
+	relationfunction.registRelationShipManager(); 
+	
+	var cm =new classMaker(EntityManager,relationManager,attrNodeManager);
+	console.log(cm);
+	 console.log(cm.classify("e1"));
+=======
+	 EntityManager.createEntity({name:"e32232",attr:[]},false);
+	 var en2 = EntityManager.getEntityByName("e32232");
+	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"int",datelength:10,isPk:true});
+
+	 en2.setAttr({lName:"내용",pName:"content",datetype:"varchar",datelength:500});
+	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
+	 
+	 v(en2).show();
+>>>>>>> branch 'master' of https://github.com/duckoo/duckoorepo
 	 
 	
 	 

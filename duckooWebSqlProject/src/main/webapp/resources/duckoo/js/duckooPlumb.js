@@ -21,7 +21,6 @@ var renderManager=(function(){
 			return;
 		}
 		
-		
 		var obj= jsPlumb.connect({
 		       source:$source, 
 		       target:$target,
@@ -42,9 +41,9 @@ var renderManager=(function(){
 	   
 	    //나중에 써먹어야된다.
         // 0: source, 1: target
-	  var rectSor = getDivToRect($target.attr("id"));
-	   var x=obj.getAttachedElements()[1].endpoint.x;
-	   var y=obj.getAttachedElements()[1].endpoint.y;
+	//  var rectSor = getDivToRect($target.attr("id"));
+	  // var x=obj.getAttachedElements()[1].endpoint.x;
+	  // var y=obj.getAttachedElements()[1].endpoint.y;
 	   
 	   /*console.log("rect: ",rectSor );
 	   console.log("pt On rect: ",projectPointInRect(rectSor,{x:x,y:y}));
@@ -54,7 +53,10 @@ var renderManager=(function(){
 	    console.log("js: ",obj.getAttachedElements()[1].endpoint.x); 
 	    console.log("js: ",obj.getAttachedElements()[1].endpoint);
 	    console.log("ep:",obj.getAttachedElements()[1].canvas.innerHTML);*/
-	    
+	  //  console.log(obj);
+	   
+	   
+	   
 	    obj.getAttachedElements()[1].canvas.innerHTML="<img src='/resources/zaku/img/TestIMage.jpg'></img>";
 	    jsPlumb.repaintEverything();
 	   
