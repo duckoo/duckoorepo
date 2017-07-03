@@ -154,5 +154,4 @@ var relationfunction=(function(){
 		 	relId:relId,
 		 	getElementArr:getElementArr,
 		 	initiateElementArr:initiateElementArr}
-	 
 })();

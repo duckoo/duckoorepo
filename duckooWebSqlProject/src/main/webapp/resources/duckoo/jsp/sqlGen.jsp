@@ -1,16 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
- <script id="sqlCreate" type="text/x-handlebars-template">
- create table {{name}} (  
-{{#attr}}
-	  {{name}},
-      {{gen name type}}
-
- {{/attr}}
-);
-</script> 
-
 
  <script id="mysqlCreateDDL" type="text/x-handlebars-template">
  create table {{name}} (  
@@ -18,14 +8,21 @@
        {{pName}} {{#genMySQLType domainName datetype datelength}}{{/genMySQLType}} {{#isNotNull isPk notNull}}{{/isNotNull}} {{#if autoIncrement}}AUTO_IMCREMENT{{/if}}  {{#getDefault defaultExp}} {{/getDefault}}  {{#isEnd @last}}{{/isEnd}}    
    {{/attr}}
 );
-
 ALTER TABLE {{name}}
-ADD CONSTRAINT PK_{{name}} PRIMARY KEY({{#getPk this}} {{/getPk}}) 
-{{#genFK this}}{{/genFK}}
+ADD CONSTRAINT PK_{{name}} PRIMARY KEY  {{#getPk this}}{{/getPk}} 
 
-</script> 
-<script type="text/javascript" src="/resources/duckoo/js/sql/sqlgen.js?<%=request.getParameter("token")%>"></script>
+{{#genFK this}}{{/genFK}}
+</script>
+
+
+ 
+<script type="text/javascript" src="/resources/duckoo/js/sql/commonSql/CommonSql.js?<%=request.getParameter("token")%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/sql/mysql/GenMysqlSql.js?<%=request.getParameter("token")%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/sql/oracle/GenOracleSql.js?<%=request.getParameter("token")%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/sql/sqlFactory.js?<%=request.getParameter("token")%>"></script>
+
 <script type="text/javascript">
+
 var $document =$document ||$(document);
 
 $document.on("click","#genTest",function(e){

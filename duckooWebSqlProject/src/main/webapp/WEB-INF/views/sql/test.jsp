@@ -105,6 +105,25 @@ jsPlumb.ready(function() {
 	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
 	 
 	 v(en4).show();
+	 ///////////////////
+	 
+	 EntityManager.createEntity({name:"고객등급",attr:[]});
+	 var customGrade=EntityManager.getEntityByName("고객등급");
+	 customGrade.setAttr({lName:"등급코드",pName:"cgNo",datetype:"INTEGER",datelength:"7",notNull:true,isPk:true,autoIncrement:true})
+	 customGrade.setAttr({lName:"코드명",pName:"cgName",datetype:"VARCHAR",datelength:"32",notNull:true})
+	 
+	 EntityManager.createEntity({name:"고객",attr:[]});
+	 var custom=EntityManager.getEntityByName("고객");
+	 custom.setAttr({lName:"고객번호",pName:"cno",datetype:"INTEGER",datelength:"7",notNull:true,isPk:true,autoIncrement:true})
+	 
+     var relation = {source:"고객등급",target:"고객",relationType:"OneToMany",relationLine:"identify",restrictType:"cascade", name:en.search({pName:"bno"})[0].id +"_"+en2.search({pName:"rno"})[0].id};
+     
+     relationfunction.setTempRelation(relation); 
+    
+     v(en).show();
+     v(en2).show();
+    
+    relationfunction.registRelationShipManager();
 
 });
 	
