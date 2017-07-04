@@ -16,5 +16,4 @@ var SqlFactory=(function(){
 	});
 })();
 
-SqlFactory.add(GenMysqlSql);
 

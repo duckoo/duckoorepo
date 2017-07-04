@@ -176,7 +176,7 @@ var relationfunction=(function(){
 			tag.relIdPush(tempRelation.id);
 			attrNodeManager.link(sId,tId);
 		}
-	      console.log("제대로 들어갔냐: ",attrNodeManager);
+	   //   console.log("제대로 들어갔냐: ",attrNodeManager);
 		
 		var  relation= new Relation(tempRelation);
 		

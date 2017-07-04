@@ -23,14 +23,9 @@ var CommonSql=(function(){
 		return sql;
 	}
 	
-	////////////////////////////////////////////////////////
-	function isEnd(last){
-		 if(!last)return ",";
-	}
-	Handlebars.registerHelper("isEnd",isEnd);
 	/////////////////////////////////////////////////////////
 	function isNotNull(ispk,notnull) {
-		  var ret="";
+		  var ret=" ";
 		  if(ispk)ret="NOT NULL";
 		  if(notnull)ret="NOT NULL";
 	    return ret;
@@ -72,7 +67,7 @@ var CommonSql=(function(){
 	    	var ps=arrToComaString(relationParent[key[i]]);
 	    	var pE=pEntityName[key[i]];
 	    	var cName=""+pE+"_to_"+that.name;
-	    sql+="ALTER TABLE "+that.name+"  ADD  CONSTRAINT "+cName+" FOREIGN KEY "+cs+" REFERENCES "+pE+ps+"\n\n";
+	    sql+="ALTER TABLE "+that.name+"  ADD  CONSTRAINT "+cName+" \n FOREIGN KEY "+cs+" REFERENCES "+pE+ps+"\n\n";
 	   }
 	    return sql;
 	}
@@ -89,7 +84,6 @@ var CommonSql=(function(){
 		Handlebars.registerHelper("genFK",fn );
 	}
 	CommonSql.prototype.dropTable=dropTable;
-	
 	
 	return new CommonSql();
 })();
