@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name = "google-signin-client_id"content = "271929324186-nb92pvj0v2cdv4cr7chvt84nvu6q2t4o.apps.googleusercontent.com">
 <title>erd main</title>
 <% Random random = new Random(); 
     int token= random.nextInt();
@@ -33,12 +34,7 @@
 
 <script type="text/javascript" src="/resources/duckoo/js/util/Count.js?<%=request.getParameter("token")%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/util/MyArrayUtil.js?<%=token%>"></script>
-
-
-
-
-
-
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 
 <body class="canvas" id="canvasDiv" style="width: 6000px; height: 6000px; border: 1px solid black;">
@@ -67,6 +63,7 @@
 
 <script type="text/javascript" src="/resources/duckoo/js/EntityControll.js?<%=token%>"></script>
 <script>
+
 jsPlumb.ready(function() {
 	 setInterval(function(){
 		 console.log("re:");
@@ -96,10 +93,10 @@ jsPlumb.ready(function() {
 	 
 	 v(en2).show();
 	 
-	
-	 
 
 });
+
+
 	
 </script>
    

@@ -3,7 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -23,6 +25,19 @@
 	
 	<context:component-scan base-package="org.duckoo.web" />
 	
+	<beans:bean id="loginInterceptor" class="org.duckoo.interceptor.LoginInterceptor"></beans:bean>
+	<beans:bean id="authInterceptor" class="org.duckoo.interceptor.AuthInterceptor"></beans:bean>
+	<interceptors>
+		<interceptor>
+			<mapping path="/main/index1"/>
+			<beans:ref bean="loginInterceptor"/>
+		</interceptor>
+		
+		<interceptor>
+			<mapping path="/sql/testMinwoo"/>
+			<beans:ref bean="authInterceptor"/>
+		</interceptor>
 	
+	</interceptors>
 	
 </beans:beans>
