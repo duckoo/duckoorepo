@@ -30,11 +30,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
 <script type="text/javascript" src="/resources/duckoo/js/Observer.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/view/dView.js?<%=request.getParameter("token")%>"></script>
-
+<script type="text/javascript" src="/resources/duckoo/js/util/MyArrayUtil.js?<%=request.getParameter("token")%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/util/Count.js?<%=request.getParameter("token")%>"></script>
-<script type="text/javascript" src="/resources/duckoo/js/jpaDomain/classMaker.js?<%=token%>"></script>
-<script type="text/javascript" src="/resources/duckoo/js/jpaDomain/memberMaker.js?<%=token%>"></script>
-<script type="text/javascript" src="/resources/duckoo/js/jpaDomain/Maps.js?<%=token%>"></script>
+
 
 
 
@@ -65,7 +63,10 @@
 <jsp:param name="token" value="<%=token%>" />
 </jsp:include> 
 
-
+<script type="text/javascript" src="/resources/duckoo/js/jpaDomain/classMaker.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/jpaDomain/memberMaker.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/jpaDomain/dualKey.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/jpaDomain/Maps.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/EntityControll.js?<%=token%>"></script>
 <script>
 jsPlumb.ready(function() {
@@ -78,55 +79,51 @@ jsPlumb.ready(function() {
 	var tempRelation = {};
 	 EntityManager.createEntity({name:"e1",attr:[]},false);
 	 var en=EntityManager.getEntityByName("e1");
-<<<<<<< HEAD
+
 	 en.setAttr({lName:"게시글번호",pName:"bno",datetype:"INT()",isPk:true,isFk:false});
-	 en.setAttr({lName:"글제목",pName:"title",datetype:"varchar()",isFk:false});
+	 en.setAttr({lName:"글제목",pName:"title",datetype:"varchar()",isPk:false,isFk:false});
 	 en.setAttr({lName:"글내용",pName:"content",datetype:"varchar()"});
 	 en.setAttr({lName:"작성자",pName:"writer",datetype:"varchar"});
 	 en.setAttr({lName:"등록날자",pName:"regdate",datetype:"varchar"});
-=======
-	 en.setAttr({lName:"게시글번호",pName:"bno",datetype:"int",datelength:10,isPk:true,isFk:false});
-	 en.setAttr({lName:"글제목",pName:"title",datetype:"varchar",datelength:300,isPk:true,isFk:false});
-	 en.setAttr({lName:"글내용",pName:"content",datetype:"varchar",datelength:2000});
-	 en.setAttr({lName:"작성자",pName:"writer",datetype:"varchar",datelength:100});
-	 en.setAttr({lName:"등록날자",pName:"regdate",datetype:"timestamp"});
->>>>>>> branch 'master' of https://github.com/duckoo/duckoorepo
-	 
-	 
+
 	 EntityManager.createEntity({name:"e2",attr:[]},false);
 	 var en2=EntityManager.getEntityByName("e2");
 	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"varchar",isPk:true,isFk:false});
+	 en2.setAttr({lName:"게시글번호",pName:"bno",datetype:"INT()",isPk:false,isFk:true});
 	 en2.setAttr({lName:"댓글제목",pName:"title",datetype:"varchar"});
 	 en2.setAttr({lName:"댓글내용",pName:"content",datetype:"varchar"});
 	 en2.setAttr({lName:"댓글작성자",pName:"writer",datetype:"varchar"});
 	 en2.setAttr({lName:"댓글등록날자",pName:"regdate",datetype:"varchar"});
 	  
 	 
-	 
-	 var relation = {source:"e1",target:"e2",relationType:"OneToMany",relationLine:"identify",restrictType:"cascade", name:en.search({pName:"bno"})[0].id +"_"+en2.search({pName:"rno"})[0].id};
+	 EntityManager.createEntity({name:"e3",attr:[]},false);
+	 var en3=EntityManager.getEntityByName("e3");
+	 en3.setAttr({lName:"파일번호",pName:"fno",datetype:"varchar()",isPk:true,isFk:false});
+	 en3.setAttr({lName:"게시글번호",pName:"bno",datetype:"INT()",isPk:false,isFk:true});
+	 en3.setAttr({lName:"게시글번호",pName:"fname",datetype:"varchar()"});
+	
+	
 	 
 	 relationfunction.setTempRelation(relation);
-	
 	 v(en).show();
 	 v(en2).show();
+	 v(en3).show();
+
+ 	var relation = {source:"e1",target:"e2",relationType:"OneToMany",relationLine:"nidentify",restrictType:"cascade", name:en.search({pName:"bno"})[0].id+"_"+en2.search({pName:"bno"})[0].id};
 	 
-<<<<<<< HEAD
-	
+	 relationfunction.setTempRelation(relation);
 	relationfunction.registRelationShipManager(); 
 	
+	relation = {source:"e1",target:"e3",relationType:"OneToMany",relationLine:"nidentify",restrictType:"cascade", name:en.search({pName:"bno"})[0].id+"_"+en3.search({pName:"bno"})[0].id};
+	relationfunction.setTempRelation(relation);
+	relationfunction.registRelationShipManager();
+	
 	var cm =new classMaker(EntityManager,relationManager,attrNodeManager);
-	console.log(cm);
+	 console.log(cm);
 	 console.log(cm.classify("e1"));
-=======
-	 EntityManager.createEntity({name:"e32232",attr:[]},false);
-	 var en2 = EntityManager.getEntityByName("e32232");
-	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"int",datelength:10,isPk:true});
+	 console.log(cm.classify("e2"));
+	 console.log(cm.classify("e3"));
 
-	 en2.setAttr({lName:"내용",pName:"content",datetype:"varchar",datelength:500});
-	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
-	 
-	 v(en2).show();
->>>>>>> branch 'master' of https://github.com/duckoo/duckoorepo
 	 
 	
 	 
