@@ -5,4 +5,14 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 		
+		
+		
+		
+
+	<bean id="uploadPath" class="java.lang.String">
+		<constructor-arg value="C:\\zzz\\upload">
+		</constructor-arg>
+	</bean>
+		
+		
 </beans>

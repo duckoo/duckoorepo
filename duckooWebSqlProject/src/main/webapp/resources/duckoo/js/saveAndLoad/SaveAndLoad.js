@@ -31,6 +31,8 @@ var SaveAndLoad=(function(){
 	
 	SaveAndLoad.prototype.load=function(json){
 		var jobj= JSON.parse(json);
+		console.log("jobj",jobj);
+		jobj=jobj.json;
 		loadEntity.call(this,jobj.entitys);
 		loadRelation.call(this,jobj.relations);
 		loadNode.call(this,jobj.nodes);
@@ -43,7 +45,26 @@ var SaveAndLoad=(function(){
 		 this.entitys=enArr;
 		 this.nodes=noArr;
 		 this.relations=reArr;
-		 return JSON.stringify(this);
+		 var ret= JSON.stringify(this);
+		 console.log("json: ",ret);
+		 
+		 
+		 $.ajax({
+				  url : '/rest/setErdPageJSON'
+		        , method : "post"
+				, dataType : 'json'
+				, data : ret
+				, processData : true 
+				, contentType : "application/json; charset=UTF-8"
+				, success : function(data, stat, xhr) {
+					alert("success");
+				}
+			    , error : function(xhr, stat, err) {
+			    	alert("error");
+			    	console.log(err);
+			    }
+			});
+		 return ret;
 	}
 	return new SaveAndLoad();
 })();

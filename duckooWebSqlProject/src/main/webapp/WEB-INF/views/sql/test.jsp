@@ -128,7 +128,8 @@ jsPlumb.ready(function() {
 	 relation = {source:"상품",target:"주문상품",relationType:"OneToMany",relationLine:"identify",restrictType:"cascade", name:makeName([sPK],[sFK])};
 	 relationfunction.setTempRelation(relation); 
 	 relationfunction.registRelationShipManager();
-     
+	 
+	 SaveAndLoad.saveToJson();
 });
 	
 </script>
