@@ -24,8 +24,9 @@ var Attribute=(function(){
 		};
 ///////////////////////////////////////////////////////
  function init(opt) {
-		 this.setAttribute(opt);
-      this.id=counter();
+	 var opt = opt || {};
+	 this.setAttribute(opt);//
+	 if(!opt.id)this.id=counter(); // 무조건 카운터주는걸 막았음 잠시만..	
   }
   function setAttribute(_attrList){
 	  var attrList=_attrList||{};

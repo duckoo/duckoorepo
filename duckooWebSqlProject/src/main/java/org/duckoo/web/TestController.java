@@ -31,5 +31,8 @@ public class TestController {
 	public void re4(){
 		
 	}
+	@GetMapping("/LoadTest")
+	public void re5(){
+	}
 	
 }

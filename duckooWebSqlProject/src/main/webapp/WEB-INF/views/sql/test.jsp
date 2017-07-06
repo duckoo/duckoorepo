@@ -22,17 +22,15 @@
 		integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
 		crossorigin="anonymous"></script>
 <script type="text/javascript" src="/resources/duckoo/js/duckooPlumb.js?<%=token%>"></script>
-<script type="text/javascript" src="/resources/duckoo/js/relationship.js?<%=token%>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.js"></script> 
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
 <script type="text/javascript" src="/resources/duckoo/js/Observer.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/view/dView.js?<%=token%>"></script>
-<script type="text/javascript" src="/resources/duckoo/js/saveAndLoad/Save.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/saveAndLoad/SaveAndLoad.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/util/Count.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/util/MyArrayUtil.js?<%=token%>"></script>
-
 </head>
 
 <body class="canvas" id="canvasDiv" style="width: 6000px; height: 6000px; border: 1px solid black;">
@@ -68,8 +66,7 @@ jsPlumb.ready(function() {
 	 setInterval(function(){
 		 console.log("re:");
 		jsPlumb.repaintEverything();
-	},1000/20);
-	
+	},1000);
 	 //이름만드는거 존나 귀찮아서..만든 임시함수임.
 	 function makeName(attr1,attr2){
        var str1=""+attr1[0].id;
@@ -132,9 +129,7 @@ jsPlumb.ready(function() {
 	 relationfunction.setTempRelation(relation); 
 	 relationfunction.registRelationShipManager();
 	 
-	 Save.saveEntity(orderStuff);
-	 
-     
+	 SaveAndLoad.saveToJson();
 });
 	
 </script>

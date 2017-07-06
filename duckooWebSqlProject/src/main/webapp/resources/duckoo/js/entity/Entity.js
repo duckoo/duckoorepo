@@ -21,6 +21,8 @@ function init(_opt) {
 	var opt= _opt ||{};
 	this.name = opt.name ||undefined;
 	this.extend=false;
+	this.top=opt.top || 0;
+	this.left=opt.left || 0;
 }
 
 function getAttr(id){
@@ -99,6 +101,7 @@ function getAttr(id){
  
 ///////////////////////////////////////////////////////////////////////   
    function createInstance(opt){
+	   var opt = opt || {};
 	   var newEntity=Object.create(entity);
 	    Object.defineProperty(newEntity,"name",{
 	    	  value:undefined,
@@ -119,6 +122,26 @@ function getAttr(id){
 		       enumerable:true,
 		       configurable:false
 	    });
+	    
+	    Object.defineProperty(newEntity,"top",{
+	    	  value:0,
+		      writable:true,
+		       enumerable:true,
+		       configurable:false
+	    });
+	    
+	    Object.defineProperty(newEntity,"left",{
+	    	  value:0,
+		      writable:true,
+		       enumerable:true,
+		       configurable:false
+	    });
+	    
+	    if(opt.attr){
+	     for(var i=0,len=opt.attr.length;i<len;i++){
+	    	newEntity.attr[i]=Attribute.creteInstance(opt.attr[i])
+	      }
+	   }
 	   newEntity.init(opt);
 	   return newEntity;
    }

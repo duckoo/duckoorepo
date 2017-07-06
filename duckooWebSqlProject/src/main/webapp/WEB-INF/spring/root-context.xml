@@ -16,7 +16,6 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
-	
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<!-- <property name="driverClassName" value="com.mysql.jdbc.Driver"></property> -->
@@ -41,4 +40,13 @@
 	<context:component-scan base-package="org.duckoo.persistence"></context:component-scan>
 	<context:component-scan base-package="org.duckoo.domain"></context:component-scan>
 	<context:component-scan base-package="org.duckoo.service"></context:component-scan>
+
+
+	<bean id="uploadPath" class="java.lang.String">
+		<constructor-arg value="C:\\zzz\\upload">
+		</constructor-arg>
+	</bean>
+		
+		
+
 </beans>

@@ -187,7 +187,6 @@ function updateAttrFinalBtn(e){
     delete attr1["notNull"];
     delete attr1["autoIncrement"];
     
-    console.log("uafb attr : ",attr1);
     
     attrNodeManager.updateTourAll(String(id),{datetype:attr.datetype});
     attrNodeManager.updateTourChild(String(id),attr1);
@@ -231,10 +230,8 @@ function confirmYes(){
 	
 	var id = target.attr("id");
 	
-	console.log("에이티티알메니저:",attrNodeManager);
 	attrNodeManager.deleteTour(Number(id));
 	console.log("delete Atfer:",attrNodeManager);
-	
 	
 	entity.deleteAttr(Number(id));
 	var $openAttrDelUpDiv= $("#openAttrDelUpDiv_"+id);

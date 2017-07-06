@@ -1,7 +1,10 @@
 var EnitityView=(function(){
   var entityHtml=$("#entityTemplate").html();
   var entityTemplate=Handlebars.compile(entityHtml);
-
+  var basicY=120;
+  var basicX=0;
+  
+  
   Handlebars.registerHelper("getAttrHeight",function(ex){
 		var str="height:";
 		if(ex)str+="285px";
@@ -20,22 +23,28 @@ var EnitityView=(function(){
 		 if(!$taget)$taget=$("body");
 		 var str=this.genHtmlStr();
 		$taget.append(str);
-		$("#"+this.name).draggable({handle:'.table_name',containment:"#canvasDiv",scroll:true});
-
-	}
-  function show(pt){ 
+  	  var $that =$("#"+this.name);
+	  $that.draggable({handle:'.table_name',containment:"#canvasDiv",scroll:true});
+}
+ function show(pt){ 
 		var $this=$("#"+this.name);
-		$this.css("display","block");
 		if($this.length===0){
 			this.renderToHTML();
 		}
-		if(pt){
-			$this=$("#"+this.name);
-			$this.offset({top:pt.y,left:pt.x});
-		}
+	 $this.css("display","block");
+	this.move(pt);  
+	   
   }
-  
-  
+  function move(pt){
+	  var pt = pt || {};
+	  var x= pt.x || this.left || basicX;
+	  var y= pt.y || this.top || basicY;
+	  var $this=$("#"+this.name);
+	  if($this.length===0)return;
+	  $this.offset({top:y,left:x});
+	  this.left=x;
+	  this.top=y;
+  }
   function hide(){
 	 var $this=$("#"+this.name);
 	 $this.css("display","none");
@@ -48,6 +57,7 @@ var EnitityView=(function(){
 		en.refresh=refresh;
 		en.show=show;
 		en.entitySizing=entitySizing;
+		en.move=move;
 		return en;
 	}
   function entitySizing(){

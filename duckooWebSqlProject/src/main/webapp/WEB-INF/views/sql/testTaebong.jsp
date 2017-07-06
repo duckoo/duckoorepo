@@ -23,14 +23,13 @@
 		integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
 		crossorigin="anonymous"></script>
 <script type="text/javascript" src="/resources/duckoo/js/duckooPlumb.js?<%=token%>"></script>
-<script type="text/javascript" src="/resources/duckoo/js/relationship.js?<%=token%>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.js"></script> 
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
 <script type="text/javascript" src="/resources/duckoo/js/Observer.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/view/dView.js?<%=token%>"></script>
-<script type="text/javascript" src="/resources/duckoo/js/saveAndLoad/Save.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/saveAndLoad/SaveAndLoad.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/util/Count.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/util/MyArrayUtil.js?<%=token%>"></script>
 
@@ -145,7 +144,7 @@ jsPlumb.ready(function() {
 	 relationfunction.setTempRelation(relation); 
 	 relationfunction.registRelationShipManager();
 	 
-	 Save.saveEntity(orderStuff);
+	
      
 });
 	

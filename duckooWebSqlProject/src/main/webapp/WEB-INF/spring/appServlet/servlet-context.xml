@@ -22,8 +22,8 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
 	<context:component-scan base-package="org.duckoo.web" />
+
 	
 	<beans:bean id="loginInterceptor" class="org.duckoo.interceptor.LoginInterceptor"></beans:bean>
 	<beans:bean id="authInterceptor" class="org.duckoo.interceptor.AuthInterceptor"></beans:bean>
@@ -39,5 +39,6 @@
 		</interceptor>
 	
 	</interceptors>
+
 	
 </beans:beans>
