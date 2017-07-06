@@ -25,11 +25,11 @@ public class TestController {
 	}
 	@GetMapping("/testTaebong")
 	public void re3(){
-		
+		System.out.println("Test Taebong Get!!!!!!");
 	}
 	@GetMapping("/testMinwoo")
 	public void re4(){
-		System.out.println("테스트민우222222");
+		
 	}
 	
 }

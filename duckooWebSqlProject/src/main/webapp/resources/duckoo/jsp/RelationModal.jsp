@@ -126,24 +126,6 @@ $document.on("click","#makeTableBtn",function(e){
 	$("#tbl_nameModal").modal({backdrop:'static'});
 });
 
-function checkRes(chk){
-    var obj = $(".resOption");
-    for(var i=0; i<obj.length; i++){
-        if(obj[i] != chk){
-            obj[i].checked = false;
-        }
-    }
-} 
-
-function checkOpt(chk){
-    var obj = $(".option");
-    for(var i=0; i<obj.length; i++){
-        if(obj[i] != chk){
-            obj[i].checked = false;
-        }
-    }
-}
-
 $("#conform").on("click",function(e){
 	 
 	 var tempName = $("#tbl_name").val().trim();
@@ -166,10 +148,10 @@ $document.on("click","#makeRelationBtn",function(e){
 	relationfunction.initiateElementArr();
 	var icon = $(this);
 	  
-	//console.log("rf:",relationfunction)
+	console.log("rf:",relationfunction)
 	
 	var mkFlag=relationfunction.changeFlagState();
-	//console.log("rf:",mkFlag);
+	console.log("rf:",mkFlag);
 	var color="#5cb85c";
 	if(mkFlag)
 	  color="#FF0066";
@@ -182,7 +164,7 @@ $("#idf").on("click",function(e){
 		e.preventDefault();
 		relationfunction.getTempRelation().relationLine = "identify";
 		$("#relationModal").modal("hide");
-		$("#identified").modal();
+		$("#identified").modal({backdrop:'static'});
 		var tempArr = relationfunction.getElementArr();
 		relationfunction.collectSelectOption(EntityManager.getEntityByName(tempArr[0]) , true , relationfunction.getTempRelation().relationLine);
 		relationfunction.collectSelectOption(EntityManager.getEntityByName(tempArr[1]), false ,relationfunction.getTempRelation().relationLine);
@@ -192,7 +174,7 @@ $("#nidf").on("click",function(e){
 	e.preventDefault();
 	relationfunction.getTempRelation().relationLine = "nidentify";
 	$("#relationModal").modal("hide");
-	$("#identified").modal();
+	$("#identified").modal({backdrop:'static'});
 	var tempArr = relationfunction.getElementArr();
 	relationfunction.collectSelectOption(EntityManager.getEntityByName(tempArr[0]),true,relationfunction.getTempRelation().relationLine);
 	relationfunction.collectSelectOption(EntityManager.getEntityByName(tempArr[1]),false,relationfunction.getTempRelation().relationLine);
@@ -204,7 +186,7 @@ $("#relSave").on("click",function(e){
 	//console.log(relationfunction.getSrcPK());
 	//console.log(relationfunction.getTarPK());
 	
-	var targetName= MatchName().split("+");
+	var targetName= relationfunction.MatchName().split("+");
 	var firstName = "";
 	var lastName = "";
 	var autoFlag = false;  
@@ -218,18 +200,17 @@ $("#relSave").on("click",function(e){
      });
 	//console.log("autoFlag",autoFlag);
 	if(autoFlag){
-		autoGen(relationfunction.getTempRelation().source,relationfunction.getTempRelation().target,relationfunction.getTempRelation().relationLine);
+		relationfunction.autoGen(relationfunction.getTempRelation().source,relationfunction.getTempRelation().target,relationfunction.getTempRelation().relationLine);
 	}
 	else if(!EntityControll.isEffectiveName(targetName)){
 		alert("중복된 컬럼이 등록되었습니다 다시시도하세요.");
 		$("#identified").modal('hide');
 		$("#makeRelationBtn").trigger("click");
 		return;
-	}
-	else if(EntityControll.isPkExist(relationfunction.getSrcPK(),relationfunction.getTarPK())){
+	}else if(EntityControll.isPkExist(relationfunction.getSrcPK(),relationfunction.getTarPK())){
 	//console.log($("#sourceCol option:selected").val());
 	
-	relationfunction.getTempRelation().relationAttr=[$("#sourceCol option:selected").val(),MatchName()];
+	relationfunction.getTempRelation().relationAttr=[$("#sourceCol option:selected").val(),relationfunction.MatchName()];
 	
      $(".option").each(function() {
    	  
@@ -238,8 +219,7 @@ $("#relSave").on("click",function(e){
        	relationfunction.getTempRelation().relationType = ($(this).val());
         }
         checkBoxInitiate("option");
-     });
-     //현재 pk의 데이터 타입을 Fk데이터 타입에 대입시켜버림 그냥 검증에서 데이터 타입 안맞으면 안들어가게 하는게 나을거같음.
+     });   
      for(var i= 0; i<targetName.length;i++){
      	var getFKAttr = EntityManager.getEntityByName(relationfunction.getTempRelation().target).search({pName:targetName[i]})[0];
      	//console.log("target's FK attribute : ",getFKAttr);
@@ -251,27 +231,23 @@ $("#relSave").on("click",function(e){
      	
      	if(relationfunction.getTempRelation().relationLine=="identify"){
      		getFKAttr.isFk = true;
+     		
+     		console.log("trans element pk,fk",getFKAttr)
      	}else{
      		getFKAttr.isFk = true;
      		getFKAttr.isPk = false;
      	}
      	relationfunction.getTempRelation().name = firstName +"_"+lastName;
+     	console.log("pk error is correct? : " ,relationfunction.getTempRelation());
      }
-     
-	//tempRelation Attr이용해서 connect option 지정.
+
 	
-	
-	//console.log(relationfunction.getTempRelation());
-	
-	
-	registRelationShipManager(relationfunction.getTempRelation());
+	relationfunction.registRelationShipManager();
 	
 	//console.log("relation ship saved : ",RelationShipManager.getRelationship(relationfunction.getTempRelation().name));
 	
-	}
-	else{
+	}else{
 		alert("대응되는 Attribute를 찾을 수 없습니다. 자동생성은 AutoGenerete를 체크하세요");
-		
 	}
 	
 	$("#makeRelationBtn").trigger("click");
@@ -318,15 +294,6 @@ function registRelationShipManager(tempRelation){
 	var  relation= new Relation(tempRelation);
 	
 	relationManager.add(relation);
-    
-	
-	
-	
-	
-	
-	
-	
-	
 	//console.log("저장됨? : ",relationManager.get(tempRelation.name));	
 	//console.log(" attrNodeManager------------- : ",attrNodeManager);
 	
@@ -339,7 +306,6 @@ function registRelationShipManager(tempRelation){
 	v(EntityManager.getEntityByName(tempRelation.target)).refresh();
 	v(EntityManager.getEntityByName(tempRelation.source)).entitySizing();
 	v(EntityManager.getEntityByName(tempRelation.target)).entitySizing();
-	
 	
 }
 
@@ -423,7 +389,6 @@ function autoGen(srcElementId,tarElementId,connectionType){
 	}
 }
 
-
 $(".genOption").on("click",function(e){
 	var genVal = $(this).val();
 	genVal= (genVal==="true")?false:true;
@@ -443,7 +408,7 @@ $(".genOption").on("click",function(e){
 	
 })
 $("#optSelect").on("click",function(e){
-	$("#optionSelect").modal();
+	$("#optionSelect").modal({backdrop:'static'});
 	 
 	
 	
@@ -453,6 +418,24 @@ $("#optSave").on("click",function(e){
 	restrictSelect();
 
 });
+
+function checkRes(chk){
+    var obj = $(".resOption");
+    for(var i=0; i<obj.length; i++){
+        if(obj[i] != chk){
+            obj[i].checked = false;
+        }
+    }
+} 
+
+function checkOpt(chk){
+    var obj = $(".option");
+    for(var i=0; i<obj.length; i++){
+        if(obj[i] != chk){
+            obj[i].checked = false;
+        }
+    }
+}
 function restrictSelect(){
 	 $(".resOption").each(function() {
 	  	  
@@ -467,17 +450,15 @@ function restrictSelect(){
 function checkBoxInitiate(optionValueClass){
 	var obj = $("."+optionValueClass);
 	//console.log("restrict option array:",obj);
-    for(var i=0; i<obj.length; i++){
-    		
-        if(i!=0){
-            obj[i].checked = false;
-        }
-        else{
-        	obj[i].checked = true;
-        }
-    }
-	
-	
+   for(var i=0; i<obj.length; i++){
+   		
+       if(i!=0){
+           obj[i].checked = false;
+       }
+       else{
+       	obj[i].checked = true;
+       }
+   }
 };
 
 </script>

@@ -3,10 +3,14 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
  <link rel="stylesheet" href="/resources/duckoo/css/menu.css?<%=request.getParameter("token")%>">  
- <%Cookie[] cookies = (Cookie[])session.getAttribute("login");
+<%Cookie[] cookies = (Cookie[])session.getAttribute("login");
  	Map<String,String> cookieList = new HashMap<String,String>();
- 	for(int i =0; i<cookies.length; i++){
- 			cookieList.put(cookies[i].getName(),cookies[i].getValue());
+ 	if(cookies==null){
+ 		
+ 	} else{
+ 		for(int i =0; i<cookies.length; i++){
+ 				cookieList.put(cookies[i].getName(),cookies[i].getValue());
+ 		}
  	}
  %>
  

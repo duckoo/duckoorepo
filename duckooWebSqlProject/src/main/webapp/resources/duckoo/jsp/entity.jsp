@@ -6,7 +6,7 @@
 <script id="entityTemplate" type="text/x-handlebars-template">
 <div class='entity' id='{{name}}'>
     <div class='deleteTbl' data-deleteBtn='{{name}}'>x</div>
-    <div class='innerEntity' data-innerEntity='{{name}}'>
+    <div class='innerEntity' id="innerEntity_{{name}}" data-innerEntity='{{name}}'>
         <div class='table_name'>
            <div style='width:65%; margin-left:5px; float:left;'>{{name}}</div>
            <button class='scaleUpBtn' style='float:right;' data-scaleBtn='{{name}}'><i class='fa fa-chevron-down' aria-hidden='true' ></i></button>

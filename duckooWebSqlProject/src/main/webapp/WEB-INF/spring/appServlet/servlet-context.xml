@@ -29,12 +29,12 @@
 	<beans:bean id="authInterceptor" class="org.duckoo.interceptor.AuthInterceptor"></beans:bean>
 	<interceptors>
 		<interceptor>
-			<mapping path="/main/index1"/>
+			<mapping path="/main/index"/>
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
 		
 		<interceptor>
-			<mapping path="/sql/testMinwoo"/>
+			<mapping path="/sql/testTaebong"/>
 			<beans:ref bean="authInterceptor"/>
 		</interceptor>
 	

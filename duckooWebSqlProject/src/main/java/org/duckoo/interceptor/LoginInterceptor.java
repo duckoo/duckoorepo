@@ -1,5 +1,8 @@
 package org.duckoo.interceptor;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,14 +21,31 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			ModelAndView modelAndView) throws Exception {
 		HttpSession session = request.getSession();
 		Cookie[] cookies = request.getCookies();
-		for(int i=0; i<cookies.length; i++){
-		System.out.println("어디보자"+i+": "+cookies[i].getName());
+		Map<String,String> cookieList = new HashMap<>();
+		if(cookies==null){
+				
+		}else{
+			
+			for(int i=0; i<cookies.length; i++){
+				cookieList.put(cookies[i].getName(), cookies[i].getValue());
+			}
+			
+			if(cookieList.get("username")==null){
+				
+			}else{
+				
+				session.setAttribute(LOGIN, cookies);
+
+				System.out.println("쿠키생성");
+/*				Object dest = session.getAttribute("dest");
+				System.out.println("dest: "+(String)dest);
+				if(dest!=null){
+					response.sendRedirect((String)dest);
+				}*/
+			}
+			
 		}
-		session.setAttribute(LOGIN, cookies);
 		
-		Object dest = session.getAttribute("dest");
-		System.out.println("dest: "+(String)dest);
-		response.sendRedirect(dest!=null?(String)dest:"/sql/testMinwoo");
 	    
 	}
 

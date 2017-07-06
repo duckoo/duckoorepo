@@ -23,13 +23,19 @@ var EnitityView=(function(){
 		$("#"+this.name).draggable({handle:'.table_name',containment:"#canvasDiv",scroll:true});
 
 	}
-  function show(){ 
+  function show(pt){ 
 		var $this=$("#"+this.name);
 		$this.css("display","block");
 		if($this.length===0){
 			this.renderToHTML();
 		}
-	}
+		if(pt){
+			$this=$("#"+this.name);
+			$this.offset({top:pt.y,left:pt.x});
+		}
+  }
+  
+  
   function hide(){
 	 var $this=$("#"+this.name);
 	 $this.css("display","none");

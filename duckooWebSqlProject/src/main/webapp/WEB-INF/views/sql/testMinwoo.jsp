@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name = "google-signin-client_id"content = "271929324186-nb92pvj0v2cdv4cr7chvt84nvu6q2t4o.apps.googleusercontent.com">
 <title>erd main</title>
 <% Random random = new Random(); 
     int token= random.nextInt();
@@ -24,17 +23,16 @@
 		crossorigin="anonymous"></script>
 <script type="text/javascript" src="/resources/duckoo/js/duckooPlumb.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/relationship.js?<%=token%>"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.js"></script> 
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
 <script type="text/javascript" src="/resources/duckoo/js/Observer.js?<%=token%>"></script>
-<script type="text/javascript" src="/resources/duckoo/js/view/dView.js?<%=request.getParameter("token")%>"></script>
-
-<script type="text/javascript" src="/resources/duckoo/js/util/Count.js?<%=request.getParameter("token")%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/view/dView.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/saveAndLoad/Save.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/util/Count.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/util/MyArrayUtil.js?<%=token%>"></script>
-<script src="https://apis.google.com/js/platform.js" async defer></script>
+
 </head>
 
 <body class="canvas" id="canvasDiv" style="width: 6000px; height: 6000px; border: 1px solid black;">
@@ -61,42 +59,80 @@
 </jsp:include> 
 
 
+
 <script type="text/javascript" src="/resources/duckoo/js/EntityControll.js?<%=token%>"></script>
 <script>
-
 jsPlumb.ready(function() {
 	 setInterval(function(){
 		 console.log("re:");
 		jsPlumb.repaintEverything();
 	},1000/20);
 	
-	var mkFlag = false;
-	var tempRelation = {};
-	 EntityManager.createEntity({name:"e1",attr:[]},false);
-	 var en=EntityManager.getEntityByName("e1");
-	 en.setAttr({lName:"게시글번호",pName:"bno",datetype:"int",datelength:10,isPk:true,isFk:false});
-	 en.setAttr({lName:"글제목",pName:"title",datetype:"varchar",datelength:300,isPk:true,isFk:false});
-	 en.setAttr({lName:"글내용",pName:"content",datetype:"varchar",datelength:2000});
-	 en.setAttr({lName:"작성자",pName:"writer",datetype:"varchar",datelength:100});
-	 en.setAttr({lName:"등록날자",pName:"regdate",datetype:"timestamp"});
-	 
+	 //이름만드는거 존나 귀찮아서..만든 임시함수임.
+	 function makeName(attr1,attr2){
+       var str1=""+attr1[0].id;
+       var str2=""+attr2[0].id;
+       for(var i=1,len=attr1.length;i<len;i++){
+    	   str1+="/"+attr1[i].id;
+    	   str2+="/"+attr2[i].id;
+       }
+		return str1+"_"+str2;
+	 }
 	
-	 v(en).show();
+	var customGrade=EntityManager.createEntity({name:"고객등급",attr:[]});
+	var pk1=customGrade.setAttr({lName:"등급코드",pName:"cgNo",datetype:"INTEGER",datelength:"7",notNull:true,isPk:true,autoIncrement:true})
+	 customGrade.setAttr({lName:"코드명",pName:"cgName",datetype:"VARCHAR",datelength:"32",notNull:true})
 	 
-	 
-	 EntityManager.createEntity({name:"e32232",attr:[]},false);
-	 var en2 = EntityManager.getEntityByName("e32232");
-	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"int",datelength:10,isPk:true});
+	var custom= EntityManager.createEntity({name:"고객",attr:[]});
+	var cPk= custom.setAttr({lName:"고객번호",pName:"cno",datetype:"INTEGER",datelength:"7",notNull:true,isPk:true,autoIncrement:true})
+	var fk1=custom.setAttr({lName:"고객등급코드",pName:"cgNo",datetype:"INTEGER",datelength:"7",notNull:true,isFk:true})
+	 custom.setAttr({lName:"성명",pName:"name",datetype:"VARCHAR",datelength:"32",notNull:true})
+	 custom.setAttr({lName:"주소",pName:"adress",datetype:"VARCHAR",datelength:"32"});
+	 custom.setAttr({lName:"전화번호",pName:"phoneNumber",datetype:"VARCHAR",datelength:"32"});
+	 custom.setAttr({lName:"성별",pName:"gender",datetype:"VARCHAR",datelength:"9"});
 
-	 en2.setAttr({lName:"내용",pName:"content",datetype:"varchar",datelength:500});
-	 $('.attrArea').niceScroll({ horizrailenabled: true,boxzoom: false});
-	 
-	 v(en2).show();
-	 
+	 v(customGrade).show({x:20,y:120});
+     v(custom).show({x:20,y:600});
+	  var relation = {source:"고객등급",target:"고객",relationType:"OneToMany",relationLine:"nidentify",restrictType:"cascade", name:makeName([pk1],[fk1])};
+     relationfunction.setTempRelation(relation); 
+     relationfunction.registRelationShipManager();
 
+    var order=EntityManager.createEntity({name:"주문",attr:[]});
+   var oPK= order.setAttr({lName:"주문번호",pName:"oNo",datetype:"INTEGER",datelength:"7",notNull:true,isPk:true,autoIncrement:true});
+   var oFk= order.setAttr({lName:"고객번호",pName:"cno",datetype:"INTEGER",datelength:"7",notNull:true,isFk:true});
+     custom.setAttr({lName:"주문일자",pName:"order_date",datetype:"DATE",datelength:"0",notNull:true});
+	 custom.setAttr({lName:"총금액",pName:"sumMoney",datetype:"VARCHAR",datelength:"28"});
+	 custom.setAttr({lName:"처리상태",pName:"state",datetype:"VARCHAR",datelength:"9",notNull:true});
+
+	 v(order).show({x:400,y:360});
+	 relation = {source:"고객",target:"주문",relationType:"OneToMany",relationLine:"nidentify",restrictType:"cascade", name:makeName([cPk],[oFk])};
+	 relationfunction.setTempRelation(relation); 
+	 relationfunction.registRelationShipManager();
+	 
+	 var stuff= EntityManager.createEntity({name:"상품",attr:[]});
+	 var sPK= stuff.setAttr({lName:"상품번호",pName:"sno",datetype:"INTEGER",datelength:"28",notNull:true,isPk:true,autoIncrement:true});
+	 stuff.setAttr({lName:"상품명",pName:"sname",datetype:"VARCHAR",datelength:"28",notNull:true});
+	 stuff.setAttr({lName:"재고량",pName:"state",datetype:"INTEGER",datelength:"9",notNull:true});
+     v(stuff).show({x:800,y:120});
+	 
+	 var orderStuff=EntityManager.createEntity({name:"주문상품",attr:[]});
+	 orderStuff.setAttr({lName:"주문상세번호",pName:"oNoStuff",datetype:"INTEGER",datelength:"28",notNull:true,isPk:true,autoIncrement:true});
+	var sFK=orderStuff.setAttr({lName:"상품코드",pName:"sno",datetype:"INTEGER",datelength:"28",notNull:true,isPk:true,isFk:true});
+	 oFK= orderStuff.setAttr({lName:"주문번호",pName:"ono",datetype:"INTEGER",datelength:"28",notNull:true,isPk:true,isFk:true});
+	 orderStuff.setAttr({lName:"수량",pName:"count",datetype:"INTEGER",datelength:"28"});
+		
+	 v(orderStuff).show({x:800,y:600});
+	 relation = {source:"주문",target:"주문상품",relationType:"OneToMany",relationLine:"identify",restrictType:"cascade", name:makeName([oPK],[oFK])};
+	 relationfunction.setTempRelation(relation); 
+	 relationfunction.registRelationShipManager();
+
+	 relation = {source:"상품",target:"주문상품",relationType:"OneToMany",relationLine:"identify",restrictType:"cascade", name:makeName([sPK],[sFK])};
+	 relationfunction.setTempRelation(relation); 
+	 relationfunction.registRelationShipManager();
+	 
+	 Save.saveEntity(orderStuff);
+     
 });
-
-
 	
 </script>
    
