@@ -33,7 +33,7 @@ function setEntity(entity){
 	entityArr[entity.name]=entity;
 }
 function setJObj(e){
-	entityArr={}; // 테스트때문에.. 굳이 안해줘도됨.
+	entityArr={}; //
 	var key = Object.keys(e);
 	for(var i=0 ,len = key.length;i<len;i++){
 		createEntity(e[key[i]]);

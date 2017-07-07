@@ -115,12 +115,14 @@ jsPlumb.ready(function() {
      v(stuff).show({x:800,y:120});
 	 
 	 var orderStuff=EntityManager.createEntity({name:"주문상품",attr:[]});
-	 orderStuff.setAttr({lName:"주문상세번호",pName:"oNoStuff",datetype:"INTEGER",datelength:"28",notNull:true,isPk:true,autoIncrement:true});
+	var ospk= orderStuff.setAttr({lName:"주문상세번호",pName:"oNoStuff",datetype:"INTEGER",datelength:"28",notNull:true,isPk:true,autoIncrement:true});
 	var sFK=orderStuff.setAttr({lName:"상품코드",pName:"sno",datetype:"INTEGER",datelength:"28",notNull:true,isPk:true,isFk:true});
 	 oFK= orderStuff.setAttr({lName:"주문번호",pName:"ono",datetype:"INTEGER",datelength:"28",notNull:true,isPk:true,isFk:true});
 	 orderStuff.setAttr({lName:"수량",pName:"count",datetype:"INTEGER",datelength:"28"});
-		
-	 v(orderStuff).show({x:800,y:600});
+	 ospk.entity="주문상품";
+	 attrNodeManager.addNodeTour([],ospk);
+	
+	v(orderStuff).show({x:800,y:600});
 	 relation = {source:"주문",target:"주문상품",relationType:"OneToMany",relationLine:"identify",restrictType:"cascade", name:makeName([oPK],[oFK])};
 	 relationfunction.setTempRelation(relation); 
 	 relationfunction.registRelationShipManager();

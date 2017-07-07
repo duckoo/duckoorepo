@@ -1,5 +1,16 @@
 var SidebarView=(function(){
 	var bodyTemplate=Handlebars.compile($("#__sidebarTemp__").html());
+	var listTemplate= Handlebars.compile($("#sidebarItem").html());
+	var entityListTemplate=Handlebars.compile($("#entityList").html());
+	
+	
+	Handlebars.registerHelper("genEntityList",function(name){
+		var names=SchemaManager.getEntitysNames(name);
+		var obj={id:name,arr:names};
+		return entityListTemplate(obj);
+	});
+			
+			
 	
 	function SidebarView(sidebar){
 		 this.sidebar=sidebar;
@@ -9,8 +20,23 @@ var SidebarView=(function(){
 		this.draggable();
 		
 	}
+	
+	SidebarView.prototype.toggleEntityList=function(sName,toggle){
+	    if(toggle){
+	    	 var ulE=$("#el_"+sName);
+	    	 var dis=ulE.css("display");
+	    	 dis= dis==="none" ? "block" : "none";
+	    	 ulE.css("display",dis);
+	    }
+	}
+	
+	SidebarView.prototype.renderItem=function(items){
+	    $target=$("#sidebody_"+this.id);
+		var tag= listTemplate(items);
+		$target.html(tag);
+	}
+	
 	SidebarView.prototype.render=function(){
-		
 	}
 	
 	SidebarView.prototype.resizable=function(opt){

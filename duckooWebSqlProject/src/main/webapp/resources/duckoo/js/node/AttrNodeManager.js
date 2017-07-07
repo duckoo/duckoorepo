@@ -61,8 +61,6 @@ var attrNodeManager=(function(){
 	}
 	
 	
-	
-	
 	AttrNodeManager.prototype.add=function(node){
 		if(!node.id)return;
 		this.arr[node.id]=node;
@@ -128,10 +126,15 @@ var attrNodeManager=(function(){
 	
 	AttrNodeManager.prototype.addNodeTour=function(startId,attr){
 		var manager= this;
+		if(startId.length===0){
+			this.arr[attr.id]= new AttrNode(attr);
+			return;
+		}
+		
 		var relationIdArr =manager.get(startId).reId;
 		 (function addPk(relArr,attr){
 			var nearRelation=[];
-			var manager= this;
+			//var manager= this;
 			var originalId = attr.id;
 			var targetAttrId  = [];
 			var relationIdArr =relArr;
@@ -197,6 +200,7 @@ var attrNodeManager=(function(){
 	
 	AttrNodeManager.prototype.deleteTour=function(id){
 		var deleTarget=[];
+	 	 var id= Number(id);
 		 if(this.arr[id].parent){
 			 deleTarget = MyArrayUtil.intersection(this.arr[id].reId,this.arr[id].parent.reId);
 		 }

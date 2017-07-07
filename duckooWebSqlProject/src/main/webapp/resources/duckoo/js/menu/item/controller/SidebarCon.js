@@ -1,8 +1,28 @@
 var SidebarCon=(function(){
+	
+	
 	function SidebarCon(sidebar){
 		this.sidebar=sidebar;
 		this.sidebarView= new SidebarView(sidebar);
 		this.id=this.sidebar.id;
+		this.focusItem=undefined;
+		  
+	}
+	
+	SidebarCon.prototype.setFocus=function(name){
+		if(!name)return;	
+		this.foucusItem=name;
+	}
+	
+	function showEntityList(){
+		
+	}
+	
+	SidebarCon.prototype.toggleEntityList=function(name){
+		if(this.foucusItem === name){
+		  this.sidebarView.toggleEntityList(name,true);
+		}
+		this.foucusItem =name;
 	}
 	
 	
@@ -10,10 +30,14 @@ var SidebarCon=(function(){
 	
 	}
 	
+	SidebarCon.prototype.renderItem=function(items){
+		this.sidebarView.renderItem(items);
+		
+	}
+	
 	
 	SidebarCon.prototype.open= function(){
 		document.getElementById(""+this.id).style.display="block";
-
 		setTimeout(function(){
 			document.getElementById(""+this.id).style.width = "14%";
 		}.bind(this),100);

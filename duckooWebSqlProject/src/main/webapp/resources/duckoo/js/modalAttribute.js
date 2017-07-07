@@ -272,7 +272,9 @@ function addAttrFinalBtn(e){
     var newAttr = entity.setAttr(attr).clone();
     if(isPk) {
     	 console.log("cAttr: ",newAttr);
-    	 attrNodeManager.addNodeTour(pkArr[0].id,newAttr);
+    	 //부실 공사.
+    	 var id = (pkArr[0] && pkArr[0].id) || [];
+    	 attrNodeManager.addNodeTour(id,newAttr);
     }
     entity.sortAttribute();
     v(entity).refresh();

@@ -31,6 +31,7 @@
 <script type="text/javascript" src="/resources/duckoo/js/saveAndLoad/SaveAndLoad.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/util/Count.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/util/MyArrayUtil.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/schema/SchemaManager.js?<%=token%>"></script>
 </head>
 
 <body class="canvas" id="canvasDiv" style="width: 6000px; height: 6000px; border: 1px solid black;">
@@ -77,7 +78,13 @@ jsPlumb.ready(function() {
 			,  contentType:"application/x-www-form-urlencoded; charset=UTF-8"
 			, datatype: 'json'  
 			, success : function(data) {
-				SaveAndLoad.load(data);
+			  for(var i=0,len=data.length;i<len;i++){
+				 var sub= data[i].substring(1);
+				 //이렇게하니까 된다.. 왜그런지는 모름...
+				var schema=JSON.parse(sub);
+				var jObj= SchemaManager.set(schema);
+			  }
+			  // SaveAndLoad.saveToJson();
 			}
 			
 		    , error : function(xhr, stat, err) {
@@ -85,6 +92,10 @@ jsPlumb.ready(function() {
 		    	console.log(err);
 		    }
 		});
+	
+	
+	
+	
 	
 	
 	

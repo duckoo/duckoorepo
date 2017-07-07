@@ -35,6 +35,9 @@ var EnitityView=(function(){
 	this.move(pt);  
 	   
   }
+ 
+ 
+ 
   function move(pt){
 	  var pt = pt || {};
 	  var x= pt.x || this.left || basicX;
@@ -50,6 +53,11 @@ var EnitityView=(function(){
 	 $this.css("display","none");
 	}
   
+  function del(){
+	  var $this=$("#"+this.name);
+	  $this.remove();
+  }
+  
   function inject(en){
 	    en.hide=hide;
 	    en.genHtmlStr=genHtmlStr;
@@ -58,6 +66,7 @@ var EnitityView=(function(){
 		en.show=show;
 		en.entitySizing=entitySizing;
 		en.move=move;
+		en.del=del;
 		return en;
 	}
   function entitySizing(){
