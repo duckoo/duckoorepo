@@ -261,13 +261,9 @@ function addAttrFinalBtn(e){
     var notNull = $("#notNull").is(":checked");
     var autoIncre = $("#autoIncre").is(":checked");
     var uniqueVal = $("#uniqueVal").is(":checked");
-
 	//entity.setAttr({isPk:isPk,datelength:datelength, lName:lName,pName:pName,domainName:"none",datetype:dataType,notNull:notNull,autoIncrement:autoIncre,uniqueVal:uniqueVal});
-
     var attr={isPk:isPk, lName:lName,pName:pName,domainName:"none",datetype:dataType,datelength:datelength,notNull:notNull,autoIncrement:autoIncre,uniqueVal:uniqueVal};
-
     tagSetAttr(entity);
-   
     var pkArr= entity.search({isPk:true});
     var newAttr = entity.setAttr(attr).clone();
     if(isPk) {
@@ -285,7 +281,6 @@ obb.init("addAttrFinalBtn2",addAttrFinalBtn);
 Obserable.setEventObserver("addAttrFinalBtn",obb);
 
 function saveBtn(e){
-	console.log("entitytytytyty:",entity);
     EntityManager.setEntity(entity);
     var $entity = $("#"+entity.name);
     
@@ -297,8 +292,6 @@ function saveBtn(e){
 obb=Object.create(Obsever);
 obb.init("saveBtn2",saveBtn);
 Obserable.setEventObserver("saveBtn",obb);
-
-
 
 
 

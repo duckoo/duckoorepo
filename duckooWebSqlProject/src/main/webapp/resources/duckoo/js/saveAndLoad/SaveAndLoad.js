@@ -1,12 +1,10 @@
 var SaveAndLoad=(function(){
-	
 	function SaveAndLoad(o){
 		var o= o ||{};
 		this.entitys= o.entitys || {};
 		this.relations=o.relations || {};
 		this.nodes= o.nodes || {};
 	}
-	
 	function loadEntity(jobj){
 		
 		//모든 엔티티 태그들 삭제한다.
