@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/resources/duckoo/css/mainModal.css">
     <link rel="stylesheet" href="/resources/duckoo/css/loading.css">
+    <link rel="stylesheet" href="/resources/duckoo/css/selectPage.css?<%=token%>">
 <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -38,6 +39,12 @@
 <body class="canvas" id="canvasDiv" style="width: 6000px; height: 6000px; border: 1px solid black;">
 	<div id="preloader" style="display: block;"> 
     	<div id="loader" style="display: block;"></div>
+   </div>
+   <div id="selectPageBody">
+   		<div id="selectPageBox">
+        	<button class="selecPageBtns" id="newERDBtn">NEW ERD</button>
+        	<button class="selecPageBtns" id="prevERDBtn">PREV ERD</button>
+    	</div>
    </div>
 <jsp:include page="/resources/duckoo/jsp/entity.jsp">
 <jsp:param name="token" value="<%=token%>" />
@@ -78,7 +85,6 @@ $(window).on("load",function() {
 
 jsPlumb.ready(function() {
 	 setInterval(function(){
-		 console.log("re:");
 		jsPlumb.repaintEverything();
 	},1000/20);
 	
@@ -144,6 +150,7 @@ jsPlumb.ready(function() {
 	 relationfunction.setTempRelation(relation); 
 	 relationfunction.registRelationShipManager();
 	 
+	 console.log($(".entity").css("z-index"));
 	
      
 });

@@ -78,9 +78,8 @@
 		e.stopPropagation();
 		e.preventDefault();
 		var href=$(this).attr("href");
-		alert(href);
 		switch(href){
-			case  "/sql/testTaebong" : alert("sqlTaebong"); window.location.href=$(this).attr("href");
+			case  "/sql/testTaebong" : window.location.href=$(this).attr("href");
 			break;
 			case  "#logout" : signOut();
 							  document.cookie="username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
