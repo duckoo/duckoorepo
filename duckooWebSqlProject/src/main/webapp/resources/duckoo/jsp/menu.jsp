@@ -1,19 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
  <link rel="stylesheet" href="/resources/duckoo/css/menu.css?<%=request.getParameter("token")%>">  
-<%Cookie[] cookies = (Cookie[])session.getAttribute("login");
+ <%Cookie[] cookies = (Cookie[])session.getAttribute("login");
  	Map<String,String> cookieList = new HashMap<String,String>();
  	if(cookies==null){
- 		
+ 		cookieList.put("username",null);
  	} else{
  		for(int i =0; i<cookies.length; i++){
  				cookieList.put(cookies[i].getName(),cookies[i].getValue());
  		}
  	}
- %>
- 
+ 	pageContext.setAttribute("username",cookieList.get("username"));
+ %>   
+   
+   
    <div id="pageTab">
 	 <ul class="nav nav-tabs">
     	<li class="active"><a href="#"><i class="fa fa-table" aria-hidden="true"></i>&nbsp;ERD page</a></li>
@@ -27,6 +30,11 @@
 			</div>
     	</ul>
 	</div>
+	
+	
+<button id="genTest" class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="bottom" title="JAVA VO코드를 생성합니다."><span>Generate-Code</span></button>	
+	
+	
 	
 	
 	
@@ -148,6 +156,13 @@ $document.on("click","#sideBarCloseBtn",function(e){
     e.preventDefault();
 	sidebarCon.close();
 })
+$("#menuBar").hover(function(e){
+	e.stopPropagation();
+    e.preventDefault();
+	console.log("hover");
+	$(".mainHeader").css("display","block");
+})
+
 
 
 $document.on("click",".sideItem",function(e){

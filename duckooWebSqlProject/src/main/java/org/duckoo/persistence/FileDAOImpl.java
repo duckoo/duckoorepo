@@ -1,37 +1,37 @@
 package org.duckoo.persistence;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
+import org.duckoo.domain.FileVO;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.duckoo.domain.UserVO;
 import org.springframework.stereotype.Repository;
 import org.springframework.test.context.ContextConfiguration;
 
+
 @Repository
 @ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/**/root-context.xml" })
-public class UserDAOImpl implements UserDAO {
-	
-	private static final String namespace = "org.duckoo.persistence.UserDAO";
+public class FileDAOImpl implements FileDAO {
+	private static final String namespace = "org.duckoo.persistence.FileDAO";
 	
 	@Inject
 	SqlSessionTemplate sst;
 	
 	@Override
-	public void create(UserVO vo) {
+	public void create(FileVO vo) {
 		sst.insert(namespace+".create",vo);
-		
+
 	}
 
 	@Override
-	public void delete(int bno) {
-		// TODO Auto-generated method stub
-		
+	public List<FileVO> fileList(String userid) {
+		return sst.selectList(namespace+".fileList",userid);
 	}
 
 	@Override
-	public UserVO read(String userid) {
-		return sst.selectOne(namespace+".read",userid);
-		
+	public FileVO read(int fno) {
+		return sst.selectOne(namespace+".read",fno);
 	}
 
 }

@@ -35,6 +35,7 @@
 		
 		<interceptor>
 			<mapping path="/sql/testTaebong"/>
+			<mapping path="/sql/selectPage"/>
 			<beans:ref bean="authInterceptor"/>
 		</interceptor>
 	
