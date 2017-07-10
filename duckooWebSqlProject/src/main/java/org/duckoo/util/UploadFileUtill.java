@@ -69,10 +69,14 @@ public class UploadFileUtill {
 		   uploadName= makeThumbnail(uploadPath,savePath,saveName);
 	   }
 	   List<String> ret = new ArrayList<>();
-	   ret.add(target.getAbsolutePath());
-	   ret.add(uploadName);
+	   ret.add(target.getAbsolutePath()); //경로
+	   ret.add(uploadName);//유유아이디 파일 이름
 	   
-	   return ret;
+	   //합쳐져서 디비에 들어감
+	   
+	   
+	   return ret
+			   ;
    }
  
 }

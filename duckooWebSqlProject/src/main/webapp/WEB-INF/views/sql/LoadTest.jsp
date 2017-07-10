@@ -79,7 +79,8 @@ jsPlumb.ready(function() {
 			, datatype: 'json'  
 			, success : function(data) {
 			  for(var i=0,len=data.length;i<len;i++){
-				 var sub= data[i].substring(1);
+				 var sub= data[i].substring(0);
+				 console.log(sub);
 				 //이렇게하니까 된다.. 왜그런지는 모름...
 				var schema=JSON.parse(sub);
 				var jObj= SchemaManager.set(schema);

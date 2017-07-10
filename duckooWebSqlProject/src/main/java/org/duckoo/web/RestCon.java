@@ -8,13 +8,17 @@ import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.duckoo.domain.FileVO;
+import org.duckoo.service.ServiceDAO;
 import org.duckoo.util.UploadFileUtill;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,26 +27,44 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/rest")
 public class RestCon {
-
+	
+	
+	@Inject
+	ServiceDAO service;
+	
 	@Resource(name="uploadPath")
     private	String uploadPath;
 	
 	private static Logger log= Logger.getLogger(UploadFileUtill.class);
  
 	@RequestMapping("setErdPageJSON")
-    boolean setErdPageJSON(@RequestBody Map<String,Object> jsons){
+    boolean setErdPageJSON(@RequestBody Map<String,Object> jsons,HttpServletRequest request){
+		Cookie[] cookies = request.getCookies();
+		String userid = null;
+		for(int i=0; i<cookies.length; i++){
+			if(cookies[i].getName().equals("userid")){
+				userid=cookies[i].getValue();
+			};
+		}
 		System.out.println(jsons);
 		for (Map.Entry<String, Object> entry : jsons.entrySet()) {
-			String key   = entry.getKey();
-			Object value =  entry.getValue();
+			String key   = entry.getKey();//스키마이름
+			Object value =  entry.getValue();//스키마 제이슨 데이터
 			JSONObject js = new JSONObject(); //잭슨바인더로 인수받아서
 			js.put(key,value);// json이라는 라이브러리 추가해서 한거임..
 			System.out.println("json:: "+js);
 			byte[] jByte=js.toString().getBytes();
 			UploadFileUtill ufu=new UploadFileUtill();
 			try {
-				ufu.uploadFile(uploadPath, "1.txt", jByte);
-				//여기서 데이터베이스 처리해야됨..
+				List<String>  filePathAndName =ufu.uploadFile(uploadPath, key+".txt", jByte);
+				FileVO fvo =new FileVO();
+				fvo.setFschema(key);
+				log.info("이게뭐야:"+filePathAndName.get(0)+":"+filePathAndName.get(1));
+				fvo.setFsrc(filePathAndName.get(0));
+				fvo.setUserid(userid);
+				service.registerFile(fvo);
+				
+				//DB에 파일 저장 s.get(0) === 경로 s.get(1) 이름 
 			} catch (Exception e) {
 				System.out.println("FILE ERROR");
 				e.printStackTrace();
@@ -53,14 +75,23 @@ public class RestCon {
 	
 	//@RequestMapping(value="getErdPageJSON",produces="application/text; charset=utf8")
 	@RequestMapping(value="getErdPageJSON",produces="application/json")
-	List<String> getErdPageJSON(HttpServletResponse response) throws IOException{
-		String absoultePath="C:\\zzz\\upload\\2017\\27\\07\\";
+	List<String> getErdPageJSON(HttpServletResponse response,HttpServletRequest request) throws IOException{
+		Cookie[] cookies = request.getCookies();
+		String userid = null;
+		for(int i=0; i<cookies.length; i++){
+			if(cookies[i].getName().equals("userid")){
+				userid=cookies[i].getValue();
+			};
+		}
+		//String absoultePath="C:\\zzz\\upload\\2017\\27\\07\\";
 		List<String> src=new LinkedList<>();
 		List<String> ret= new LinkedList<>();
 		//데이터베이스에서 경로 가져와야한다.
-		src.add(absoultePath + "3.txt");
-		src.add(absoultePath + "2.txt");
-		src.add(absoultePath + "5.txt");
+		List<FileVO> fvo = service.fileList(userid);
+		System.out.println("fvo:"+fvo);
+		for(int i=0; i<fvo.size(); i++){
+			src.add(fvo.get(i).getFsrc());
+		}
 		
 	   for(int i=0,len = src.size();i<len;i++){
 		    File file=new File(src.get(i));

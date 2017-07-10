@@ -32,7 +32,6 @@ var SidebarCon=(function(){
 	
 	SidebarCon.prototype.renderItem=function(items){
 		this.sidebarView.renderItem(items);
-		
 	}
 	
 	

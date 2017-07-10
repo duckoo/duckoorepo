@@ -31,6 +31,8 @@
 <script type="text/javascript" src="/resources/duckoo/js/saveAndLoad/SaveAndLoad.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/util/Count.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/util/MyArrayUtil.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/schema/SchemaManager.js?<%=token%>"></script>
+
 </head>
 
 <body class="canvas" id="canvasDiv" style="width: 6000px; height: 6000px; border: 1px solid black;">
@@ -131,6 +133,8 @@ jsPlumb.ready(function() {
 	 relationfunction.setTempRelation(relation); 
 	 relationfunction.registRelationShipManager();
 	 
+	 
+	 SchemaManager.SetNewSchema("test");
 	 SaveAndLoad.saveToJson();
 });
 	

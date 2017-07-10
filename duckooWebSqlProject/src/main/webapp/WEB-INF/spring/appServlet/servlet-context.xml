@@ -36,6 +36,8 @@
 		<interceptor>
 			<mapping path="/sql/testTaebong"/>
 			<mapping path="/sql/selectPage"/>
+			<mapping path="/rest/setErdPageJSON"/>
+			<mapping path="/rest/getErdPageJSON"/>
 			<beans:ref bean="authInterceptor"/>
 		</interceptor>
 	

@@ -1,6 +1,7 @@
 var SchemaManager=(function(){
  function SchemaManager(){
    this.arr= {};
+   this.focus=undefined;
  }
  
  SchemaManager.prototype.set=function(parsedObj){
@@ -19,12 +20,30 @@ var SchemaManager=(function(){
 	 return key;
  }
  SchemaManager.prototype.focusOn=function(name){
+	 this.focus=name;
 	 SaveAndLoad.load(this.arr[name]);
  }
  
  SchemaManager.prototype.getEntitysNames=function(name){
 	 var es= this.arr[name].entitys;
 	 return Object.keys(es);
+ }
+ 
+ SchemaManager.prototype.SetNewSchema=function(name){
+	 var enArr=EntityManager.getEntityByName();
+	 var noArr=attrNodeManager.prepareJSON();
+	 var reArr=relationManager.get();
+	 var obj={};
+	
+	 obj["entitys"]=enArr;
+	 obj["nodes"]=noArr;
+	 obj["relations"]=reArr;
+	  this.arr[name]=obj;
+	  
+ }
+ 
+ SchemaManager.prototype.focusErdSave=function(){
+	 
  }
  
  

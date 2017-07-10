@@ -54,13 +54,16 @@ var SaveAndLoad=(function(){
 		 this.nodes=noArr;
 		 this.relations=reArr;
 		 */
-		 var ret= JSON.stringify(schemas);
+		
+		var ret= JSON.stringify(schemas);
+		
+		 var userid = {"userid":userid};
 		 console.log("json: ",ret);
 		 $.ajax({
 				  url : '/rest/setErdPageJSON'
 		        , method : "post"
 				, dataType : 'json'
-				, data : ret
+				, data : ret,userid
 				, processData : true 
 				, contentType : "application/json; charset=UTF-8"
 				, success : function(data, stat, xhr) {

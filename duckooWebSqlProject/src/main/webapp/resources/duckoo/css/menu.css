@@ -1,16 +1,18 @@
-@CHARSET "UTF-8";
 .jhjkhkjkjjkhjkbhjkhkjhjkjk{
 	width:100px;
 }
 
 #pageTab{
 	width:100%;
-	height:5%;
+	height:45px;
 	position:fixed;
 	border-style:solid;
+	border-width:1px;
 	z-index:3;
-	background-color: #5bc0de;
+	background: #31b0d5;
+
 }
+
 body{
 	background-image: url(http://freedevelopertutorials.azurewebsites.net/wp-content/uploads/2015/06/grid.png);
 	overflow:auto;
@@ -22,10 +24,15 @@ body{
 	border-top-right-radius: 30px;
 
 }
+#mainNaviBar{
+	float:left; width:20%; z-index:3; margin-top:3px;
+}
 #menuBar{
-	height:40px;
-	border-bottom:medium;
-	margin-top:3px;
+	height:45px;
+	width:79%;
+    margin-top:3px;
+    border-bottom:medium;
+    float:right;
 }
 .console{
 	float:left; width:0px; height:250px; border-style: solid; position:fixed; margin-top:714px;
@@ -66,9 +73,6 @@ body{
 .sideBarBody{
 	width:100%;
 	height:610px;
-}
-#mainNaviBar{
-	margin-top:55px; margin-left:15px; width:200px; position:fixed; z-index:3;
 }
 
 .button {
@@ -127,14 +131,20 @@ body{
 .dropbtn {
     background-color: #4CAF50;
     color: white;
-    padding: 16px;
     font-size: 16px;
     border: none;
     cursor: pointer;
+    height:28px;
+    border-radius: 5px;
+    border-style: solid;
+    border-width:1px;
+    border-color:whitesmoke;
 }
 
 .dropdown {
     position: relative;
+    margin-top:5px;
+    height:28px;
     
 }
 
@@ -163,4 +173,12 @@ body{
 
 .dropdown:hover .dropbtn {
     background-color: #3e8e41;
+}
+
+.genBtnListDiv{
+    display:none;
+}
+
+.genBtnListWrap:hover .genBtnListDiv{
+    display:block;
 }
