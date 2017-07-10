@@ -26,5 +26,8 @@ var classInfo =(function(){
 	classInfo.prototype.addProps = function(prop){
 		this.properties.push(prop);
 	}
+	classInfo.prototype.getClassName = function(){
+		return this.className;
+	}
 	return classInfo;
 })();

@@ -12,11 +12,22 @@ var codeUtils = (function(){
 		var result = reverseArr[1]+"To"+reverseArr[0];
 		return result;
 	}
-
-
+	function checkValue(targetClassInfo){
+		
+		var flag = true;
+		classManager.getClassInfoArr().forEach(function(inClassInfo){
+			console.log("inClassInfo",inClassInfo);
+			if(targetClassInfo.getClassName()==inClassInfo.getClassName()){
+				console.log("Denied");
+				flag=false;
+			}
+		});
+		return flag;
+	}
 
 	return{upperFirstLetter:upperFirstLetter,
-		  reverseRelationType:reverseRelationType
+		  reverseRelationType:reverseRelationType,
+		  checkValue:checkValue
 	}
 	
 })();

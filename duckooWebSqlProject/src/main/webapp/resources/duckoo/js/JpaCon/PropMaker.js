@@ -64,7 +64,7 @@ var propMaker = (function(){
 				}
 			}
 		}
-		console.log("property Arr",props);
+		/*console.log("property Arr",props);*/
 		return props;
 	}
 	//for dualkey pk entity
@@ -74,12 +74,12 @@ var propMaker = (function(){
 		var fkProps = targetEntity.search({isFk:true});
 		var pkrefName =tempClassInfo.Emclass.className;
 		var fProp = new property();
+		var ownPk = MyArrayUtil.intersection(targetEntity.search({isPk:true}),targetEntity.search({isFk:true}))
 		
-		var pkProp = new property();
-		pkProp.addAnnotations("EmbeddedId");
-		pkProp.dataType = tempClassInfo.Emclass.className;
-		pkProp.pName = tempClassInfo.Emclass.className.toLowerCase();
-		props.push(pkProp);
+		
+		ownPk.forEach(function(loc){
+			
+		});
 		
 		noProps.forEach(function(prop){
 			var tempProp= new property();
@@ -105,7 +105,16 @@ var propMaker = (function(){
 				fProp.dataType = codeUtils.upperFirstLetter(relation[i].source);
 				fProp.isReferenced = true;
 				fProp.addJoinColumn((fkProp.pName).toUpperCase());
+				if(relation.source!=targetEntity.source){
+					var pkProp = new property();
+					pkProp.addAnnotations("EmbeddedId");
+					pkProp.dataType = relation[i].source;
+					pkProp.pName = tempClassInfo.Emclass.className.toLowerCase();
+					props.push(pkProp);
+				}
+				
 				props.push(fProp);
+				
 			}
 			
 			

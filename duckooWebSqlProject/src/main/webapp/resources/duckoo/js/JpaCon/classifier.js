@@ -15,8 +15,8 @@ var classifier = (function(){
 		
 		superClasses.forEach(function(inNode){
 			if(tempNode==inNode){
-				console.log("what is tempNode?",tempNode);
-				console.log("what is inNode?",inNode);
+				/*console.log("what is tempNode?",tempNode);
+				console.log("what is inNode?",inNode);*/
 				return;
 			}
 			

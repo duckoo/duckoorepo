@@ -16,7 +16,7 @@ var classInfoMaker = (function(){
 		annotations.push("entity");
 		
 		
-		//???????????
+		//상속용으로 만들어봄. 나중에 쓸데 있으면씀.
 		/*if(targetNode.reId.length>0){
 			annotations.push("Dtype");
 		}*/
@@ -28,6 +28,7 @@ var classInfoMaker = (function(){
 		
 		console.log("matched TempClassInfo",tempClassInfo);
 		classManager.addClassInfo(tempClassInfo);
+		
 		return tempClassInfo;
 	}
 	
