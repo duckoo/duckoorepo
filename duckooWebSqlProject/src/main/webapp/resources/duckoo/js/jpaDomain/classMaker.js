@@ -8,7 +8,7 @@ var classMaker = (function(){
 		this.nm = NodeManager;
 	}
 	classMaker.prototype.make = function(targetEntity){
-		var str = "public class "+targetEntity.name+"{\n";
+		var str = "public class "+this.makeClassName(targetEntity.name)+"{\n";
 		str +="\tpublic "+targetEntity.name+"(){};\n\n"
 		str +=mm.make(targetEntity);
 		str +="};"
@@ -17,8 +17,9 @@ var classMaker = (function(){
 	classMaker.prototype.classify = function(entityName){
 		var target = en.getEntityByName(entityName);
 		
-		var str = "@Entity\n";
-		str +="@Table(name = "+entityName+")\n"
+		var str = this.addImport();
+		str += "@Entity\n";
+		str +="@Table(name = "+'"'+entityName+'"'+")\n"
 		if(!EntityControll.isDualKey(target)){
 			str += this.make(target);//class 문자열.
 		}else{
@@ -30,7 +31,10 @@ var classMaker = (function(){
 	}
 	
 	classMaker.prototype.addImport = function(){
-		
+		var str = "import javax.persistence.*;\n\n";
+		return str;
 	}
+	
+	
 	return classMaker;
 })();

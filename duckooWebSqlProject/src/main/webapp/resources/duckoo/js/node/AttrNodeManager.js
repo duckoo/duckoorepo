@@ -3,16 +3,14 @@ var attrNodeManager=(function(){
 	function AttrNodeManager(){
 		this.arr= {};
 	}
-
+	
 	AttrNodeManager.prototype.add=function(node){
 		if(!node.id)return;
 		this.arr[node.id]=node;
 	}
 	
-	
 	AttrNodeManager.prototype.unLink=function(id){// 검증안됨..
 		var pare= this.arr[id].parent;
-		console.log("p:: ",pare)
 		if(!pare)return;
 		var pArr=pare.getChild();
 		var idx =0;
@@ -31,21 +29,19 @@ var attrNodeManager=(function(){
 		}
 		return this.arr[id];
 	}
-	
+	AttrNodeManager.prototype.getAllNode = function(){
+		return this.arr;
+	}
 	AttrNodeManager.prototype.del=function(id){
 		var idArr=[];
 		var manager = this;
 		idArr.push(id);
-		
 		this.unLink(id);
-
 		this.update(id,function(){
 			idArr.push(this.id);
 		});
-		
 		idArr.forEach(function(idx){
 		    var en=EntityManager.getEntityByName(this.arr[Number(idx)].entity);
-		    console.log("en:::::",en);
 		    en.deleteAttr(Number(idx));
 			 delete manager.arr[idx];
 			 v(en).refresh();
@@ -90,7 +86,6 @@ var attrNodeManager=(function(){
 				var sourEntity= nearRelation[0].source;
 				var sourceNode= attrNodeManager.get(originalId);
 				sourceNode.entity=sourEntity;
-				
 				for(var i=0;i<nearRelation.length;i++){
 					var tempEntity = EntityManager.getEntityByName(nearRelation[i].target);
 					attr.id=undefined;
@@ -99,14 +94,12 @@ var attrNodeManager=(function(){
 					if(nearRelation[i].relationLine==="identify"){
 						attr.isPk = true;
 					}
-					//tempEntity.setAttr(attr); // 가까운 관계에 엔티티에 속성추가.
 					var tempArr = tempEntity.getAttr();
 					var id =tempEntity.setAttr(attr).id;
 					 targetAttrId.push(id);
 					var newNode= attrNodeManager.get(id);
 					newNode.entity=tempEntity.name;
 					attrNodeManager.link(originalId,id);
-					console.log("link....",attrNodeManager)
 					newNode.reId=relationIdArr;
 				    var pk= tempEntity.search({isPk:true});
 				    var childReId=attrNodeManager.get(pk[0].id).reId;
@@ -125,17 +118,14 @@ var attrNodeManager=(function(){
 	}	
 	
 	AttrNodeManager.prototype.relationTour=function(startId,fn){
-		console.log("relationTour");
 		function tour(){
 			var p= this.parent.reId;
 			var t= this.reId;
 			var iRarr = MyArrayUtil.intersection(p,t);
-			iRarr.forEach(function(id){ console.log("this...",this);  fn.call(this,id);}.bind(this));
-			console.log("iRarr:", iRarr);
+			iRarr.forEach(function(id){ fn.call(this,id);}.bind(this));
 		}
 		this.update(startId,tour);
 	}
-	
 	
 	AttrNodeManager.prototype.unRelationParent=function(id){ //부모와 인연을 끊는다..
 		   var pare= this.arr[id].parent;
@@ -171,40 +161,27 @@ var attrNodeManager=(function(){
 		 if(this.arr[id].parent){
 			 deleTarget = MyArrayUtil.intersection(this.arr[id].reId,this.arr[id].parent.reId);
 		 }
-		 
 		 manager.relationTour(Number(id),function(imyourman){
 			var count=relationManager.get(imyourman).decreaseCount();
 			if(count===0){deleTarget.push(imyourman);}
 		});
-		
 		deleTarget.forEach(function(rId){
 			  jsPlumb.detach(renderManager.getConnecter(rId));
 		});
-       ///////////////////////////////////////
 		var targetId=[];
 		manager.unRelationParent(Number(id));
-		
 		this.update(id,function(){
 			targetId.push(this.id);
 		});
-		
-		console.log("targetID: ",targetId)
-		
 		targetId.forEach(function(_id){
 			var en=EntityManager.getEntityByName(this.arr[Number(_id)].entity);
-			console.log("enitity: ",en);
 			   keyType.id=Number(_id);
-			   console.log("keyType: ",keyType);
 			   en.setAttr(keyType);
-			  console.log("enitity:2 ",en);
 			   manager.unRelationParent(Number(_id));
 			   v(en).refresh();
 			   v(en).entitySizing();
 		}.bind(this));
-
 	}
-	
-	
 	
 	
 	AttrNodeManager.prototype.update=function(startId,fn){
@@ -225,7 +202,6 @@ var attrNodeManager=(function(){
 		if(!id)return;
 		attr.id=id;
 		EntityManager.getEntityByName(this.arr[id].entity).setAttr(attr);
-		
 		this.update(id,function(){
 			target.push(this.id);
 		});
@@ -235,30 +211,21 @@ var attrNodeManager=(function(){
 			EntityManager.getEntityByName(node.entity).setAttr(attr);
 			v(EntityManager.getEntityByName(node.entity)).refresh();
 		}.bind(this));
-		
 	}
 	
 	
 	AttrNodeManager.prototype.updateTourAll=function(id,attr){
 		   var pArr=[];
 		   if(!this.arr[id].parent)return;
-		   
 		    (function up(parent){
 		    	if(!parent)return;
 		    	pArr.push(parent.id);
 		    	up(parent.parent);
 		    }.bind(this))(this.arr[id].parent);
 		    
-		    
 		    var startId= pArr.pop();
 		    this.updateTourChild(Number(startId),attr);
-		
 	}
-	
-	
-	
-	
-	
 	
 	
 	

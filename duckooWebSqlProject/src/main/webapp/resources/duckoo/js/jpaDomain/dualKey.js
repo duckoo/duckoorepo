@@ -12,14 +12,14 @@ var dualKey = (function(){
 		var tempPKArr = this.entity.search({isPk:true});
 		
 		str = "@Data\n";
-		str += "@Embeddable\n";
-		str +="public class "+this.entity.name+"_pks"+" implements Serializable{\n";
+		str += "@MappedSuperClass\n";
+		str +="public class "+this.entity.name+"_pks"+"{\n";
 		
 		str +=this.makeProp(entity,tempPKArr);// hashcode, equals 만들어야됨
 		str+="}\n\n";
 		
 		
-		str+=this.makeDualKeyTable(entity,tempPKArr);
+		
 		
 		return str;
 		

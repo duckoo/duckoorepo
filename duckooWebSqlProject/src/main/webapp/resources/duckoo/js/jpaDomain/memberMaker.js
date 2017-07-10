@@ -85,7 +85,9 @@ var memberMaker = (function(){
 		var targetNodeId = Number(targetNode.id);
 		var str = "\t@"+relationType+"\n";
 		//console.log("나오긴 하니:",entity.search({id:targetNodeId}));
-		str += "\t@JoinColumn(name = "+'"'+(entity.search({id:targetNodeId}))[0].pName+'"'+")\n";
+		str += "\t@JoinTable(name = "+'"'+target_tbl_name+"_"+entity.name+'"'+",\n" +
+				" \t\tjoinColumns = @JoinColumn(name ="+'"'+(entity.search({id:targetNodeId}))[0].pName+'"'+"),\n" +
+						"\t\tinverseJoinColumns=@JoinColumn(name="+'"'+(entity.search({id:targetNodeId}))[0].pName+'"'+"))\n";
 		str += "\tprivate "+target_tbl_name+ " example2;\n\n";
 		return str;
 	}

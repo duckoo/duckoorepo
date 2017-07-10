@@ -176,13 +176,13 @@ var relationfunction=(function(){
 			tag.relIdPush(tempRelation.id);
 			attrNodeManager.link(sId,tId);
 		}
-	      console.log("제대로 들어갔냐: ",attrNodeManager);
+	   //   console.log("제대로 들어갔냐: ",attrNodeManager);
 		
 		var  relation= new Relation(tempRelation);
 		
 		relationManager.add(relation);
 	    
-		console.log("tempRelation???",tempRelation);
+		//console.log("tempRelation???",tempRelation);
 		//console.log("저장됨? : ",relationManager.get(tempRelation.name));	
 		
 		renderManager.connectDiv({$source:$("#"+tempRelation.source) ,$target:$("#"+tempRelation.target),id:tempRelation.id,lineType:tempRelation.relationLine});
@@ -249,7 +249,6 @@ var relationfunction=(function(){
 			tempRelation.name = firstName +"_"+lastName;	
 			firstName = firstName.substring(0,firstName.length-1);
 			lastName = lastName.substring(0,lastName.length-1);
-
 		
 			
 			
@@ -301,5 +300,4 @@ var relationfunction=(function(){
 		 	MatchName:MatchName,
 		 	initiateTempRelation:initiateTempRelation,
 		 	setTempRelation:setTempRelation}
-	 
 })();

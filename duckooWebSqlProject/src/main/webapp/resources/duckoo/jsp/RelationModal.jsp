@@ -54,14 +54,12 @@
         <div class="modal-Rbody">
         <div id="srcInfo">
         	<select id="sourceCol">
-        		<option selected="selected" value="1">col1</option>
-        		<option value="2">col2</option>
+        		
         	</select>
         </div>
         <div id="targetInfo">
         	<select id="targetCol">
-        		<option selected value="1">tarcol1</option>
-        		<option>tarcol2</option>
+        		
         	</select>
         </div>
         <div id="options">
@@ -254,7 +252,6 @@ $("#relSave").on("click",function(e){
 	
 	$("#identified").modal('hide');
 });
-
 
 $(".genOption").on("click",function(e){
 	var genVal = $(this).val();

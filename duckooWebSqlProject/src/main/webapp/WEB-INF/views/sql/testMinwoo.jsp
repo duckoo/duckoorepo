@@ -59,13 +59,38 @@
 <jsp:param name="token" value="<%=token%>" />
 </jsp:include> 
 
-<jsp:include page="/resources/duckoo/jsp/sqlGen.jsp">
+<jsp:include page="/resources/duckoo/jsp/jpaOptionModal.jsp">
 <jsp:param name="token" value="<%=token%>" />
 </jsp:include> 
 
-<script type="text/javascript" src="/resources/duckoo/js/jpaDomain/classMaker.js?<%=token%>"></script>
+<jsp:include page="/resources/duckoo/jsp/sqlGen.jsp">
+<jsp:param name="token" value="<%=token%>" />
+</jsp:include>
+<script type="text/javascript" src="/resources/duckoo/js/jpaDomain/emClass.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/jpaDomain/inheritClass.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/jpaDomain/memberMaker.js?<%=token%>"></script>
-<script type="text/javascript" src="/resources/duckoo/js/jpaDomain/dualKey.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/jpaDomain/classMaker.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/jpaDomain/classifier.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/jpaDomain/normalClass.js?<%=token%>"></script>
+
+
+
+
+
+<script type="text/javascript" src="/resources/duckoo/js/JpaCon/emClass.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/JpaCon/codeUtils.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/JpaCon/property.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/JpaCon/PropMaker.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/JpaCon/classInfo.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/JpaCon/classManager.js?<%=token%>"></script>
+
+<script type="text/javascript" src="/resources/duckoo/js/JpaCon/emClass.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/JpaCon/scanner.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/JpaCon/classInfoMaker.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/JpaCon/classifier.js?<%=token%>"></script>
+
+
+
 <script type="text/javascript" src="/resources/duckoo/js/jpaDomain/Maps.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/EntityControll.js?<%=token%>"></script>
 <script>
@@ -89,7 +114,7 @@ jsPlumb.ready(function() {
 	 EntityManager.createEntity({name:"e2",attr:[]},false);
 	 var en2=EntityManager.getEntityByName("e2");
 	 en2.setAttr({lName:"댓글번호",pName:"rno",datetype:"varchar",isPk:true,isFk:false});
-	 en2.setAttr({lName:"게시글번호",pName:"bno",datetype:"INT()",isPk:false,isFk:true});
+	 en2.setAttr({lName:"게시글번호",pName:"bno",datetype:"INT()",isPk:true,isFk:true});
 	 en2.setAttr({lName:"댓글제목",pName:"title",datetype:"varchar"});
 	 en2.setAttr({lName:"댓글내용",pName:"content",datetype:"varchar"});
 	 en2.setAttr({lName:"댓글작성자",pName:"writer",datetype:"varchar"});
@@ -109,7 +134,7 @@ jsPlumb.ready(function() {
 	 v(en2).show();
 	 v(en3).show();
 
- 	var relation = {source:"e1",target:"e2",relationType:"OneToMany",relationLine:"nidentify",restrictType:"cascade", name:en.search({pName:"bno"})[0].id+"_"+en2.search({pName:"bno"})[0].id};
+ 	var relation = {source:"e1",target:"e2",relationType:"OneToMany",relationLine:"identify",restrictType:"cascade", name:en.search({pName:"bno"})[0].id+"_"+en2.search({pName:"bno"})[0].id};
 	 
 	 relationfunction.setTempRelation(relation);
 	relationfunction.registRelationShipManager(); 
@@ -118,14 +143,14 @@ jsPlumb.ready(function() {
 	relationfunction.setTempRelation(relation);
 	relationfunction.registRelationShipManager();
 	
-	var cm =new classMaker(EntityManager,relationManager,attrNodeManager);
+	/*  var cm =new classMaker(EntityManager,relationManager,attrNodeManager);
 	 console.log(cm);
-	 console.log(cm.classify("e1"));
-	 console.log(cm.classify("e2"));
-	 console.log(cm.classify("e3"));
-
+	 console.log(cm.classify("e1"));  */
+ 	var cf = new classifier();
 	 
-	
+	 cf.classify(attrNodeManager.get("7"));
+	 cf.classify(attrNodeManager.get("7"));
+	 
 	 
 
 });
