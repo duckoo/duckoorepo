@@ -4,6 +4,7 @@ var ConsoleCon=(function(){
 	  this.console=consol;
 	  this.consoleView= new ConsoleView(consol);	
 	  this.id=this.console.id;
+	
 	}
 	ConsoleCon.prototype.open=function(e){
 		document.getElementById(""+this.id).style.display="block";

@@ -22,16 +22,16 @@
 		integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
 		crossorigin="anonymous"></script>
 <script type="text/javascript" src="/resources/duckoo/js/duckooPlumb.js?<%=token%>"></script>
-<script type="text/javascript" src="/resources/duckoo/js/relationship.js?<%=token%>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.3/jquery.nicescroll.js"></script> 
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
 <script type="text/javascript" src="/resources/duckoo/js/Observer.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/view/dView.js?<%=token%>"></script>
-<script type="text/javascript" src="/resources/duckoo/js/saveAndLoad/Save.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/saveAndLoad/SaveAndLoad.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/util/Count.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/util/MyArrayUtil.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/schema/SchemaManager.js?<%=token%>"></script>
 
 </head>
 
@@ -68,8 +68,7 @@ jsPlumb.ready(function() {
 	 setInterval(function(){
 		 console.log("re:");
 		jsPlumb.repaintEverything();
-	},1000/20);
-	
+	},1000);
 	 //이름만드는거 존나 귀찮아서..만든 임시함수임.
 	 function makeName(attr1,attr2){
        var str1=""+attr1[0].id;
@@ -118,12 +117,14 @@ jsPlumb.ready(function() {
      v(stuff).show({x:800,y:120});
 	 
 	 var orderStuff=EntityManager.createEntity({name:"주문상품",attr:[]});
-	 orderStuff.setAttr({lName:"주문상세번호",pName:"oNoStuff",datetype:"INTEGER",datelength:"28",notNull:true,isPk:true,autoIncrement:true});
+	var ospk= orderStuff.setAttr({lName:"주문상세번호",pName:"oNoStuff",datetype:"INTEGER",datelength:"28",notNull:true,isPk:true,autoIncrement:true});
 	var sFK=orderStuff.setAttr({lName:"상품코드",pName:"sno",datetype:"INTEGER",datelength:"28",notNull:true,isPk:true,isFk:true});
 	 oFK= orderStuff.setAttr({lName:"주문번호",pName:"ono",datetype:"INTEGER",datelength:"28",notNull:true,isPk:true,isFk:true});
 	 orderStuff.setAttr({lName:"수량",pName:"count",datetype:"INTEGER",datelength:"28"});
-		
-	 v(orderStuff).show({x:800,y:600});
+	 ospk.entity="주문상품";
+	 attrNodeManager.addNodeTour([],ospk);
+	
+	v(orderStuff).show({x:800,y:600});
 	 relation = {source:"주문",target:"주문상품",relationType:"OneToMany",relationLine:"identify",restrictType:"cascade", name:makeName([oPK],[oFK])};
 	 relationfunction.setTempRelation(relation); 
 	 relationfunction.registRelationShipManager();
@@ -132,9 +133,9 @@ jsPlumb.ready(function() {
 	 relationfunction.setTempRelation(relation); 
 	 relationfunction.registRelationShipManager();
 	 
-	 Save.saveEntity(orderStuff);
 	 
-     
+	 SchemaManager.SetNewSchema("test");
+	 SaveAndLoad.saveToJson();
 });
 	
 </script>

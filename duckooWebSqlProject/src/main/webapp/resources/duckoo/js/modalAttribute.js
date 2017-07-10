@@ -187,7 +187,6 @@ function updateAttrFinalBtn(e){
     delete attr1["notNull"];
     delete attr1["autoIncrement"];
     
-    console.log("uafb attr : ",attr1);
     
     attrNodeManager.updateTourAll(String(id),{datetype:attr.datetype});
     attrNodeManager.updateTourChild(String(id),attr1);
@@ -231,10 +230,8 @@ function confirmYes(){
 	
 	var id = target.attr("id");
 	
-	console.log("에이티티알메니저:",attrNodeManager);
 	attrNodeManager.deleteTour(Number(id));
 	console.log("delete Atfer:",attrNodeManager);
-	
 	
 	entity.deleteAttr(Number(id));
 	var $openAttrDelUpDiv= $("#openAttrDelUpDiv_"+id);
@@ -264,18 +261,16 @@ function addAttrFinalBtn(e){
     var notNull = $("#notNull").is(":checked");
     var autoIncre = $("#autoIncre").is(":checked");
     var uniqueVal = $("#uniqueVal").is(":checked");
-
 	//entity.setAttr({isPk:isPk,datelength:datelength, lName:lName,pName:pName,domainName:"none",datetype:dataType,notNull:notNull,autoIncrement:autoIncre,uniqueVal:uniqueVal});
-
     var attr={isPk:isPk, lName:lName,pName:pName,domainName:"none",datetype:dataType,datelength:datelength,notNull:notNull,autoIncrement:autoIncre,uniqueVal:uniqueVal};
-
     tagSetAttr(entity);
-   
     var pkArr= entity.search({isPk:true});
     var newAttr = entity.setAttr(attr).clone();
     if(isPk) {
     	 console.log("cAttr: ",newAttr);
-    	 attrNodeManager.addNodeTour(pkArr[0].id,newAttr);
+    	 //부실 공사.
+    	 var id = (pkArr[0] && pkArr[0].id) || [];
+    	 attrNodeManager.addNodeTour(id,newAttr);
     }
     entity.sortAttribute();
     v(entity).refresh();
@@ -286,7 +281,6 @@ obb.init("addAttrFinalBtn2",addAttrFinalBtn);
 Obserable.setEventObserver("addAttrFinalBtn",obb);
 
 function saveBtn(e){
-	console.log("entitytytytyty:",entity);
     EntityManager.setEntity(entity);
     var $entity = $("#"+entity.name);
     
@@ -298,8 +292,6 @@ function saveBtn(e){
 obb=Object.create(Obsever);
 obb.init("saveBtn2",saveBtn);
 Obserable.setEventObserver("saveBtn",obb);
-
-
 
 
 

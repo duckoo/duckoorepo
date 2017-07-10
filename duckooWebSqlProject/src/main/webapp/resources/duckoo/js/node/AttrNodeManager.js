@@ -3,6 +3,63 @@ var attrNodeManager=(function(){
 	function AttrNodeManager(){
 		this.arr= {};
 	}
+	AttrNodeManager.prototype.prepareJSON=function(){
+		console.log("s:",this.arr);
+		
+		var key= Object.keys(this.arr);
+		var idArr={};
+		var valArr={};
+	
+		for(var i=0,len=key.length; i<len ;i++){
+			var temp = this.arr[key[i]];
+			if(!idArr[key[i]]) idArr[key[i]]={};
+			idArr[key[i]]["parent"]= (temp.parent===undefined) ? undefined:temp.parent.id;
+			idArr[key[i]]["child"]=[];
+			idArr[key[i]]["id"]=temp.id;
+			 
+			for(var j=0,len2=temp.child.length;j<len2;j++){
+				  idArr[key[i]].child[j]= temp.child[j].id;
+			 }
+			if(!valArr[key[i]])valArr[key[i]]={};
+			
+			  valArr[key[i]]["id"]=temp.id;
+			  valArr[key[i]]["reId"]=temp.reId;
+			  valArr[key[i]]["entity"]=temp.entity;
+	     }
+		
+		return {
+			circularID:idArr,
+			value:valArr
+		}
+		
+	}
+	
+	
+	AttrNodeManager.prototype.setJObj=function(o){
+	   var valArr=o.value;
+	   var cid=o.circularID;
+	   var key= Object.keys(cid);
+	   this.arr={};// 걍 초기화해버리자..
+	   for(var i=0,len=key.length; i<len ;i++){
+		   var temp= {};   
+		  temp["id"]=valArr[key[i]].id;
+		  temp["entity"]=valArr[key[i]].entity;
+		  temp["reId"]=valArr[key[i]].reId;
+		  var newNode= new AttrNode(temp);
+		  this.arr[key[i]]=newNode;
+	   }
+	   for(var i=0,len=key.length; i<len ;i++){
+		   var temp= this.arr[key[i]]; 
+		   temp["parent"]= (cid[key[i]].parent ===undefined) ? undefined :this.arr[cid[key[i]].parent];
+		   temp["child"]=[];
+			for(var j=0,len2=cid[key[i]].child.length;j<len2;j++){
+				 temp["child"][j]=this.arr[cid[key[i]].child[j]];
+		   }
+	   }
+	   console.log("toObj",this.arr);
+	   
+	}
+	
 	
 	AttrNodeManager.prototype.add=function(node){
 		if(!node.id)return;
@@ -71,10 +128,15 @@ var attrNodeManager=(function(){
 	
 	AttrNodeManager.prototype.addNodeTour=function(startId,attr){
 		var manager= this;
+		if(startId.length===0){
+			this.arr[attr.id]= new AttrNode(attr);
+			return;
+		}
+		
 		var relationIdArr =manager.get(startId).reId;
 		 (function addPk(relArr,attr){
 			var nearRelation=[];
-			var manager= this;
+			//var manager= this;
 			var originalId = attr.id;
 			var targetAttrId  = [];
 			var relationIdArr =relArr;
@@ -140,6 +202,7 @@ var attrNodeManager=(function(){
 	
 	AttrNodeManager.prototype.deleteTour=function(id){
 		var deleTarget=[];
+	 	 var id= Number(id);
 		 if(this.arr[id].parent){
 			 deleTarget = MyArrayUtil.intersection(this.arr[id].reId,this.arr[id].parent.reId);
 		 }
@@ -149,11 +212,12 @@ var attrNodeManager=(function(){
 		});
 		attrNodeManager.unRelationParent(Number(id));//
 		deleTarget.forEach(function(rId){
+			console.log("jebal2...............",rId);
 			  jsPlumb.detach(renderManager.getConnecter(rId));
+			  
 		});
 		attrNodeManager.del(Number(id));//
 	}
-	
 	
 	AttrNodeManager.prototype.keyTypeTour=function(id,keyType){
 		var deleTarget=[];
@@ -166,6 +230,7 @@ var attrNodeManager=(function(){
 			if(count===0){deleTarget.push(imyourman);}
 		});
 		deleTarget.forEach(function(rId){
+			console.log("jebal...............",rId);
 			  jsPlumb.detach(renderManager.getConnecter(rId));
 		});
 		var targetId=[];

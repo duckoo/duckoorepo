@@ -2,7 +2,7 @@ var AttrNode=(function(){
 	function AttrNode(opt){
 		var opt = opt || {};
 		this.id= opt.id || undefined;
-  		this.reId = opt.val || [];
+  		this.reId = opt.reId|| [];
   		this.parent= opt.parent || undefined;
   		this.child = opt.child || [];
   		//..............
@@ -31,7 +31,6 @@ var AttrNode=(function(){
 	AttrNode.prototype.relIdPush=function(id){
 	       this.reId.push(id);	
 	}
-	
 	AttrNode.prototype.relIdPop=function(id){
 		for(var i=0, len = this.reId.length;i<len ; i++){
 			if(this.reId[i]===id){
@@ -40,10 +39,6 @@ var AttrNode=(function(){
 			}
 		}
 	}
-	
-	
-	
-	
 	
 	
 /*	AttrNode.prototype.getChildInfo=function(idx){

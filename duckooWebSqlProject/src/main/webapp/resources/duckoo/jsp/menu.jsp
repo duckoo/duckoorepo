@@ -1,20 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %>
  <link rel="stylesheet" href="/resources/duckoo/css/menu.css?<%=request.getParameter("token")%>">  
- 
- 
+ <%Cookie[] cookies = (Cookie[])session.getAttribute("login");
+ 	Map<String,String> cookieList = new HashMap<String,String>();
+ 	if(cookies==null){
+ 		cookieList.put("username",null);
+ 	} else{
+ 		for(int i =0; i<cookies.length; i++){
+ 				cookieList.put(cookies[i].getName(),cookies[i].getValue());
+ 		}
+ 	}
+ 	pageContext.setAttribute("username",cookieList.get("username"));
+ %>   
+   
+   
+   
+   
    <div id="pageTab">
 	 <ul class="nav nav-tabs">
-    	<li class="active"><a href="#"><i class="fa fa-table" aria-hidden="true"></i>&nbsp;ERD page</a></li>
-    	  <li><a href="#"><i class="fa fa-question-circle" aria-hidden="true"></i>&nbsp;Q&A</a></li>
-    		<li><a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i>&nbsp;Share</a></li>
     		<div id="menuBar">
-			<h5 style="float:left; font-weight:bold;">&nbsp;&nbsp;저장되었습니다.&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-check" aria-hidden="true"></i></h5>
-			<button class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="bottom" title="DB에 테이블을 생성합니다."><span>Insert DB</span></button>
-			<button id="genTest" class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="bottom" title="JAVA VO코드를 생성합니다."><span>Generate-Code</span></button>
+			<h5 style="float:left; font-weight:bold;">&nbsp;&nbsp;저장되었습니다.&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-check" aria-hidden="true"></i></h5>			
+			<button style="float:right; margin-top:2px; vertical-align:middle;"><i class="fa fa-bars fa-2x" aria-hidden="true"></i></button>
+            <div class="genBtnListWrap" style="float:right; width:200px; display:inline-block;">
+                <button id="genListBtn"class="button btn btn-success" type="button" style="vertical-align:middle; float:right;"><span>Generate</span></button>
+                <div class="genBtnListDiv">
+                    <button id="genTest" class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="left" title="JAVA VO코드를 생성합니다."><span>Generate-Code</span></button>
+                    <button id="sqlSaveBtn" class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="left" title="SAVE"><span>SAVE</span></button>
+                    <button class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="bottom" title="DB에 테이블을 생성합니다."><span>Insert DB</span></button> 
+			    </div>
 			</div>
+            
     	</ul>
 	</div>
+	
+		
+	
+	
 	
 	
 	
@@ -31,7 +54,7 @@
 	 	<div class='sideBarHeader'>
 	 		<div class="menuClosebtn" id="sideBarCloseBtn" >&times;</div>
 		</div>
-		<div class="sideBarBody">
+		<div id="sidebody_{{id}}" class="sideBarBody">
 			
 		</div>
 	</div>
@@ -45,7 +68,7 @@
 		<button id="makeRelationBtn" class="btn btn-success" style="margin-top:5px;" type="button" data-toggle="tooltip" data-placement="bottom" title="관계생성">
 			<i class="fa fa-long-arrow-down" aria-hidden="true"></i>
 		</button>
-		<div class="dropdown btn btn-success" style="float:left;">
+		<div class="dropdown" style="float:left;">
   			<button class="dropbtn">Menu</button>
   			<div class="dropdown-content" data-id='menu' style="left:0;">
     		</div>
@@ -61,6 +84,26 @@
 	<a href="#" id='item_{{id}}'><i class="fa fa-folder-open-o" style="margin-right:10px;" aria-hidden="true"></i>{{name}}</a>
    {{/itemList}}
 </script>	
+
+
+<script id="sidebarItem" type="text/x-handlebars-template">
+<ul class="sidebarItemList">  
+ {{#this}}
+    <li class="sideItem" data-name={{this}}>{{this}} {{#genEntityList this}}{{/genEntityList}} </li>
+  {{/this}}
+</ul>
+</script>	
+
+
+<script id="entityList" type="text/x-handlebars-template">
+<ul id="el_{{id}}" style="display:none;">  
+ {{#arr}}
+    <li class="entityList" data-name={{this}}>{{this}}</li>
+  {{/arr}}
+</ul>
+</script>	
+
+
 
 <script type="text/javascript" src="/resources/duckoo/js/menu/model/Menu.js?<%=request.getParameter("token")%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/menu/view/MenuView.js?<%=request.getParameter("token")%>"></script>
@@ -104,6 +147,10 @@ $document.on("click","#item_"+sidebarCon.getId(),function(e){
 	e.stopPropagation();
     e.preventDefault();
 	sidebarCon.open();
+	// 
+	var keys=SchemaManager.getKeys();
+	console.log("keys?",keys);
+	sidebarCon.renderItem(keys);
 })
 
 $document.on("click","#sideBarCloseBtn",function(e){
@@ -111,6 +158,35 @@ $document.on("click","#sideBarCloseBtn",function(e){
     e.preventDefault();
 	sidebarCon.close();
 })
+
+$document.on("click",".sideItem",function(e){
+	e.stopPropagation();
+    e.preventDefault();
+	var name = $(this).attr("data-name");
+	//SchemaManager.focusOn(name);
+	SchemaManager.focusOn(name);
+	var earr= SchemaManager.getEntitysNames(name);
+	sidebarCon.toggleEntityList(name);
+	
+})
+
+$document.on("click",".entityList",function(e){
+	e.stopPropagation();
+    e.preventDefault();
+	var name = $(this).attr("data-name");
+	console.log("entitly: ",name);
+	/*
+	*/
+	  var cEntity=EntityManager.getEntityByName(name).clone();
+	  modalAttribute.setModal(cEntity,modal);
+	  $("#myModal").modal();
+})
+$("#sqlSaveBtn").on("click",function(e){
+	e.stopPropagation();
+    e.preventDefault();
+    SchemaManager.SetNewSchema("taehyunTest");
+	SaveAndLoad.saveToJson()
+});
 
 
 

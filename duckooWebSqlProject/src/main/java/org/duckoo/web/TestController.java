@@ -2,7 +2,6 @@ package org.duckoo.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -24,6 +23,13 @@ public class TestController {
 	}
 	@GetMapping("/testMinwoo")
 	public void re4(){
+		
+	}
+	@GetMapping("/LoadTest")
+	public void re5(){
+	}
+	@GetMapping("/selectPage")
+	public void re6(){
 		
 	}
 	

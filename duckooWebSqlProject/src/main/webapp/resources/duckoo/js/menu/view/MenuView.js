@@ -23,7 +23,7 @@ var MenuView=(function(){
 		obb.init("item_update",refresh.bind(this));
 		this.menu.setObserve("Item_update",obb);
 		
-		$("body").append(bodyTemplate(this.menu));
+		$(".nav-tabs").append(bodyTemplate(this.menu));
 	}
 	
 	MenuView.prototype.render=	function __vRender__(opt){

@@ -28,10 +28,16 @@ function getEntityByName(name){
 	if(arguments.length===0){return entityArr}
 	return entityArr[name];
 }
-
 function setEntity(entity){
 	if(!entity || !entity.name){return ;}
 	entityArr[entity.name]=entity;
+}
+function setJObj(e){
+	entityArr={}; //
+	var key = Object.keys(e);
+	for(var i=0 ,len = key.length;i<len;i++){
+		createEntity(e[key[i]]);
+	}
 }
 return {
 	    createEntity:createEntity,
@@ -39,6 +45,7 @@ return {
 	    deleteEntity:deleteEntity,
 	    getEntityByName:getEntityByName,
 	    setAttribute:setAttribute,
-	    Obserable:Obserable
+	    Obserable:Obserable,
+	    setJObj:setJObj
       };
 })();
