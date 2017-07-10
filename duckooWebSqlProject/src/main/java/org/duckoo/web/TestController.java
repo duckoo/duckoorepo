@@ -32,5 +32,9 @@ public class TestController {
 	public void re6(){
 		
 	}
+	@GetMapping("/testTaebong2")
+	public void re7(){
+		
+	}
 	
 }

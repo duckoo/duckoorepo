@@ -1,10 +1,12 @@
 var maps = (function(){
 	var Values= {"varchar":"String",
 				 "INT":"Integer",
-				 "Date":"Date",
+				 "DATE":"Date",
 				 "Varchar2":"String",
 				 "varchar2":"String",
-				 "TimeStamp":"TimeStamp"
+				 "TimeStamp":"TimeStamp",
+				 "INTEGER":"Integer",
+				 "VARCHAR":"Varchar"
 				 };
 	
 	function getType(dataType){
