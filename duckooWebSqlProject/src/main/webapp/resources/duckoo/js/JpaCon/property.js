@@ -7,7 +7,9 @@ var property = (function(){
 	var joinedColumn;
 	var relations;
 	var joinedTable;
-	
+	var NodeidsForPK;
+	var mark;
+	var tableName;
 	
 	
 	
@@ -17,7 +19,7 @@ var property = (function(){
 		this.joinedColumn = [];
 		this.relations =[];
 		this.joinedTable =[];
-		
+		this.mark=false;
 	}
 	
 	property.prototype.setIsRef = function(bool){
@@ -48,5 +50,7 @@ var property = (function(){
 	property.prototype.addJoinTable = function(tableName){
 		this.joinedTable.push(tableName);
 	}
+	
+	
 	return property;
 })();

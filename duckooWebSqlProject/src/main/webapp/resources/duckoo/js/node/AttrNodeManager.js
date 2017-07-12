@@ -60,6 +60,11 @@ var attrNodeManager=(function(){
 	   
 	}
 	
+	AttrNodeManager.prototype.hasPK=function(id){
+		var id = Number(id); 
+	   return this.arr[id] !==undefined? true : false;
+	}
+	
 	
 	AttrNodeManager.prototype.add=function(node){
 		if(!node.id)return;
@@ -128,10 +133,6 @@ var attrNodeManager=(function(){
 	
 	AttrNodeManager.prototype.addNodeTour=function(startId,attr){
 		var manager= this;
-		if(startId.length===0){
-			this.arr[attr.id]= new AttrNode(attr);
-			return;
-		}
 		
 		var relationIdArr =manager.get(startId).reId;
 		 (function addPk(relArr,attr){

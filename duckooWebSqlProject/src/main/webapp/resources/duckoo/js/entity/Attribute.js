@@ -1,8 +1,5 @@
 var Attribute=(function(){
-	var counter=(function(){
-		   var count=1;
-		   return function(){return count++;}
-	 })();	
+	var counter=new Count(1);	
 ////////////////////////////////////////////////////
 	var attribute = {
 			className:"attribute",
@@ -26,8 +23,18 @@ var Attribute=(function(){
  function init(opt) {
 	 var opt = opt || {};
 	 this.setAttribute(opt);//
-	 if(!opt.id)this.id=counter(); // 무조건 카운터주는걸 막았음 잠시만..	
-  }
+	 if(!opt.id){
+		 this.id=counter.gen(); // 무조건 카운터주는걸 막았음 잠시만..	
+	    return;
+	 }
+	 this.id= opt.id;
+ }
+ function g_countInit(val){
+	 console.log(val);
+	 counter.init(val); 
+ }
+ 
+ 
   function setAttribute(_attrList){
 	  var attrList=_attrList||{};
 	  var key=Object.keys(attrList);
@@ -56,5 +63,5 @@ var Attribute=(function(){
 	   newIn.init(opt);
 		return newIn;
 	}
- return {creteInstance:creteInstance,clone:clone};	
+ return {creteInstance:creteInstance,clone:clone,g_countInit:g_countInit};	
 })();

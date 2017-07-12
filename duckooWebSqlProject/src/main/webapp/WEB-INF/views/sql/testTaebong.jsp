@@ -66,8 +66,23 @@
 
 <jsp:include page="/resources/duckoo/jsp/sqlGen.jsp">
 <jsp:param name="token" value="<%=token%>" />
-</jsp:include> 
+</jsp:include>
 
+<script type="text/javascript" src="/resources/duckoo/js/JpaCon/emClass.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/JpaCon/codeUtils.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/JpaCon/property.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/JpaCon/PropMaker.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/JpaCon/classInfo.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/JpaCon/classManager.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/JpaCon/scanner.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/JpaCon/classInfoMaker.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/JpaCon/classifier.js?<%=token%>"></script>
+
+<script type="text/javascript" src="/resources/duckoo/js/jpaDomain/Maps.js?<%=token%>"></script>
+
+<jsp:include page="/resources/duckoo/jsp/jpaModal.jsp">
+<jsp:param name="token" value="<%=token%>" />
+</jsp:include>  
 
 
 <script type="text/javascript" src="/resources/duckoo/js/EntityControll.js?<%=token%>"></script>

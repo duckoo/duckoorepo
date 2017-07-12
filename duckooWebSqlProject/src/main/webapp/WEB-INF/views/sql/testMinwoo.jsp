@@ -27,18 +27,20 @@
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.js"></script>
 <script type="text/javascript" src="/resources/duckoo/js/Observer.js?<%=token%>"></script>
-<script type="text/javascript" src="/resources/duckoo/js/view/dView.js?<%=token%>"></script>
+
+
+<script type="text/javascript" src="/resources/duckoo/js/view/dView.js?<%=request.getParameter("token")%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/util/MyArrayUtil.js?<%=request.getParameter("token")%>"></script>
+<script type="text/javascript" src="/resources/duckoo/js/util/Count.js?<%=request.getParameter("token")%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/saveAndLoad/SaveAndLoad.js?<%=token%>"></script>
-<script type="text/javascript" src="/resources/duckoo/js/util/Count.js?<%=token%>"></script>
-<script type="text/javascript" src="/resources/duckoo/js/util/MyArrayUtil.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/schema/SchemaManager.js?<%=token%>"></script>
 
 
 
-</head>
 
 <body class="canvas" id="canvasDiv" style="width: 6000px; height: 6000px; border: 1px solid black;">
-<textarea id="javaClassText" style="display:none"></textarea>
+<div id="javaClassText" style="margin-top:1500px; width:1005px; height:1000px; border-style:solid; background-color: white; overflow:auto;"></div>
+
 <jsp:include page="/resources/duckoo/jsp/entity.jsp">
 <jsp:param name="token" value="<%=token%>" />
 </jsp:include> 
@@ -65,9 +67,6 @@
 </jsp:include>
 
 
-
-
-
 <script type="text/javascript" src="/resources/duckoo/js/JpaCon/emClass.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/JpaCon/codeUtils.js?<%=token%>"></script>
 <script type="text/javascript" src="/resources/duckoo/js/JpaCon/property.js?<%=token%>"></script>
@@ -83,10 +82,79 @@
 <script type="text/javascript" src="/resources/duckoo/js/EntityControll.js?<%=token%>"></script>
 
 <script id="javaClasss" type="text/x-handlebars-template">
+<br>--------------------------------{{className}} JPA Code-----------------------------</br>
+<div id="{{className.className}}" style="width:1000px; font-weight: bold;">
+    <div style="width:auto; float:left; color:#880055;">import</div><div style="margin-left:3px; width:auto; float:left; color:#040000;"> java.util.*;</div>
+    <br>
+    <div style="width:auto; float:left; color:#880055;">import</div><div style="margin-left:3px; width:auto; float:left; color:#040000;"> javax.persistence.*;</div>
+    <br>
+	<br>
+    <div id="annotations_{{className}}">
+     
+    </div>
+    <div style="width:auto; float:left; color:#880055;">public class</div><div style="margin-left:3px; width:auto; float:left; color:#040000;"> {{className}} {</div>
+    <br>
+    <br>
+    <div style="width:auto; float:left; color:#880055;">public </div><div style="margin-left:5px;  float:left; color:#040000;">{{className}}(){</div><div style="margin-left:3px; width:auto; float:left; color:#040000;">};</div>
+    
+    <div id="columns_{{className}}">
 	
-
-
+	</div>
+    
+    <br>
+    <div style="width:auto; float:left;"></div><div style="margin-left:3px; width:auto; float:left; color:#040000;">}</div>
+</div>
 </script>
+<script id="classAnnotations" type="text/x-handlebars-template">
+	<div id="annotation_{{className}}_{{anotation}}" style="color:#63666B">@{{annotation}}</div>
+</script>
+
+
+<script id="columnDivs" type="text/x-handlebars-template">	
+	<br>
+    <div id="columnDiv_{{className}}_{{pName}}">
+	</div>
+</script>
+
+<script id="columnAnno" type="text/x-handlebars-template">
+	{{#annoCheck propAnno}}
+	<br>
+	<div style="color:#63666B; width:auto; float:left;">@{{propAnno}}</div><div style="color:#040000; float:left;">(name=</div><div style="color:#2C03F5; float:left;">"{{colName}}"</div><div style="color:#040000; float:left;">)</div>
+	{{/annoCheck}}
+	{{#annoCheck1 propAnno}}
+		{{#markCheck mark}}
+		<br>
+		<div style="color:#63666B; float:left; width:100%;">@{{propAnno}}</div>
+		{{else}}
+		<br>
+		<div style="color:#63666B; width:auto; float:left;">@{{propAnno}}</div><div style="color:#040000; float:left;">(mappedBy=</div><div style="color:#2C03F5; float:left;">"{{joinedTable}}"</div><div style="color:#040000; float:left;">)</div>
+		{{/markCheck}}
+	{{/annoCheck1}}
+	{{#annoCheck2 propAnno}}
+		{{#markCheck mark}}
+		<br>
+		<div style="color:#63666B; width:auto; float:left;">@{{propAnno}}</div>
+		<br>
+		<div style="color:#63666B; width:auto; float:left;">@JoinColumn</div><div style="color:#040000; float:left;">(name=</div><div style="color:#2C03F5; float:left;">"{{joinedColName}}"</div><div style="color:#040000; float:left;">)</div>
+		{{else}}
+		<br>
+		<div style="color:#63666B; float:left; width:100%;">@{{propAnno}}</div>
+		{{/markCheck}}
+	{{/annoCheck2}}
+	{{#annoCheck3 propAnno}}
+		<br>
+		<div style="color:#63666B; float:left; width:100%;">@{{propAnno}}</div>
+	{{/annoCheck3}}
+	
+</script>
+
+<script id="columnVal" type="text/x-handlebars-template">
+	<br>
+	<div style="float:left; color:#880055;">private </div>
+	
+	<div style="margin-left:5px; float:left; color:#040000;">{{dataType}} </div><div style="margin-left:5px; color:#2C03F5; float:left;">{{pName}}</div><div style="float:left; color:#040000;">;</div>
+</script>
+
 
 <script>
 jsPlumb.ready(function() {
@@ -107,16 +175,16 @@ jsPlumb.ready(function() {
 	 }
 	
 	var customGrade=EntityManager.createEntity({name:"customGrade",attr:[]});
-	var pk1=customGrade.setAttr({lName:"등급코드",pName:"cgNo",datetype:"INTEGER",datelength:"7",notNull:true,isPk:true,autoIncrement:true})
-	 customGrade.setAttr({lName:"코드명",pName:"cgName",datetype:"VARCHAR",datelength:"32",notNull:true})
+	var pk1=customGrade.setAttr({lName:"등급코드",pName:"cgNo",datetype:"int",datelength:"7",notNull:true,isPk:true,autoIncrement:true})
+	 customGrade.setAttr({lName:"코드명",pName:"cgName",datetype:"varchar",datelength:"32",notNull:true})
 	 
 	var custom= EntityManager.createEntity({name:"custom",attr:[]});
-	var cPk= custom.setAttr({lName:"고객번호",pName:"cno",datetype:"INTEGER",datelength:"7",notNull:true,isPk:true,autoIncrement:true})
-	var fk1=custom.setAttr({lName:"고객등급코드",pName:"cgNo",datetype:"INTEGER",datelength:"7",notNull:true,isFk:true})
-	 custom.setAttr({lName:"성명",pName:"name",datetype:"VARCHAR",datelength:"32",notNull:true})
-	 custom.setAttr({lName:"주소",pName:"adress",datetype:"VARCHAR",datelength:"32"});
-	 custom.setAttr({lName:"전화번호",pName:"phoneNumber",datetype:"VARCHAR",datelength:"32"});
-	 custom.setAttr({lName:"성별",pName:"gender",datetype:"VARCHAR",datelength:"9"});
+	var cPk= custom.setAttr({lName:"고객번호",pName:"cno",datetype:"int",datelength:"7",notNull:true,isPk:true,autoIncrement:true})
+	var fk1=custom.setAttr({lName:"고객등급코드",pName:"cgNo",datetype:"int",datelength:"7",notNull:true,isFk:true})
+	 custom.setAttr({lName:"성명",pName:"name",datetype:"varchar",datelength:"32",notNull:true})
+	 custom.setAttr({lName:"주소",pName:"adress",datetype:"varchar",datelength:"32"});
+	 custom.setAttr({lName:"전화번호",pName:"phoneNumber",datetype:"varchar",datelength:"32"});
+	 custom.setAttr({lName:"성별",pName:"gender",datetype:"varchar",datelength:"9"});
 
 	 v(customGrade).show({x:20,y:120});
      v(custom).show({x:20,y:600});
@@ -125,11 +193,11 @@ jsPlumb.ready(function() {
      relationfunction.registRelationShipManager();
 
     var order=EntityManager.createEntity({name:"orders",attr:[]});
-   var oPK= order.setAttr({lName:"주문번호",pName:"oNo",datetype:"INTEGER",datelength:"7",notNull:true,isPk:true,autoIncrement:true});
-   var oFk= order.setAttr({lName:"고객번호",pName:"cno",datetype:"INTEGER",datelength:"7",notNull:true,isFk:true});
-     custom.setAttr({lName:"주문일자",pName:"order_date",datetype:"DATE",datelength:"0",notNull:true});
-	 custom.setAttr({lName:"총금액",pName:"sumMoney",datetype:"VARCHAR",datelength:"28"});
-	 custom.setAttr({lName:"처리상태",pName:"state",datetype:"VARCHAR",datelength:"9",notNull:true});
+   var oPK= order.setAttr({lName:"주문번호",pName:"oNo",datetype:"int",datelength:"7",notNull:true,isPk:true,autoIncrement:true});
+   var oFk= order.setAttr({lName:"고객번호",pName:"cno",datetype:"int",datelength:"7",notNull:true,isFk:true});
+     custom.setAttr({lName:"주문일자",pName:"order_date",datetype:"date",datelength:"0",notNull:true});
+	 custom.setAttr({lName:"총금액",pName:"sumMoney",datetype:"varchar",datelength:"28"});
+	 custom.setAttr({lName:"처리상태",pName:"state",datetype:"varchar",datelength:"9",notNull:true});
 
 	 v(order).show({x:400,y:360});
 	 relation = {source:"custom",target:"orders",relationType:"OneToMany",relationLine:"nidentify",restrictType:"cascade", name:makeName([cPk],[oFk])};
@@ -137,16 +205,16 @@ jsPlumb.ready(function() {
 	 relationfunction.registRelationShipManager();
 	 
 	 var stuff= EntityManager.createEntity({name:"items",attr:[]});
-	 var sPK= stuff.setAttr({lName:"상품번호",pName:"sno",datetype:"INTEGER",datelength:"28",notNull:true,isPk:true,autoIncrement:true});
-	 stuff.setAttr({lName:"상품명",pName:"sname",datetype:"VARCHAR",datelength:"28",notNull:true});
-	 stuff.setAttr({lName:"재고량",pName:"state",datetype:"INTEGER",datelength:"9",notNull:true});
+	 var sPK= stuff.setAttr({lName:"상품번호",pName:"sno",datetype:"int",datelength:"28",notNull:true,isPk:true,autoIncrement:true});
+	 stuff.setAttr({lName:"상품명",pName:"sname",datetype:"varchar",datelength:"28",notNull:true});
+	 stuff.setAttr({lName:"재고량",pName:"state",datetype:"int",datelength:"9",notNull:true});
      v(stuff).show({x:800,y:120});
 	 
 	 var orderStuff=EntityManager.createEntity({name:"orderItem",attr:[]});
-	 orderStuff.setAttr({lName:"주문상세번호",pName:"oNoStuff",datetype:"INTEGER",datelength:"28",notNull:true,isPk:true,autoIncrement:true});
-	var sFK=orderStuff.setAttr({lName:"상품코드",pName:"sno",datetype:"INTEGER",datelength:"28",notNull:true,isPk:true,isFk:true});
-	 oFK= orderStuff.setAttr({lName:"주문번호",pName:"ono",datetype:"INTEGER",datelength:"28",notNull:true,isPk:true,isFk:true});
-	 orderStuff.setAttr({lName:"수량",pName:"count",datetype:"INTEGER",datelength:"28"});
+	 orderStuff.setAttr({lName:"주문상세번호",pName:"oNoStuff",datetype:"int",datelength:"28",notNull:true,isPk:true,autoIncrement:true});
+	var sFK=orderStuff.setAttr({lName:"상품코드",pName:"sno",datetype:"int",datelength:"28",notNull:true,isPk:true,isFk:true});
+	 oFK= orderStuff.setAttr({lName:"주문번호",pName:"ono",datetype:"int",datelength:"28",notNull:true,isPk:true,isFk:true});
+	 orderStuff.setAttr({lName:"수량",pName:"count",datetype:"int",datelength:"28"});
 		
 	 v(orderStuff).show({x:800,y:600});
 	 relation = {source:"orders",target:"orderItem",relationType:"OneToMany",relationLine:"identify",restrictType:"cascade", name:makeName([oPK],[oFK])};
@@ -168,26 +236,163 @@ jsPlumb.ready(function() {
 	
 
  	 var cf = new classifier();
+ 	 var attrNodes = attrNodeManager.getAllNode();
+ 	 var key= Object.keys(attrNodes);
+ 	 key.forEach(function(val){
+ 		cf.classify(attrNodes[val]);
+ 	 });
+ 	 	
+	cf.punish();
+	console.log("클래스 인포:",classManager.getClassInfoArr());
 	 
-	 cf.classify(attrNodeManager.get("18")); 
-	 cf.classify(attrNodeManager.get("19"));
-	 
-	 console.log("클래스 인포:",classManager.getClassInfoArr());
 	 var classInfo = classManager.getClassInfoArr();
-	 var $javaClassText = $("#javaClassText");
-	 var classInfoSource = $("#javaClasss");
-	 var javaTemplate = Handlebars.compile(classInfoSource);
-	 for(var i=0; i<classInfo.length; i++){
-	 	 var javaData = {};
 	 
-		 
+	 var emClassInfo=[];
+	 
+	 for(var i=0; i<classInfo.length; i++){
+			if(classInfo[i].Emclass!=undefined){
+				classInfo.push(classInfo[i].Emclass);
+			}
+	 }
+	  
+	 
+	 
+	 
+	 
+	 var $javaClassText = $("#javaClassText");//클래스들 붙일 곳
+	 
+	 var classInfoSource = $("#javaClasss").html();//클래스핸들소스
+	 var javaTemplate = Handlebars.compile(classInfoSource);//클래스핸들바스컴파일
+	 
+	 var classAnnotationSource = $("#classAnnotations").html();//클래스어노테이션소스
+	 var classAnnotationTemplate = Handlebars.compile(classAnnotationSource);// 클래스어노테이션컴파일
+	 
+	 
+	 for(var i=0; i<classInfo.length; i++){
+		 var className = classInfo[i].className;
+	 	 var javaData = {className:className}; 
 		 var javaHtml = javaTemplate(javaData);
 	 	 $javaClassText.append(javaHtml);
+	 	 for(var j=0; j<classInfo[i].annotations.length; j++){
+		 		var annotation = classInfo[i].annotations[j];
+		 		var classAnnotationData = {className:classInfo[i].className,annotation:annotation};
+		 		
+		 		var classAnnotationHtml = classAnnotationTemplate(classAnnotationData);
+		 		$("#annotations_"+classInfo[i].className).append(classAnnotationHtml);
+		 	 }	 
 	 }
-	 //Handlebars.registerHelper("classInfo",function(options){ 
-	 //});
 	 
 	 
+	 var columnDivsSource = $("#columnDivs").html();//컬럼디아브이소스
+	 var columnDivsTemplate = Handlebars.compile(columnDivsSource); //컬럼디아브이컴파일
+	 
+	 for(var i=0; i<classInfo.length; i++){
+		 for(var j=0; j<classInfo[i].properties.length; j++){
+			 var pName = classInfo[i].properties[j].pName;
+			 var pNameData = {className:classInfo[i].className,pName:pName};
+			 var pNameHtml = columnDivsTemplate(pNameData);
+			 $("#columns_"+classInfo[i].className).append(pNameHtml);
+		 }
+	 }
+
+	 
+	 Handlebars.registerHelper("annoCheck",function(anno,options){
+		 console.log("@Column");
+		 var anno = anno;
+		 if(anno=="Column"){
+			 return options.fn(this);
+		 } else{
+			 return options.inverse(this);
+		 }
+	 });
+	 
+	 Handlebars.registerHelper("annoCheck1",function(anno,options){
+		 console.log("@OneToMany");
+		 var anno = anno;
+		 if(anno=="OneToMany"){
+			 return options.fn(this);
+		 } else{
+			 return options.inverse(this);
+		 }
+	 });
+	 
+	 Handlebars.registerHelper("markCheck",function(mark,options){
+		
+		if(mark){
+			return options.fn(this);
+		}else{
+			return options.inverse(this);
+		}
+	 });
+	 
+	 Handlebars.registerHelper("annoCheck2",function(anno,options){
+		 console.log("@ManyToOne");
+		 var anno = anno;
+		 if(anno=="ManyToOne"){
+			 return options.fn(this);
+		 } else{
+			 return options.inverse(this);
+		 }
+	 });
+	 Handlebars.registerHelper("annoCheck3",function(anno,options){
+		 console.log("@ID");
+		 var anno = anno;
+		 if(anno=="ID"){
+			 return options.fn(this);
+		 } else{
+			 return options.inverse(this);
+		 }
+	 });	 
+	 
+	 
+	 var columnAnnoSource = $("#columnAnno").html();//컬럼어노소스
+	 var columnAnnoTemplate =Handlebars.compile(columnAnnoSource); // 컬럼어노컴파일 
+	 
+	 for(var i=0; i<classInfo.length; i++){
+		 for(var j=0; j<classInfo[i].properties.length; j++){
+			 for(var k=0; k<classInfo[i].properties[j].annotations.length; k++){
+				 var anno = classInfo[i].properties[j].annotations[k];
+				 //console.log("anno:",anno,"/i j k:",i,",",j,",",k,"/pname:",classInfo[i].properties[j].pName);
+				 var colName = classInfo[i].properties[j].colName;
+				 if(classInfo[i].properties[j].joinedColumn[0]!=undefined){
+				 	var annoData = {propAnno:anno,colName:colName,mark:classInfo[i].properties[j].mark,joinedTable:classInfo[i].tableName,joinedColName:classInfo[i].properties[j].joinedColumn[0].pName};
+				 }else{
+					 var annoData = {propAnno:anno,colName:colName,mark:classInfo[i].properties[j].mark,joinedTable:classInfo[i].tableName};
+				 }
+				 var annoHtml = columnAnnoTemplate(annoData);
+				 $("#columnDiv_"+classInfo[i].className+"_"+classInfo[i].properties[j].pName).append(annoHtml);
+			 }
+			 
+		 }
+	 }
+	 
+	 
+	 var columnValSource = $("#columnVal").html();//컬럼변수소스
+	 var coulumnValTemplate = Handlebars.compile(columnValSource);//컬럼변수템플릿
+	  
+	 for(var i=0; i<classInfo.length; i++){
+		 for(var j=0; j<classInfo[i].properties.length; j++){
+				 var pName = classInfo[i].properties[j].pName;
+				 var dataType = classInfo[i].properties[j].dataType;
+				
+				 for(var k=0; k<classInfo[i].properties[j].annotations.length; k++){
+					 if(classInfo[i].properties[j].annotations[k]=="OneToMany"){
+						 dataType = "List<"+classInfo[i].properties[j].dataType+">";
+						 pName = classInfo[i].properties[j].pName +" = new ArrayList()";
+					 }
+				 }
+				 
+				 
+				 var valData = {pName:pName,dataType:dataType};
+				 
+				 
+				 
+				 var valHtml = coulumnValTemplate(valData);
+				 $("#columnDiv_"+classInfo[i].className+"_"+classInfo[i].properties[j].pName).append(valHtml);
+		 }
+	 }
+	 
+	
 
      
 });

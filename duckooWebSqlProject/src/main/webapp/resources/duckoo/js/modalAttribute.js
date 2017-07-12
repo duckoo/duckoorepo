@@ -229,8 +229,12 @@ function confirms(keyType, pName){
 function confirmYes(){
 	
 	var id = target.attr("id");
+	if(attrNodeManager.hasPK(id))
+	 attrNodeManager.deleteTour(Number(id));
+	else{
+	 entity.deleteAttr(Number(id));
+	}
 	
-	attrNodeManager.deleteTour(Number(id));
 	console.log("delete Atfer:",attrNodeManager);
 	
 	entity.deleteAttr(Number(id));
@@ -270,7 +274,7 @@ function addAttrFinalBtn(e){
     	 console.log("cAttr: ",newAttr);
     	 //부실 공사.
     	 var id = (pkArr[0] && pkArr[0].id) || [];
-    	 attrNodeManager.addNodeTour(id,newAttr);
+    	// attrNodeManager.addNodeTour(id,newAttr);
     }
     entity.sortAttribute();
     v(entity).refresh();

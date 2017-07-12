@@ -13,28 +13,37 @@ var classifier = (function(){
 		}
 		
 		
-		superClasses.forEach(function(inNode){
-			if(tempNode==inNode){
-				console.log("what is tempNode?",tempNode);
-				console.log("what is inNode?",inNode);
+		for(var i in superClasses){
+			if(tempNode.id===superClasses[i].id){
+				/*console.log("what is tempNode?",tempNode);
+				console.log("what is inNode?",inNode);*/
 				return;
 			}
-			
-			superClasses.push(tempNode);
-		});
-			
+			else{
+				superClasses.push(tempNode);
+			}
+		};
+	}
 	
+	classifier.prototype.punish =function(){
 		console.log("superclass",superClasses);
-		
 		superClasses.forEach(function(spc){	
 			classInfoMaker.makeClassInfo(spc);
 		});
-		for(var i =0; i<tempNode.child.length;i++){
-			console.log("????????????????????");
-			classInfoMaker.makeClassInfo(tempNode.child[i]);
-		}
+		//child?
+		
+		superClasses.forEach(function(spc){
+			for(var i in spc.child){
+				classInfoMaker.makeClassInfo(spc.child[i]);
+			}
+		});
+		
+		
+		
 		
 	}
+	
+	
 	console.log("classInfo : ",classManager.getClassInfoArr());
 	return classifier;
 })();

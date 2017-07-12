@@ -35,9 +35,16 @@ function setEntity(entity){
 function setJObj(e){
 	entityArr={}; //
 	var key = Object.keys(e);
+	var maxId=-1;
+	
 	for(var i=0 ,len = key.length;i<len;i++){
-		createEntity(e[key[i]]);
+	  var newEN=createEntity(e[key[i]]);
+		var idCOunt = newEN.getMaxAttrID();
+		if(maxId<idCOunt)maxId=idCOunt;
+		
 	}
+	Attribute.g_countInit(maxId+1);
+	
 }
 return {
 	    createEntity:createEntity,

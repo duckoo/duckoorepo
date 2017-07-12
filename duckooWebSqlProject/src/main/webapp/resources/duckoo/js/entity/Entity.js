@@ -7,6 +7,7 @@ var entity ={
 				deleteAttr:deleteAttr,
 				setAttr:setAttr,
 				setAttrArray:function(arr){this.attr=arr;},
+				getMaxAttrID:getMaxAttrID,
 			    clone:clone
 			 };
 
@@ -47,6 +48,17 @@ function getAttr(id){
 		return ret;
 	}	
 
+ function getMaxAttrID(){
+	 var maxId=-1;
+	 
+	 this.attr.forEach(function(val){
+		 console.log(val.id);
+		 var id= Number(val.id);
+		 if(maxId<id)maxId=id;
+	 });
+	 return maxId;
+ }
+ 
  function sortAttribute(){
 		var deskPk=[];
         var deskFK=[];

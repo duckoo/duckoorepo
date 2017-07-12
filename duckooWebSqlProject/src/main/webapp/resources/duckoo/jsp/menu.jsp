@@ -26,7 +26,8 @@
             <div class="genBtnListWrap" style="float:right; width:200px; display:inline-block;">
                 <button id="genListBtn"class="button btn btn-success" type="button" style="vertical-align:middle; float:right;"><span>Generate</span></button>
                 <div class="genBtnListDiv">
-                    <button id="genTest" class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="left" title="JAVA VO코드를 생성합니다."><span>Generate-Code</span></button>
+                    <button id="genTest" class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="left" title="CREATE 쿼리를 생성합니다."><span>Generate-SQL</span></button>
+                    <button id="genJpaBtn" class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="left" title="JPA 코드를 생성합니다."><span>Generate-JPA Code</span></button>
                     <button id="sqlSaveBtn" class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="left" title="SAVE"><span>SAVE</span></button>
                     <button class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="bottom" title="DB에 테이블을 생성합니다."><span>Insert DB</span></button> 
 			    </div>
@@ -186,6 +187,34 @@ $("#sqlSaveBtn").on("click",function(e){
     e.preventDefault();
     SchemaManager.SetNewSchema("taehyunTest");
 	SaveAndLoad.saveToJson()
+});
+
+$("#genJpaBtn").on("click",function(e){
+	e.stopPropagation();
+    e.preventDefault();
+     var cf = new classifier();
+	 var attrNodes = attrNodeManager.getAllNode();
+	 var key= Object.keys(attrNodes);
+	 console.log("key:",key);
+	 var arr = [];
+	  key.forEach(function(val){
+		if(attrNodes[val].entity!=undefined){
+			
+			arr.push(attrNodes[val]);
+		}
+		
+	 }); 
+	  
+	  console.log("arr:",arr);
+	  
+	 arr.forEach(function(at){
+		 cf.classify(at);
+		 
+	 });
+	 
+	var jg = new jpaGen(cf);
+	jg.generate();	
+	$("#jpaModal").modal();
 });
 
 

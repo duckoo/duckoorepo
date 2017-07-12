@@ -4,6 +4,7 @@ var classInfo =(function(){
 	var annotations;
 	var properties;
 	var Emclass;
+	var tableName;
 	
 	function classInfo(){
 		this.annotations=[];
@@ -25,6 +26,9 @@ var classInfo =(function(){
 	}
 	classInfo.prototype.addProps = function(prop){
 		this.properties.push(prop);
+	}
+	classInfo.prototype.getClassName = function(){
+		return this.className;
 	}
 	return classInfo;
 })();

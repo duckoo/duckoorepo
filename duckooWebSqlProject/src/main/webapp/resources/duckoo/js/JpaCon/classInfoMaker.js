@@ -12,11 +12,12 @@ var classInfoMaker = (function(){
 		
 		
 		tempClassInfo.className = codeUtils.upperFirstLetter(targetNode.entity);
+		tempClassInfo.tableName = targetNode.entity;
 		var annotations = [];
 		annotations.push("entity");
 		
 		
-		//???????????
+		//상속용으로 만들어봄. 나중에 쓸데 있으면씀.
 		/*if(targetNode.reId.length>0){
 			annotations.push("Dtype");
 		}*/
@@ -26,8 +27,9 @@ var classInfoMaker = (function(){
 		
 		tempClassInfo.annotations = annotations;
 		
-		console.log("matched TempClassInfo",tempClassInfo);
+		
 		classManager.addClassInfo(tempClassInfo);
+		
 		return tempClassInfo;
 	}
 	
