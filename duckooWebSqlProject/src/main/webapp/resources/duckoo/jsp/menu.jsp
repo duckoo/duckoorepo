@@ -20,15 +20,14 @@
    
    <div id="pageTab">
 	 <ul class="nav nav-tabs">
-    		<div id="menuBar">
-			<h5 style="float:left; font-weight:bold;">&nbsp;&nbsp;저장되었습니다.&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-check" aria-hidden="true"></i></h5>			
+    		<div id="menuBar">			
 			<button style="float:right; margin-top:2px; vertical-align:middle;"><i class="fa fa-bars fa-2x" aria-hidden="true"></i></button>
             <div class="genBtnListWrap" style="float:right; width:200px; display:inline-block;">
                 <button id="genListBtn"class="button btn btn-success" type="button" style="vertical-align:middle; float:right;"><span>Generate</span></button>
                 <div class="genBtnListDiv">
                     <button id="genTest" class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="left" title="CREATE 쿼리를 생성합니다."><span>Generate-SQL</span></button>
                     <button id="genJpaBtn" class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="left" title="JPA 코드를 생성합니다."><span>Generate-JPA Code</span></button>
-                    <button id="sqlSaveBtn" class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="left" title="SAVE"><span>SAVE</span></button>
+                    <button id="erdSaveBtn" class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="left" title="SAVE"><span>SAVE</span></button>
                     <button class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="bottom" title="DB에 테이블을 생성합니다."><span>Insert DB</span></button> 
 			    </div>
 			</div>
@@ -63,6 +62,9 @@
 	
 <script id="mainNaviBar" type="text/x-handlebars-template">
 	<div id="mainNaviBar">
+		<button id="makeSchemaBtn" class="btn btn-success" style="margin-top:5px; margin-left:5px;" type="button" data-toggle="tooltip" data-placement="bottom" title="스키마생성">
+	 		<i class="fa fa-database" aria-hidden="true"></i>
+	 	</button>
 		<button id="makeTableBtn" class="btn btn-success" style="margin-top:5px; margin-left:5px;" type="button" data-toggle="tooltip" data-placement="bottom" title="테이블생성">
 	 		<i class="fa fa-table" aria-hidden="true"></i>
 	 	</button>
@@ -181,12 +183,12 @@ $document.on("click",".entityList",function(e){
 	  var cEntity=EntityManager.getEntityByName(name).clone();
 	  modalAttribute.setModal(cEntity,modal);
 	  $("#myModal").modal();
-})
-$("#sqlSaveBtn").on("click",function(e){
+});
+$("#erdSaveBtn").on("click",function(e){
 	e.stopPropagation();
     e.preventDefault();
     SchemaManager.SetNewSchema("taehyunTest");
-	SaveAndLoad.saveToJson()
+	SaveAndLoad.saveToJson();
 });
 
 $("#genJpaBtn").on("click",function(e){
@@ -208,7 +210,7 @@ $("#genJpaBtn").on("click",function(e){
 	  console.log("arr:",arr);
 	  
 	 arr.forEach(function(at){
-		 cf.classify(at);
+		 cf.classClassify(at);
 		 
 	 });
 	 

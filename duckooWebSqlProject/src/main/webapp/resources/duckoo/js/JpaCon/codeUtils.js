@@ -44,10 +44,23 @@ var codeUtils = (function(){
 			
 		return flag;
 	}
+	
+	function effectiveEntity(entities, entity){
+        var flag = true;
+        
+        entities.forEach(function(en){
+            if(entity.name==en.name){flag = false;}
+            
+            
+        })
+        return flag;
+    }
+	
 	return{upperFirstLetter:upperFirstLetter,
 		  reverseRelationType:reverseRelationType,
 		  checkValue:checkValue,
-		  hasChild:hasChild
+		  hasChild:hasChild,
+		  effectiveEntity:effectiveEntity
 	}
 	
 })();

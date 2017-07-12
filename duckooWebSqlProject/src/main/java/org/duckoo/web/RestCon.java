@@ -83,7 +83,6 @@ public class RestCon {
 				userid=cookies[i].getValue();
 			};
 		}
-		//String absoultePath="C:\\zzz\\upload\\2017\\27\\07\\";
 		List<String> src=new LinkedList<>();
 		List<String> ret= new LinkedList<>();
 		//데이터베이스에서 경로 가져와야한다.

@@ -1,30 +1,40 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="/resources/duckoo/css/modalFull.css?1">
-<div class="modal fade" id="jpaModal" role="dialog" style="width:100%; height:100%">
-    <div class="modal-dialog modal-fullsize">
-      <div class="modal-content modal-fullsize">
+<%@ page import="java.util.Random" %>
+<% Random random = new Random(); 
+    int token= random.nextInt();
+%> 	
+
+<div class="modal fade" id="jpaModal" role="dialog" style="width:100%; height:100%;">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-jpaTitle">JPA CODE</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
         </div>
-        <div class="modal-jpabody" style="height:800px;">
-        	
-			<div id="javaClassText" style="width:100%; float:left; height:800px; overflow:auto;">
+        <div class="modal-body">
+        	<ul id="jpaCodeTab" class="nav nav-tabs">  				 
+
+    	
+  			</ul>
+          	
+          	<div id="javaClassText" class="tab-content" style="width:100%; height:inherit; float:left; overflow:auto;">
+			
+			
+			
 			
 			</div>
-			
         </div>
-        <div class="modal-footer" style="margin-top:20px;">
+        <div class="modal-footer">
           <button id="javaCodeDivCloseBtn" type="button" class="btn btn-danger">Close</button>
         </div>
       </div>
     </div>
-</div>
-  
+  </div>
+ 
   
 <script id="javaClasss" type="text/x-handlebars-template">
-<br>--------------------------------{{className}} JPA Code-----------------------------</br>
-<div id="{{className.className}}" style="width:100%; font-weight: bold;">
+<div class="tab-pane fade" id="{{className}}" style="width:100%; font-weight: bold;">
     <div style="width:auto; float:left; color:#880055;">import</div><div style="margin-left:3px; width:auto; float:left; color:#040000;"> java.util.*;</div>
     <br>
     <div style="width:auto; float:left; color:#880055;">import</div><div style="margin-left:3px; width:auto; float:left; color:#040000;"> javax.persistence.*;</div>
@@ -86,6 +96,10 @@
 		<br>
 		<div style="color:#63666B; float:left; width:100%;">@{{propAnno}}</div>
 	{{/annoCheck3}}
+	{{#annoCheck4 propAnno}}
+		<br>
+		<div style="color:#63666B; float:left; width:100%;">@{{propAnno}}</div>
+	{{/annoCheck4}}
 	
 </script>
 
@@ -96,12 +110,18 @@
 	<div style="margin-left:5px; float:left; color:#040000;">{{dataType}} </div><div style="margin-left:5px; color:#2C03F5; float:left;">{{pName}}</div><div style="float:left; color:#040000;">;</div>
 </script>
 
+<script id="jpaCodeTitle" type="text/x-handlebars-template">
+	<li><a data-toggle="tab" href="{{className}}">{{className}}</a></li>
+</script>
+
+
 <script>
 
 $("#javaCodeDivCloseBtn").on("click",function(e){
 	e.stopPropagation();
     e.preventDefault();
     $("#javaClassText").empty();
+    $("#jpaCodeTab").empty();
     console.log("empty");
     $("#jpaModal").modal("hide");
 });
@@ -110,5 +130,5 @@ $("#javaCodeDivCloseBtn").on("click",function(e){
 </script>
 
 
-<script type="text/javascript" src="/resources/duckoo/js/jpa/jpaGen.js?aaasdf"></script>
+<script type="text/javascript" src="/resources/duckoo/js/jpa/jpaGen.js?<%=token %>"></script>
 

@@ -6,10 +6,11 @@ var jpaGen = (function(){
 		this.cf = cfd;
 	}
 	jpaGen.prototype.generate = function(){
-	this.cf.punish();
+	this.cf.active();
 	console.log("클래스 인포:",classManager.getClassInfoArr());
 	 var classInfo = classManager.getClassInfoArr();
 	 var $javaClassText = $("#javaClassText");//클래스들 붙일 곳
+	 var $jpaCodeTab =$("#jpaCodeTab");
 	 
 	 var classInfoSource = $("#javaClasss").html();//클래스핸들소스
 	 var javaTemplate = Handlebars.compile(classInfoSource);//클래스핸들바스컴파일
@@ -17,12 +18,19 @@ var jpaGen = (function(){
 	 var classAnnotationSource = $("#classAnnotations").html();//클래스어노테이션소스
 	 var classAnnotationTemplate = Handlebars.compile(classAnnotationSource);// 클래스어노테이션컴파일
 	 
+	 var jpaCodeTitleSource = $("#jpaCodeTitle").html();
+	 console.log("jpaCodeTitleSource:",jpaCodeTitleSource);
+	 var jpaCodeTitleTemplate = Handlebars.compile(jpaCodeTitleSource);
 	 
 	 for(var i=0; i<classInfo.length; i++){
 		 var className = classInfo[i].className;
+		 var shopClassName = "#"+className;
+		 var shopData = {className:shopClassName}
 	 	 var javaData = {className:className}; 
 		 var javaHtml = javaTemplate(javaData);
+		 var jpaTitleHtml = jpaCodeTitleTemplate(shopData);
 	 	 $javaClassText.append(javaHtml);
+	 	 $jpaCodeTab.append(jpaTitleHtml);
 	 	 for(var j=0; j<classInfo[i].annotations.length; j++){
 		 		var annotation = classInfo[i].annotations[j];
 		 		var classAnnotationData = {className:classInfo[i].className,annotation:annotation};
@@ -47,7 +55,6 @@ var jpaGen = (function(){
 
 	 
 	 Handlebars.registerHelper("annoCheck",function(anno,options){
-		 console.log("@Column");
 		 var anno = anno;
 		 if(anno=="Column"){
 			 return options.fn(this);
@@ -57,7 +64,6 @@ var jpaGen = (function(){
 	 });
 	 
 	 Handlebars.registerHelper("annoCheck1",function(anno,options){
-		 console.log("@OneToMany");
 		 var anno = anno;
 		 if(anno=="OneToMany"){
 			 return options.fn(this);
@@ -67,7 +73,6 @@ var jpaGen = (function(){
 	 });
 	 
 	 Handlebars.registerHelper("markCheck",function(mark,options){
-		
 		if(mark){
 			return options.fn(this);
 		}else{
@@ -76,7 +81,6 @@ var jpaGen = (function(){
 	 });
 	 
 	 Handlebars.registerHelper("annoCheck2",function(anno,options){
-		 console.log("@ManyToOne");
 		 var anno = anno;
 		 if(anno=="ManyToOne"){
 			 return options.fn(this);
@@ -85,14 +89,21 @@ var jpaGen = (function(){
 		 }
 	 });
 	 Handlebars.registerHelper("annoCheck3",function(anno,options){
-		 console.log("@ID");
 		 var anno = anno;
-		 if(anno=="ID"){
+		 if(anno=="Id"){
 			 return options.fn(this);
 		 } else{
 			 return options.inverse(this);
 		 }
-	 });	 
+	 });
+	 Handlebars.registerHelper("annoCheck4",function(anno,options){
+		 var anno = anno;
+		 if(anno=="GenerationValue(strategy=GenerationType.AUTO)"){
+			 return options.fn(this);
+		 } else{
+			 return options.inverse(this);
+		 }
+	 });
 	 
 	 
 	 var columnAnnoSource = $("#columnAnno").html();//컬럼어노소스
@@ -128,7 +139,7 @@ var jpaGen = (function(){
 				 for(var k=0; k<classInfo[i].properties[j].annotations.length; k++){
 					 if(classInfo[i].properties[j].annotations[k]=="OneToMany"){
 						 dataType = "List<"+classInfo[i].properties[j].dataType+">";
-						 pName = classInfo[i].properties[j].pName +" = new ArrayList()";
+						 pName = classInfo[i].properties[j].pName +" = new ArrayList<>()";
 					 }
 				 }
 				 

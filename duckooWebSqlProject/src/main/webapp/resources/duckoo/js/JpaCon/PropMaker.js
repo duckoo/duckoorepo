@@ -9,12 +9,26 @@ var propMaker = (function(){
 		var noProps = MyArrayUtil.intersection(targetEntity.search({isPk:false}),targetEntity.search({isFk:false}));
 		var fkProps = targetEntity.search({isFk:true});
 		
+        var ownPk = MyArrayUtil.intersection(targetEntity.search({isPk:true}),targetEntity.search({isFk:false}));
+        console.log("onwPK:",ownPk);
+        if(ownPk.length==0){
+            var newPk = new property();
+            newPk.pName = (targetEntity.name).toLowerCase() + "_id";
+            newPk.addAnnotations("Id");
+            newPk.addAnnotations("GenerationValue(strategy=GenerationType.AUTO)");
+            newPk.addAnnotations("Column");
+            newPk.colName = newPk.pName.toUpperCase();
+            newPk.dataType = "Integer";
+            props.push(newPk);
+        }
+		
+		
 		//own column
 		ownProps.forEach(function(prop){
 			var tempProp= new property();
 			tempProp.addAnnotations("Column");
 			if(prop.isPk){
-				tempProp.addAnnotations("ID");
+				tempProp.addAnnotations("Id");
 				
 				if(attrNodeManager.get(prop.id).reId!=undefined){
 					tempProp.isReferenced = true;
@@ -144,8 +158,19 @@ var propMaker = (function(){
 		var fkProps = targetEntity.search({isFk:true});
 		var pkrefName =tempClassInfo.Emclass.className;
 		var pkProps = targetEntity.search({isPk:true});
-		var ownPk = MyArrayUtil.intersection(targetEntity.search({isPk:true}),targetEntity.search({isFk:true}))
-		
+	
+        var ownPk = MyArrayUtil.intersection(targetEntity.search({isPk:true}),targetEntity.search({isFk:false}));
+		console.log("onwPK:",ownPk);
+        if(ownPk.length==0){
+            var newPk = new property();
+            newPk.pName = (targetEntity.name).toLowerCase() + "_id";
+            newPk.addAnnotations("Id");
+            newPk.addAnnotations("GenerationValue(strategy=GenerationType.AUTO)");
+            newPk.addAnnotations("Column");
+            newPk.colName = newPk.pName.toUpperCase();
+            newPk.dataType = "Integer";
+            props.push(newPk);
+        }
 		
 		ownPk.forEach(function(prop){
 			var pProp = new property();
