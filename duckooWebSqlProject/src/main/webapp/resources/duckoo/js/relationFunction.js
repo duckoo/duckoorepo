@@ -25,7 +25,7 @@ var relationfunction=(function(){
 		    	//console.log("second :",elementArr);
 		    	$("#relationModal").modal({backdrop:'static'});
 		    	tempRelation= {source:fid,target:id};
-		    
+		    	
 		    	//console.log("tempRelation : ",tempRelation);
 
 		    	return;

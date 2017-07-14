@@ -1,11 +1,12 @@
 var classifier = (function(){
 	
 	var superClasses=[];
-	var entities = [];
+	
 	function classifier() {
-		
+		this.entities=[];
 	}
 	classifier.prototype.classify = function(node){
+		
 		var tempNode = scanner.superClassScan(node);
 			
 		if(superClasses.length==0){
@@ -42,15 +43,17 @@ var classifier = (function(){
 		
 		
 	}
+	
+	
 	classifier.prototype.classClassify = function(node){
         
         var tarEn = EntityManager.getEntityByName(node.entity);
         
-        if(entities.length==0){
-            entities.push(tarEn);
+        if(this.entities.length==0){
+            this.entities.push(tarEn);
         }
-        else if(codeUtils.effectiveEntity(entities,tarEn)){
-            entities.push(tarEn);
+        else if(codeUtils.effectiveEntity(this.entities,tarEn)){
+            this.entities.push(tarEn);
         }
         return;
     }
@@ -58,15 +61,20 @@ var classifier = (function(){
 
 
     classifier.prototype.active = function(){
-        console.log("새로운 엔티티 배열.",entities);
-        entities.forEach(function(En){    
+        console.log("새로운 엔티티 배열.",this.entities);
+        this.entities.forEach(function(En){    
             classInfoMaker.mkClassInfo(En);
         });
         //child?
 
         //child 1단계. 2단계까지 갈라면?
+        this.initClasses();
     }
-	
+	classifier.prototype.initClasses = function(){
+		this.entities=[];
+		this.superClasses=[];
+		console.log("초기호ㅏ 완료 :",this.entities);
+	}
 	
 	console.log("classInfo : ",classManager.getClassInfoArr());
 	return classifier;

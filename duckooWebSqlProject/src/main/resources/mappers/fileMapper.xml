@@ -13,6 +13,6 @@ select * from tbl_fsrc where userid=#{userid}
 select * from tbl_fsrc where fno>0 and fno=#{fno}
 </select>
 <update id="update" parameterType="FileVO">
-<![CDATA[update tbl_fsrc set fsrc=#{fsrc} where fno=#{fno}]]>
+update tbl_fsrc set fsrc=#{fsrc} where fno=#{fno}
 </update>
 </mapper>

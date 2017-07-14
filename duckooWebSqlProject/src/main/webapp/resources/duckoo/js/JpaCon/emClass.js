@@ -24,7 +24,8 @@ var emClass = (function(){
 			pkProp.addAnnotations("Column");
 			pkProp.addAnnotations("id");
 			pkProp.pName = pkcol.pName;
-			pkProp.ColumnName = (pkcol.pName).toUpperCase();
+			pkProp.colName = (pkcol.pName).toUpperCase();
+			pkProp.dataType = pkcol.dateType;
 			props.push(pkProp);
 		});
 		return props;

@@ -63,14 +63,12 @@ public class RestCon {
 				fvo.setFsrc(filePathAndName.get(0));
 				fvo.setUserid(userid);
 				List<FileVO> fvoList = service.fileList(userid);
+				System.out.println("fvoList"+fvoList);
 				for(int i=0; i<fvoList.size(); i++){
 					if(fvoList.get(i).getFschema().equals(key)){
 						fvoList.get(i).setFsrc(filePathAndName.get(0));
 						service.update(fvoList.get(i));
-						return true;
-					} else{
-						continue;
-					}
+					} 
 				}
 				
 				service.registerFile(fvo);

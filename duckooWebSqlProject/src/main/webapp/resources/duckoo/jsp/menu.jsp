@@ -215,6 +215,7 @@ $("#genJpaBtn").on("click",function(e){
 	 console.log("key:",key);
 	 var arr = [];
 	  key.forEach(function(val){
+		  console.log("attrNodesVal:",attrNodes[val]);
 		if(attrNodes[val].entity!=undefined){
 			
 			arr.push(attrNodes[val]);

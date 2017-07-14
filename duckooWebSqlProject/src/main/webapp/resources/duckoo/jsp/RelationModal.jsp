@@ -215,6 +215,7 @@ $("#relSave").on("click",function(e){
         if($(this).is(':checked')){
        	
        	relationfunction.getTempRelation().relationType = ($(this).val());
+      
         }
         checkBoxInitiate("option");
      });   

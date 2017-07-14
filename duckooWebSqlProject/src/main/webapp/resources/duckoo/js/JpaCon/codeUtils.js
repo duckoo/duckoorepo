@@ -59,7 +59,7 @@ var codeUtils = (function(){
 		var flag = true;
 		
 		propsArr.forEach(function(pr){
-			if(pr.pName==prop.pName){flag=false;}
+			if(pr.dataType==prop.dataType){flag=false;}
 		})
 		
 			

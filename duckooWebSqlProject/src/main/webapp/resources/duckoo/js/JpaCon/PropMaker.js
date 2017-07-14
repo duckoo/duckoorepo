@@ -97,8 +97,8 @@ var propMaker = (function(){
 				var node = attrNodeManager.get(pk.id);
 				if(node.reId!=undefined){
 					console.log("피케이가 뭐냐 :",node);
-					var refProp = new property();
 					for(var j in node.reId){
+						var refProp = new property();
 						var relation = relationManager.get(node.reId[j]);
 						refProp.addAnnotations(relation.relationType);
 						refProp.dataType = codeUtils.upperFirstLetter(relation.target);
@@ -112,9 +112,9 @@ var propMaker = (function(){
 							refProp.addJoinColumn(EntityManager.getEntityByName(relation.target).search({id:Number(joincolumns[k])})[0]);
 							console.log("조인컬럼의 k번째 노오오오드",attrNodeManager.get(joincolumns[k]));
 						}
+						if(codeUtils.effectiveProperty(props,refProp)){props.push(refProp);}
 						
 					}
-					if(codeUtils.effectiveProperty(props,refProp)){props.push(refProp);}
 				}
 			});
 			
@@ -225,8 +225,8 @@ var propMaker = (function(){
 				var node = attrNodeManager.get(pk.id);
 				if(node.reId!=undefined){
 					console.log("피케이가 뭐냐 :",node);
-					var refProp = new property();
 					for(var j in node.reId){
+						var refProp = new property();
 						var relation = relationManager.get(node.reId[j]);
 						refProp.addAnnotations(relation.relationType);
 						refProp.dataType = codeUtils.upperFirstLetter(relation.target);
@@ -243,9 +243,9 @@ var propMaker = (function(){
 							console.log("조인컬럼의 k번째 노오오오드",attrNodeManager.get(joincolumns[k]));
 						}
 						
+						if(codeUtils.effectiveProperty(props,refProp)){props.push(refProp);}
 					}
 					
-					if(codeUtils.effectiveProperty(props,refProp)){props.push(refProp);}
 					
 				}
 			});

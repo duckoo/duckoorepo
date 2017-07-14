@@ -19,8 +19,8 @@ public class FileDAOImpl implements FileDAO {
 	SqlSessionTemplate sst;
 	
 	@Override
-	public void create(FileVO vo) {
-		sst.insert(namespace+".create",vo);
+	public void create(FileVO fvo) {
+		sst.insert(namespace+".create",fvo);
 
 	}
 
@@ -35,8 +35,8 @@ public class FileDAOImpl implements FileDAO {
 	}
 
 	@Override
-	public void update(FileVO vo) {
-		sst.update(namespace+".update",vo);
+	public void update(FileVO fvo) {
+		sst.update(namespace+".update",fvo);
 		
 	}
 

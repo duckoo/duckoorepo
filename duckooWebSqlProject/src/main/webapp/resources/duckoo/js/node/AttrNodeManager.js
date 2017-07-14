@@ -192,8 +192,10 @@ var attrNodeManager=(function(){
 					if(pk.length && nearRelation[i].relationLine==="identify"){
 						attr.id=id;
 					   addPk(newReId,attr);
+					}else{
+						return;
 					}
-					return;
+					
 				}
 		 })(relationIdArr,attr);
 	}	
@@ -311,6 +313,7 @@ var attrNodeManager=(function(){
 		    this.updateTourChild(Number(startId),attr);
 	}
 	AttrNodeManager.prototype.deleteAll=function(){
+		this.arr=undefined;
 		this.arr={};
 	}
 	
