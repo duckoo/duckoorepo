@@ -1,7 +1,7 @@
 var classInfoMaker = (function(){
 	
 	var targetNode;
-	
+	//이미 뒤진 코드입니다.
 	var makeClassInfo = function(targetNode){
 	
 		var targetEntity = EntityManager.getEntityByName(targetNode.entity);
@@ -15,7 +15,8 @@ var classInfoMaker = (function(){
 		tempClassInfo.tableName = targetNode.entity;
 		var annotations = [];
 		annotations.push("Entity");
-		
+		annotations.push("Getter");
+        annotations.push("Setter");
 		
 		//상속용으로 만들어봄. 나중에 쓸데 있으면씀.
 		/*if(targetNode.reId.length>0){
@@ -23,6 +24,7 @@ var classInfoMaker = (function(){
 		}*/
 		
 		//property make(superClass);
+		
 		tempClassInfo.setProp(propMaker.makeProp(targetEntity,tempClassInfo));
 		
 		tempClassInfo.annotations = annotations;
@@ -33,6 +35,10 @@ var classInfoMaker = (function(){
 		return tempClassInfo;
 	}
 	
+	
+	
+	
+	//이걸 사용할 예정 오류나면 이전거로 돌려야됨.
 	var mkClassInfo = function(targetEntity){
         var tempClassInfo = new classInfo();
         
@@ -43,7 +49,8 @@ var classInfoMaker = (function(){
         tempClassInfo.tableName = targetEntity.name;
         var annotations = [];
         annotations.push("Entity");
-        
+        annotations.push("Getter");
+        annotations.push("Setter");
         
         //상속용으로 만들어봄. 나중에 쓸데 있으면씀.
         /*if(targetNode.reId.length>0){

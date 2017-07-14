@@ -34,4 +34,10 @@ public class FileDAOImpl implements FileDAO {
 		return sst.selectOne(namespace+".read",fno);
 	}
 
+	@Override
+	public void update(FileVO vo) {
+		sst.update(namespace+".update",vo);
+		
+	}
+
 }

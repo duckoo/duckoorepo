@@ -1,12 +1,12 @@
 var codeUtils = (function(){
-		
+//클래스이름 만들때 씀.
 	var upperFirstLetter = function(entityName){
 		var first = entityName[0].toUpperCase();
 		var second = entityName.substring(1,entityName.length);
 		
 		return first+second;
 	}
-
+//relation정보 반전할 때 씀
 	var reverseRelationType = function(relationType){
 		var reverseArr = relationType.split("To");
 		
@@ -25,26 +25,26 @@ var codeUtils = (function(){
 		});
 		return flag;
 	}
+//자식이 있는가 검사 이것도 안쓸거같음.
 	function hasChild(targetEntity,pkProps){
 		var flag = false;
-		console.log("타겟 엔티티 네임.:",targetEntity.name);
-		console.log("피케이배열 없뉘:",pkProps);
+		
 		for(var i=0;i<pkProps.length;i++){
 			var id = attrNodeManager.get(targetEntity.search({id:Number(pkProps[i].id)})[0].id);
-			console.log("그럼 아이디가 없냐 ",targetEntity.search({id:pkProps[i].id})[0]);
+		
 			for(var j =0;j<id.reId.length;j++){
 				var tarRel = relationManager.get(id.reId[j]);
-				console.log("타렐 소스:",tarRel.source);
+
 				if(tarRel.source==targetEntity.name){
 					flag = true;
-					console.log("true됨 시발아");
+					
 				}
 			}
 		}
 			
 		return flag;
 	}
-	
+//classifier에서 엔티티가 중복되는가를 검사.
 	function effectiveEntity(entities, entity){
         var flag = true;
         
@@ -55,12 +55,34 @@ var codeUtils = (function(){
         })
         return flag;
     }
+	function effectiveProperty(propsArr,prop){
+		var flag = true;
+		
+		propsArr.forEach(function(pr){
+			if(pr.pName==prop.pName){flag=false;}
+		})
+		
+			
+		return flag;
+		
+	}
+	function effedctiveValue(arr, value, opt){
+		var flag = false;
+		if(opt!=undefined){
+			var optVl = opt;
+			Arr.forEach(function(vl){
+				if(vl[optVl]==value[optVl]){flag = true;}
+			})
+		}
+		return flag;
+	}
 	
 	return{upperFirstLetter:upperFirstLetter,
 		  reverseRelationType:reverseRelationType,
 		  checkValue:checkValue,
 		  hasChild:hasChild,
-		  effectiveEntity:effectiveEntity
+		  effectiveEntity:effectiveEntity,
+		  effectiveProperty:effectiveProperty
 	}
 	
 })();

@@ -141,11 +141,11 @@ jsPlumb.ready(function() {
 		return str1+"_"+str2;
 	 }
 	
-	var customGrade=EntityManager.createEntity({name:"고객등급",attr:[]});
+	var customGrade=EntityManager.createEntity({name:"customgrade",attr:[]});
 	var pk1=customGrade.setAttr({lName:"등급코드",pName:"cgNo",datetype:"INTEGER",datelength:"7",notNull:true,isPk:true,autoIncrement:true})
 	 customGrade.setAttr({lName:"코드명",pName:"cgName",datetype:"VARCHAR",datelength:"32",notNull:true})
 	 
-	var custom= EntityManager.createEntity({name:"고객",attr:[]});
+	var custom= EntityManager.createEntity({name:"custom",attr:[]});
 	var cPk= custom.setAttr({lName:"고객번호",pName:"cno",datetype:"INTEGER",datelength:"7",notNull:true,isPk:true,autoIncrement:true})
 	var fk1=custom.setAttr({lName:"고객등급코드",pName:"cgNo",datetype:"INTEGER",datelength:"7",notNull:true,isFk:true})
 	 custom.setAttr({lName:"성명",pName:"name",datetype:"VARCHAR",datelength:"32",notNull:true})

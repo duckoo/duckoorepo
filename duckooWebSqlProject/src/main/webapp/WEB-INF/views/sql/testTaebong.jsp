@@ -82,9 +82,14 @@
 
 <jsp:include page="/resources/duckoo/jsp/jpaModal.jsp">
 <jsp:param name="token" value="<%=token%>" />
+</jsp:include>
+
+<jsp:include page="/resources/duckoo/jsp/makeSchemaModal.jsp">
+<jsp:param name="token" value="<%=token%>" />
 </jsp:include>  
 
 <script type="text/javascript" src="/resources/duckoo/js/EntityControll.js?<%=token%>"></script>
+<script type="text/javascript" src="/resources/duckoo/newSchema/newschema.js?<%=token%>"></script>
 
 <script>
 $(window).on("load",function() {
@@ -99,49 +104,6 @@ $(window).on("load",function() {
 
 });	
 
-//erdOnLoad start
-$("#newERDBtn").on("click",function(e){
-	e.stopPropagation();
-	e.preventDefault();
-	
-});
-//erdOnLoad end
-$("#prevERDBtn").on("click",function(e){
-	e.stopPropagation();
-	e.preventDefault();
-	 $.ajax({
-		  url : '/rest/getErdPageJSON'
-       , method : "POST"
-		, processData : true 
-		,  contentType:"application/x-www-form-urlencoded; charset=UTF-8"
-		, datatype: 'json'  
-		, success : function(data) {
-			console.log("렝쓰:",data.length);
-		 if(data.length==0){
-			 console.log("파일이없다");
-		 } else{
-		  for(var i=0,len=data.length;i<len;i++){
-			 var sub= data[i].substring(1);
-			 //이렇게하니까 된다.. 왜그런지는 모름...
-			var schema=JSON.parse(sub);
-			var jObj= SchemaManager.set(schema);
-		  }
-		 }// SaveAndLoad.saveToJson();
-		}
-		
-	    , error : function(xhr, stat, err) {
-	    	alert("error");
-	    	console.log(err);
-	    }
-	});
-
-	
-	
-	
-	
-	
-	
-});
 
 jsPlumb.ready(function() {
 	 setInterval(function(){
@@ -170,83 +132,7 @@ jsPlumb.ready(function() {
 	    	console.log(err);
 	    }
 	});
-	  
 	
-	  
-	////////////////////////
-	//이름만드는거 존나 귀찮아서..만든 임시함수임.
-		 function makeName(attr1,attr2){
-	       var str1=""+attr1[0].id;
-	       var str2=""+attr2[0].id;
-	       for(var i=1,len=attr1.length;i<len;i++){
-	    	   str1+="/"+attr1[i].id;
-	    	   str2+="/"+attr2[i].id;
-	       }
-			return str1+"_"+str2;
-		 }
-		
-		var customGrade=EntityManager.createEntity({name:"customGrade",attr:[]});
-		var pk1=customGrade.setAttr({lName:"등급코드",pName:"cgNo",datetype:"int",datelength:"7",notNull:true,isPk:true,autoIncrement:true})
-		 customGrade.setAttr({lName:"코드명",pName:"cgName",datetype:"varchar",datelength:"32",notNull:true})
-		 
-		var custom= EntityManager.createEntity({name:"custom",attr:[]});
-		var cPk= custom.setAttr({lName:"고객번호",pName:"cno",datetype:"int",datelength:"7",notNull:true,isPk:true,autoIncrement:true})
-		var fk1=custom.setAttr({lName:"고객등급코드",pName:"cgNo",datetype:"int",datelength:"7",notNull:true,isFk:true})
-		 custom.setAttr({lName:"성명",pName:"name",datetype:"varchar",datelength:"32",notNull:true})
-		 custom.setAttr({lName:"주소",pName:"adress",datetype:"varchar",datelength:"32"});
-		 custom.setAttr({lName:"전화번호",pName:"phoneNumber",datetype:"varchar",datelength:"32"});
-		 custom.setAttr({lName:"성별",pName:"gender",datetype:"varchar",datelength:"9"});
-
-		 v(customGrade).show({x:20,y:120});
-	     v(custom).show({x:20,y:600});
-		  var relation = {source:"customGrade",target:"custom",relationType:"OneToMany",relationLine:"nidentify",restrictType:"cascade", name:makeName([pk1],[fk1])};
-	     relationfunction.setTempRelation(relation); 
-	     relationfunction.registRelationShipManager();
-
-	    var order=EntityManager.createEntity({name:"orders",attr:[]});
-	   var oPK= order.setAttr({lName:"주문번호",pName:"oNo",datetype:"int",datelength:"7",notNull:true,isPk:true,autoIncrement:true});
-	   var oFk= order.setAttr({lName:"고객번호",pName:"cno",datetype:"int",datelength:"7",notNull:true,isFk:true});
-	     custom.setAttr({lName:"주문일자",pName:"order_date",datetype:"date",datelength:"0",notNull:true});
-		 custom.setAttr({lName:"총금액",pName:"sumMoney",datetype:"varchar",datelength:"28"});
-		 custom.setAttr({lName:"처리상태",pName:"state",datetype:"varchar",datelength:"9",notNull:true});
-
-		 v(order).show({x:400,y:360});
-		 relation = {source:"custom",target:"orders",relationType:"OneToMany",relationLine:"nidentify",restrictType:"cascade", name:makeName([cPk],[oFk])};
-		 relationfunction.setTempRelation(relation); 
-		 relationfunction.registRelationShipManager();
-		 
-		 var stuff= EntityManager.createEntity({name:"items",attr:[]});
-		 var sPK= stuff.setAttr({lName:"상품번호",pName:"sno",datetype:"int",datelength:"28",notNull:true,isPk:true,autoIncrement:true});
-		 stuff.setAttr({lName:"상품명",pName:"sname",datetype:"varchar",datelength:"28",notNull:true});
-		 stuff.setAttr({lName:"재고량",pName:"state",datetype:"int",datelength:"9",notNull:true});
-	     v(stuff).show({x:800,y:120});
-		 
-		 var orderStuff=EntityManager.createEntity({name:"orderItem",attr:[]});
-		 //orderStuff.setAttr({lName:"주문상세번호",pName:"oNoStuff",datetype:"int",datelength:"28",notNull:true,isPk:true,autoIncrement:true});
-		var sFK=orderStuff.setAttr({lName:"상품코드",pName:"sno",datetype:"int",datelength:"28",notNull:true,isPk:true,isFk:true});
-		 oFK= orderStuff.setAttr({lName:"주문번호",pName:"ono",datetype:"int",datelength:"28",notNull:true,isPk:true,isFk:true});
-		 orderStuff.setAttr({lName:"수량",pName:"count",datetype:"int",datelength:"28"});
-			
-		 v(orderStuff).show({x:800,y:600});
-		 relation = {source:"orders",target:"orderItem",relationType:"OneToMany",relationLine:"identify",restrictType:"cascade", name:makeName([oPK],[oFK])};
-		 relationfunction.setTempRelation(relation); 
-		 relationfunction.registRelationShipManager();
-
-		 relation = {source:"items",target:"orderItem",relationType:"OneToMany",relationLine:"identify",restrictType:"cascade", name:makeName([sPK],[sFK])};
-		 relationfunction.setTempRelation(relation); 
-		 relationfunction.registRelationShipManager();
-		 
-		 console.log($(".entity").css("z-index"));
-		 SchemaManager.SetNewSchema("test");
-		 SchemaManager.SetNewSchema("test2");
-		 SchemaManager.SetNewSchema("test3");
-		 
-		 
-		 SchemaManager.SetNewSchema("test4");
-		 //SaveAndLoad.saveToJson();
-	
-	
-	//////////////////
 	  
 	  
 	

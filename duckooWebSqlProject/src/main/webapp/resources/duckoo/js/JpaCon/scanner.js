@@ -1,3 +1,4 @@
+//스캐너쟝 이제 필요없을거같은데
 var scanner = (function(){
 	
 	var superClassScan = function(node){

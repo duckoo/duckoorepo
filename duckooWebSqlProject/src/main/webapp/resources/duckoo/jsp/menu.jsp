@@ -20,7 +20,8 @@
    
    <div id="pageTab">
 	 <ul class="nav nav-tabs">
-    		<div id="menuBar">			
+    		<div id="menuBar">
+    		<div id="currentSchemaName" style="width:300px; font-weight:bold; font-size:20px; height:100%; float:left;"></div>			
 			<button style="float:right; margin-top:2px; vertical-align:middle;"><i class="fa fa-bars fa-2x" aria-hidden="true"></i></button>
             <div class="genBtnListWrap" style="float:right; width:200px; display:inline-block;">
                 <button id="genListBtn"class="button btn btn-success" type="button" style="vertical-align:middle; float:right;"><span>Generate</span></button>
@@ -170,6 +171,8 @@ $document.on("click",".sideItem",function(e){
 	SchemaManager.focusOn(name);
 	var earr= SchemaManager.getEntitysNames(name);
 	sidebarCon.toggleEntityList(name);
+	var currentSchemaName = document.getElementById("currentSchemaName");
+	currentSchemaName.innerText=name;
 	
 })
 
@@ -184,16 +187,28 @@ $document.on("click",".entityList",function(e){
 	  modalAttribute.setModal(cEntity,modal);
 	  $("#myModal").modal();
 });
+
+
+$(document).on("click","#makeSchemaBtn",function(e){
+	e.stopPropagation();
+    e.preventDefault();
+	$("#makeSchemaModal").modal();
+});
+
+
+
 $("#erdSaveBtn").on("click",function(e){
 	e.stopPropagation();
     e.preventDefault();
-    SchemaManager.SetNewSchema("taehyunTest");
+    var currentSchemaName = document.getElementById("currentSchemaName").innerText;
+    SchemaManager.SetNewSchema(currentSchemaName);
 	SaveAndLoad.saveToJson();
 });
 
 $("#genJpaBtn").on("click",function(e){
 	e.stopPropagation();
     e.preventDefault();
+    classManager.delclassInfo();
      var cf = new classifier();
 	 var attrNodes = attrNodeManager.getAllNode();
 	 var key= Object.keys(attrNodes);
@@ -213,8 +228,10 @@ $("#genJpaBtn").on("click",function(e){
 		 cf.classClassify(at);
 		 
 	 });
+	 console.log("새로운 노드 들어갔니? :",arr);
 	 
-	var jg = new jpaGen(cf);
+	 cf.active();
+	var jg = new jpaGen();
 	jg.generate();	
 	$("#jpaModal").modal();
 });

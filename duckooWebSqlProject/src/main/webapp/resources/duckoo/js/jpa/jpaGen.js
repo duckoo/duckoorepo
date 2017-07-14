@@ -2,13 +2,16 @@ var jpaGen = (function(){
 	
 	var cf;
 	
-	function jpaGen(cfd){
-		this.cf = cfd;
+	function jpaGen(){
+		
 	}
 	jpaGen.prototype.generate = function(){
-	this.cf.active();
+	
 	console.log("클래스 인포:",classManager.getClassInfoArr());
 	 var classInfo = classManager.getClassInfoArr();
+	 
+	 
+	 
 	 var $javaClassText = $("#javaClassText");//클래스들 붙일 곳
 	 var $jpaCodeTab =$("#jpaCodeTab");
 	 
@@ -52,79 +55,83 @@ var jpaGen = (function(){
 			 $("#columns_"+classInfo[i].className).append(pNameHtml);
 		 }
 	 }
-
-	 
-	 Handlebars.registerHelper("annoCheck",function(anno,options){
-		 var anno = anno;
-		 if(anno=="Column"){
-			 return options.fn(this);
-		 } else{
-			 return options.inverse(this);
-		 }
-	 });
-	 
-	 Handlebars.registerHelper("annoCheck1",function(anno,options){
-		 var anno = anno;
-		 if(anno=="OneToMany"){
-			 return options.fn(this);
-		 } else{
-			 return options.inverse(this);
-		 }
-	 });
-	 
-	 Handlebars.registerHelper("markCheck",function(mark,options){
-		if(mark){
-			return options.fn(this);
-		}else{
-			return options.inverse(this);
-		}
-	 });
-	 
-	 Handlebars.registerHelper("annoCheck2",function(anno,options){
-		 var anno = anno;
-		 if(anno=="ManyToOne"){
-			 return options.fn(this);
-		 } else{
-			 return options.inverse(this);
-		 }
-	 });
-	 Handlebars.registerHelper("annoCheck3",function(anno,options){
-		 var anno = anno;
-		 if(anno=="Id"){
-			 return options.fn(this);
-		 } else{
-			 return options.inverse(this);
-		 }
-	 });
-	 Handlebars.registerHelper("annoCheck4",function(anno,options){
-		 var anno = anno;
-		 if(anno=="GenerationValue(strategy=GenerationType.AUTO)"){
-			 return options.fn(this);
-		 } else{
-			 return options.inverse(this);
-		 }
-	 });
-	 
-	 
-	 var columnAnnoSource = $("#columnAnno").html();//컬럼어노소스
-	 var columnAnnoTemplate =Handlebars.compile(columnAnnoSource); // 컬럼어노컴파일 
+	 var columnAnnoSource;//컬럼어노소스
+	 var columnAnnoTemplate;// 컬럼어노컴파일 
 	 
 	 for(var i=0; i<classInfo.length; i++){
 		 for(var j=0; j<classInfo[i].properties.length; j++){
 			 for(var k=0; k<classInfo[i].properties[j].annotations.length; k++){
 				 var anno = classInfo[i].properties[j].annotations[k];
-				 //console.log("anno:",anno,"/i j k:",i,",",j,",",k,"/pname:",classInfo[i].properties[j].pName);
-				 var colName = classInfo[i].properties[j].colName;
-				 if(classInfo[i].properties[j].joinedColumn[0]!=undefined){
-				 	var annoData = {propAnno:anno,colName:colName,mark:classInfo[i].properties[j].mark,joinedTable:classInfo[i].tableName,joinedColName:classInfo[i].properties[j].joinedColumn[0].pName};
-				 }else{
-					 var annoData = {propAnno:anno,colName:colName,mark:classInfo[i].properties[j].mark,joinedTable:classInfo[i].tableName};
+				 var annoData;
+				 switch (anno){
+				 	case "Column" : 
+				 		columnAnnoSource = $("#annoColumn").html();
+				 		columnAnnoTemplate = Handlebars.compile(columnAnnoSource);
+				 		annoData={propAnno:"Column", colName:classInfo[i].properties[j].colName};
+				 		var annoHtml = columnAnnoTemplate(annoData);
+						 $("#columnDiv_"+classInfo[i].className+"_"+classInfo[i].properties[j].pName).append(annoHtml);
+				 		break;
+				 	case "Id" : 
+				 		columnAnnoSource = $("#annoId").html();
+				 		columnAnnoTemplate = Handlebars.compile(columnAnnoSource);
+				 		annoData={propAnno:"Id"};
+				 		var annoHtml = columnAnnoTemplate(annoData);
+						 $("#columnDiv_"+classInfo[i].className+"_"+classInfo[i].properties[j].pName).append(annoHtml);
+				 		break;
+				 	case "JoinColumn" : 
+				 		var joinCols = classInfo[i].properties[j].joinedColumn;
+				 		if(joinCols.length>=2){
+				 			columnAnnoSource = $("#annoJoinColumnStart").html();
+			 				columnAnnoTemplate = Handlebars.compile(columnAnnoSource);
+			 				var annoHtml = columnAnnoTemplate();
+			 				$("#columnDiv_"+classInfo[i].className+"_"+classInfo[i].properties[j].pName).append(annoHtml);
+				 			joinCols.forEach(function(key){
+				 				var colName=key.pName.toUpperCase();
+				 				columnAnnoSource = $("#annoJoinCol").html();
+				 				columnAnnoTemplate = Handlebars.compile(columnAnnoSource);
+				 				annoData={propAnno:"JoinColumn", colName:colName};
+				 				var annoHtml = columnAnnoTemplate(annoData);
+				 				$("#columnDiv_"+classInfo[i].className+"_"+classInfo[i].properties[j].pName).append(annoHtml);
+				 			});
+				 			columnAnnoSource = $("#annoJoinColumnEnd").html();
+			 				columnAnnoTemplate = Handlebars.compile(columnAnnoSource);
+			 				var annoHtml = columnAnnoTemplate();
+			 				$("#columnDiv_"+classInfo[i].className+"_"+classInfo[i].properties[j].pName).append(annoHtml);
+				 		} else{
+				 			var colName = joinCols[0].pName.toUpperCase();
+			 				columnAnnoSource = $("#annoJoinCol").html();
+			 				columnAnnoTemplate = Handlebars.compile(columnAnnoSource);
+			 				annoData={propAnno:"JoinColumn", colName:colName};
+			 				var annoHtml = columnAnnoTemplate(annoData);
+			 				$("#columnDiv_"+classInfo[i].className+"_"+classInfo[i].properties[j].pName).append(annoHtml);
+				 		}
+				 		break;
+				 	case "OneToMany" : 
+				 		columnAnnoSource = $("#annoOTM").html();
+				 		columnAnnoTemplate = Handlebars.compile(columnAnnoSource);
+				 		annoData={propAnno:"OneToMany",className:classInfo[i].tableName}
+				 		var annoHtml = columnAnnoTemplate(annoData);
+						 $("#columnDiv_"+classInfo[i].className+"_"+classInfo[i].properties[j].pName).append(annoHtml);
+				 		break;
+				 	case "ManyToOne" : 
+				 		columnAnnoSource = $("#annoMTO").html();
+				 		columnAnnoTemplate = Handlebars.compile(columnAnnoSource);
+				 		annoData={propAnno:"ManyToOne"}
+				 		var annoHtml = columnAnnoTemplate(annoData);
+						 $("#columnDiv_"+classInfo[i].className+"_"+classInfo[i].properties[j].pName).append(annoHtml);
+				 		break;
+				 	case "EmbeddedId" : 
+				 		columnAnnoSource = $("#annoEBDID").html();
+				 		columnAnnoTemplate = Handlebars.compile(columnAnnoSource);
+				 		annoData={propAnno:"EmbeddedId"}
+				 		var annoHtml = columnAnnoTemplate(annoData);
+						 $("#columnDiv_"+classInfo[i].className+"_"+classInfo[i].properties[j].pName).append(annoHtml);
+				 		break;
 				 }
-				 var annoHtml = columnAnnoTemplate(annoData);
-				 $("#columnDiv_"+classInfo[i].className+"_"+classInfo[i].properties[j].pName).append(annoHtml);
+				 
 			 }
-			 
 		 }
+		 
 	 }
 	 
 	 

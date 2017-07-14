@@ -67,41 +67,45 @@
 	</div>
 </script>
 
-<script id="columnAnno" type="text/x-handlebars-template">
-	{{#annoCheck propAnno}}
-	<br>
-	<div style="color:#63666B; width:auto; float:left;">@{{propAnno}}</div><div style="color:#040000; float:left;">(name=</div><div style="color:#2C03F5; float:left;">"{{colName}}"</div><div style="color:#040000; float:left;">)</div>
-	{{/annoCheck}}
-	{{#annoCheck1 propAnno}}
-		{{#markCheck mark}}
-		<br>
-		<div style="color:#63666B; float:left; width:100%;">@{{propAnno}}</div>
-		{{else}}
-		<br>
-		<div style="color:#63666B; width:auto; float:left;">@{{propAnno}}</div><div style="color:#040000; float:left;">(mappedBy=</div><div style="color:#2C03F5; float:left;">"{{joinedTable}}"</div><div style="color:#040000; float:left;">)</div>
-		{{/markCheck}}
-	{{/annoCheck1}}
-	{{#annoCheck2 propAnno}}
-		{{#markCheck mark}}
-		<br>
-		<div style="color:#63666B; width:auto; float:left;">@{{propAnno}}</div>
-		<br>
-		<div style="color:#63666B; width:auto; float:left;">@JoinColumn</div><div style="color:#040000; float:left;">(name=</div><div style="color:#2C03F5; float:left;">"{{joinedColName}}"</div><div style="color:#040000; float:left;">)</div>
-		{{else}}
-		<br>
-		<div style="color:#63666B; float:left; width:100%;">@{{propAnno}}</div>
-		{{/markCheck}}
-	{{/annoCheck2}}
-	{{#annoCheck3 propAnno}}
-		<br>
-		<div style="color:#63666B; float:left; width:100%;">@{{propAnno}}</div>
-	{{/annoCheck3}}
-	{{#annoCheck4 propAnno}}
-		<br>
-		<div style="color:#63666B; float:left; width:100%;">@{{propAnno}}</div>
-	{{/annoCheck4}}
-	
+<script id="annoColumn" type="text/x-handlebars-template">
+<br>
+<div style="color:#63666B; width:auto; float:left;">@{{propAnno}}</div><div style="color:#040000; float:left;">(name=</div><div style="color:#2C03F5; float:left;">"{{colName}}"</div><div style="color:#040000; float:left;">)</div>
 </script>
+
+<script id="annoId" type="text/x-handlebars-template">
+<br>
+<div style="color:#63666B; float:left; width:100%;">@{{propAnno}}</div>
+</script>
+
+<script id="annoOTM" type="text/x-handlebars-template">
+<br>
+<div style="color:#63666B; width:auto; float:left;">@{{propAnno}}</div><div style="color:#040000; float:left;">(mappedBy=</div><div style="color:#2C03F5; float:left;">"{{className}}"</div><div style="color:#040000; float:left;">)</div>
+</script>
+
+<script id="annoEBDID" type="text/x-handlebars-template">
+<br>
+<div style="color:#63666B; float:left; width:100%;">@{{propAnno}}</div>
+</script>
+
+<script id="annoMTO" type="text/x-handlebars-template">
+<br>
+<div style="color:#63666B; float:left; width:100%;">@{{propAnno}}</div>
+</script>
+
+<script id="annoJoinCol" type="text/x-handlebars-template">
+<br>
+<div style="color:#63666B; float:left; width:auto;">@{{propAnno}}</div><div style="color:#040000; float:left;">(name=</div><div style="color:#2C03F5; float:left;">"{{colName}}"</div><div style="color:#040000; float:left;">)</div>
+</script>
+
+<script id="annoJoinColumnStart" type="text/x-handlebars-template">
+<br>
+<div style="color:#63666B; float:left; width:100%;">@Joincolumns(</div>
+</script>
+<script id="annoJoinColumnEnd" type="text/x-handlebars-template">
+<br>
+<div style="color:#63666B; float:left; width:100%;">)</div>
+</script>
+
 
 <script id="columnVal" type="text/x-handlebars-template">
 	<br>
@@ -114,7 +118,6 @@
 	<li><a data-toggle="tab" href="{{className}}">{{className}}</a></li>
 </script>
 
-
 <script>
 
 $("#javaCodeDivCloseBtn").on("click",function(e){
@@ -122,7 +125,7 @@ $("#javaCodeDivCloseBtn").on("click",function(e){
     e.preventDefault();
     $("#javaClassText").empty();
     $("#jpaCodeTab").empty();
-    console.log("empty");
+    classManager.delclassInfo();
     $("#jpaModal").modal("hide");
 });
 

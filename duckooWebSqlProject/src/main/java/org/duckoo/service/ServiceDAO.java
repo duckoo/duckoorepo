@@ -16,6 +16,7 @@ public interface ServiceDAO {
 	public void registerFile(FileVO fvo);
 	public List<FileVO> fileList(String userid);
 	public FileVO readFile(int fno);
+	public void update(FileVO fvo);
 	//end  file
 
 }

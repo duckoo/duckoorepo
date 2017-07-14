@@ -16,7 +16,7 @@ var property = (function(){
 	function property(){
 		this.annotations = [];
 		this.isReferenced=false;
-		this.joinedColumn = [];
+		this.joinedColumn = undefined;
 		this.relations =[];
 		this.joinedTable =[];
 		this.mark=false;
@@ -26,9 +26,11 @@ var property = (function(){
 		this.isReferenced = bool;
 	}
 	property.prototype.setJoinedColumn = function(columnArr){
+		if(this.joinedColumn==undefined){this.joinedColumn=[];}
 		this.joinedColumn = columnArr;
 	}
 	property.prototype.addJoinColumn = function(joinColumn){
+		if(this.joinedColumn==undefined){this.joinedColumn=[];}
 		this.joinedColumn.push(joinColumn);
 	}
 	property.prototype.addAnnotations = function(annotation){

@@ -13,12 +13,10 @@ function createEntity(opt){
 	}); 
     return newEntity;
 }		
-function deleteEntity(name){
-	var en=getEntityByName(name);
-	 if(!en)return;
-	 hideEntity(name);
-	 delete en; //delete 쓰지말라고하던데 흠
+function deleteEntity(){
+	 entityArr={}; //delete 쓰지말라고하던데 흠
 }
+
 function setAttribute(entityName,opt){
 	var en=getEntityByName(entityName);
 	if(!en){alert("잘못된 엔티디 접근");return;}
@@ -43,9 +41,9 @@ function setJObj(e){
 		if(maxId<idCOunt)maxId=idCOunt;
 		
 	}
-	Attribute.g_countInit(maxId+1);
-	
+	Attribute.g_countInit(maxId+1);	
 }
+
 return {
 	    createEntity:createEntity,
 	    setEntity:setEntity,
@@ -53,6 +51,7 @@ return {
 	    getEntityByName:getEntityByName,
 	    setAttribute:setAttribute,
 	    Obserable:Obserable,
-	    setJObj:setJObj
+	    setJObj:setJObj,
+	    entityArr:entityArr
       };
 })();

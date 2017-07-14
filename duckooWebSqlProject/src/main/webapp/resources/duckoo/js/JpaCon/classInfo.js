@@ -30,5 +30,6 @@ var classInfo =(function(){
 	classInfo.prototype.getClassName = function(){
 		return this.className;
 	}
+	
 	return classInfo;
 })();

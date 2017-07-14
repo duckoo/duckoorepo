@@ -265,20 +265,28 @@ function addAttrFinalBtn(e){
     var notNull = $("#notNull").is(":checked");
     var autoIncre = $("#autoIncre").is(":checked");
     var uniqueVal = $("#uniqueVal").is(":checked");
+    var isFk = false; 
 	//entity.setAttr({isPk:isPk,datelength:datelength, lName:lName,pName:pName,domainName:"none",datetype:dataType,notNull:notNull,autoIncrement:autoIncre,uniqueVal:uniqueVal});
-    var attr={isPk:isPk, lName:lName,pName:pName,domainName:"none",datetype:dataType,datelength:datelength,notNull:notNull,autoIncrement:autoIncre,uniqueVal:uniqueVal};
+    var attr={isPk:isPk, lName:lName,pName:pName,domainName:"none",datetype:dataType,datelength:datelength,notNull:notNull,autoIncrement:autoIncre,uniqueVal:uniqueVal,isFk:isFk};
     tagSetAttr(entity);
     var pkArr= entity.search({isPk:true});
+    console.log("pkArr:::::::::",pkArr);
     var newAttr = entity.setAttr(attr).clone();
+   
+    
     if(isPk) {
     	 console.log("cAttr: ",newAttr);
     	 //부실 공사.
     	 var id = (pkArr[0] && pkArr[0].id) || [];
-    	// attrNodeManager.addNodeTour(id,newAttr);
+    	 attrNodeManager.addNodeTour(id,newAttr);
     }
     entity.sortAttribute();
+    console.log("소트엔티티:",entity);
     v(entity).refresh();
     v(entity).entitySizing();
+    console.log("엔티티araboja:",EntityManager.getEntityByName());
+    console.log("노트도 좀 보자:",attrNodeManager.getAllNode());
+    //console.log("릴레이션좀 보자:",relationManager.get());
 }
 obb=Object.create(Obsever);
 obb.init("addAttrFinalBtn2",addAttrFinalBtn);

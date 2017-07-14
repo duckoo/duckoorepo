@@ -52,7 +52,14 @@ public class ServiceDAOImpl implements ServiceDAO {
 	public FileVO readFile(int fno) {
 		return filedao.read(fno);
 	}
+	@Override
+	public void update(FileVO fvo) {
+		filedao.update(fvo);
+		
+	}
 //end file
+
+
 
 
 

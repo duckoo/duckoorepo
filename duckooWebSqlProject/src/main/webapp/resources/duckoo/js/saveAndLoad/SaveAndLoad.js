@@ -35,10 +35,10 @@ var SaveAndLoad=(function(){
 		attrNodeManager.setJObj(jobj);
 	}
 	
-	SaveAndLoad.prototype.load=function(jobj){
+	SaveAndLoad.prototype.load=function(jobj){ // {entitys:{} , }
 		loadEntity.call(this,jobj.entitys);
 		loadRelation.call(this,jobj.relations);
-		loadNode.call(this,jobj.nodes);
+		loadNode.call(this,jobj.nodes);	
 	}
 	
 	SaveAndLoad.prototype.saveToJson=function(){

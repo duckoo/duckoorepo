@@ -31,9 +31,13 @@ var classManager = (function(){
 		})
 		return obj;
 	}
+	var delclassInfo = function(){
+		ClassInfoArr = [];
+	}
 	return{addClassInfo:addClassInfo,
 		getClassInfoArr:getClassInfoArr,
-		getClassInfoByClassName:getClassInfoByClassName}
+		getClassInfoByClassName:getClassInfoByClassName,
+		delclassInfo:delclassInfo}
 	
 	
 	

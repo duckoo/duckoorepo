@@ -135,7 +135,8 @@ var attrNodeManager=(function(){
 		var manager= this;
 		
 		var relationIdArr =manager.get(startId).reId;
-		 (function addPk(relArr,attr){
+		(function addPk(relArr,attr){ 
+			if(relArr.length===0)return;
 			var nearRelation=[];
 			//var manager= this;
 			var originalId = attr.id;
@@ -147,10 +148,14 @@ var attrNodeManager=(function(){
 			}// 가까운 관계구한다.
 			if(nearRelation.length===0)return;
 				var sourEntity= nearRelation[0].source;
+				console.log("오리지널아이디:::::",originalId);
 				var sourceNode= attrNodeManager.get(originalId);
 				sourceNode.entity=sourEntity;
+				console.log("니얼릴레이션::::::::",nearRelation.length);
 				for(var i=0;i<nearRelation.length;i++){
+					//if((nearRelation[i].target)==relationManager.get(nearRelation[0].id).target){break;}
 					var tempEntity = EntityManager.getEntityByName(nearRelation[i].target);
+					
 					attr.id=undefined;
 					attr.isFk=true;
 					attr.isPk=false;
@@ -160,13 +165,25 @@ var attrNodeManager=(function(){
 					var tempArr = tempEntity.getAttr();
 					var id =tempEntity.setAttr(attr).id;
 					 targetAttrId.push(id);
+					 console.log("targetAttrId:::::",targetAttrId);
 					var newNode= attrNodeManager.get(id);
 					newNode.entity=tempEntity.name;
 					attrNodeManager.link(originalId,id);
 					newNode.reId=relationIdArr;
 				    var pk= tempEntity.search({isPk:true});
 				    var childReId=attrNodeManager.get(pk[0].id).reId;
+				    
+				    
+				    var newReId=[];
 				   childReId = MyArrayUtil.minu(childReId,relationIdArr);
+				 	   
+				    childReId.forEach(function(val){
+				    		if(relationManager.get(val).source===tempEntity.name)
+				    			newReId.push(val);
+				    })
+					   
+				   
+				   console.log("재귀에들어가는 아이디:::",relationIdArr);
 				   /////태현이꼽사리
 				   tempEntity.sortAttribute();
 				   v(tempEntity).refresh();
@@ -174,8 +191,9 @@ var attrNodeManager=(function(){
 				   //////겐세이끝
 					if(pk.length && nearRelation[i].relationLine==="identify"){
 						attr.id=id;
-					   addPk(childReId,attr);
+					   addPk(newReId,attr);
 					}
+					return;
 				}
 		 })(relationIdArr,attr);
 	}	
@@ -291,6 +309,9 @@ var attrNodeManager=(function(){
 		    
 		    var startId= pArr.pop();
 		    this.updateTourChild(Number(startId),attr);
+	}
+	AttrNodeManager.prototype.deleteAll=function(){
+		this.arr={};
 	}
 	
 	

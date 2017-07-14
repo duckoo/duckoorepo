@@ -62,6 +62,17 @@ public class RestCon {
 				log.info("이게뭐야:"+filePathAndName.get(0)+":"+filePathAndName.get(1));
 				fvo.setFsrc(filePathAndName.get(0));
 				fvo.setUserid(userid);
+				List<FileVO> fvoList = service.fileList(userid);
+				for(int i=0; i<fvoList.size(); i++){
+					if(fvoList.get(i).getFschema().equals(key)){
+						fvoList.get(i).setFsrc(filePathAndName.get(0));
+						service.update(fvoList.get(i));
+						return true;
+					} else{
+						continue;
+					}
+				}
+				
 				service.registerFile(fvo);
 				
 				//DB에 파일 저장 s.get(0) === 경로 s.get(1) 이름 
