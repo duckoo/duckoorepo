@@ -68,10 +68,11 @@ public class RestCon {
 					if(fvoList.get(i).getFschema().equals(key)){
 						fvoList.get(i).setFsrc(filePathAndName.get(0));
 						service.update(fvoList.get(i));
-					} 
+					}else {						
+						service.registerFile(fvo);
+					}
 				}
 				
-				service.registerFile(fvo);
 				
 				//DB에 파일 저장 s.get(0) === 경로 s.get(1) 이름 
 			} catch (Exception e) {

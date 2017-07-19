@@ -48,7 +48,7 @@ var propMaker = (function(){
 			tempProp.colName = (prop.pName).toUpperCase();
 			
 			
-			if(codeUtils.effectiveProperty(props,tempProp)){props.push(tempProp);}
+			props.push(tempProp);
 		});
 		
 		
