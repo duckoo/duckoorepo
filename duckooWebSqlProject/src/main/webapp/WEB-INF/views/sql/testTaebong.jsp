@@ -4,14 +4,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta name="google-site-verification" content="AoPPBP2WJZGi56B7Tw5LC9kcl8FVCzfbX5qfG7zCDfI" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name = "google-signin-client_id"content = "271929324186-nb92pvj0v2cdv4cr7chvt84nvu6q2t4o.apps.googleusercontent.com">
 <title>erd main</title>
 <% Random random = new Random(); 
     int token= random.nextInt();
 %> 		 		
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/resources/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/resources/duckoo/css/mainModal.css">
     <link rel="stylesheet" href="/resources/duckoo/css/loading.css">
     <link rel="stylesheet" href="/resources/duckoo/css/selectPage.css?<%=token%>">

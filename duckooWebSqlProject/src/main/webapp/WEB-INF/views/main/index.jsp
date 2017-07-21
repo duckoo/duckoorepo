@@ -7,6 +7,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta name="google-site-verification" content="AoPPBP2WJZGi56B7Tw5LC9kcl8FVCzfbX5qfG7zCDfI" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name = "google-signin-client_id"content = "271929324186-nb92pvj0v2cdv4cr7chvt84nvu6q2t4o.apps.googleusercontent.com">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">

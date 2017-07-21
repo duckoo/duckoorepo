@@ -44,8 +44,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				session.setAttribute(LOGIN, cookies);
 				
 				UserVO userCheckVO=service.read(cookieList.get("userid"));
-				
-				if(userCheckVO.getUserid()==null){
+			
+				if(userCheckVO==null){
 					
 					UserVO vo = new UserVO();
 					vo.setUserid(cookieList.get("userid"));

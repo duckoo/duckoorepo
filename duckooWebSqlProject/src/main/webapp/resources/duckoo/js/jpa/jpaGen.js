@@ -83,9 +83,10 @@ var jpaGen = (function(){
 						 $("#columnDiv_"+classInfo[i].className+"_"+classInfo[i].properties[j].pName).append(annoHtml);
 				 		break;
 				 	case "Id" : 
+				 		var dataType = classInfo[i].properties[j].dataType;
 				 		columnAnnoSource = $("#annoId").html();
 				 		columnAnnoTemplate = Handlebars.compile(columnAnnoSource);
-				 		annoData={propAnno:"Id"};
+				 		annoData={propAnno:"Id",dataType:dataType};
 				 		var annoHtml = columnAnnoTemplate(annoData);
 						 $("#columnDiv_"+classInfo[i].className+"_"+classInfo[i].properties[j].pName).append(annoHtml);
 				 		break;

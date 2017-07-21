@@ -8,7 +8,7 @@
 	        $("#preloader").delay(300).fadeOut("slow");
 	        (function onLoad() {
 	    	    gapi.load('auth2', function() {
-	    	    gapi.auth2.init();
+	    	    gapi.auth2.init({client_id:'271929324186-nb92pvj0v2cdv4cr7chvt84nvu6q2t4o.apps.googleusercontent.com'});
 	    	    console.log("onload");
 	    	    });
 	       })();
@@ -54,9 +54,26 @@
 		}
    
    function cookieMake(){
-	   	  var refreshMain = document.getElementById("garaForm");
-		  console.log("refresh");
-		  refreshMain.submit();	  
+	   	  var refreshMain = $(document.getElementById("garaForm")).serialize();
+	   	  
+		  console.log(refreshMain,"refresh 아아아아아아아아아아아아아아");
+		  $.ajax({
+			  url: 'main/index',
+		       type: 'POST',
+		        data:refreshMain,
+		        contentType: 'application/x-www-form-urlencoded; charset=UTF-8', 
+		        dataType: 'html',
+		        success: function (result) {
+		            if (result){
+		                // 데이타 성공일때 이벤트 작성
+		            	console.log("hi..? success...?");
+		            	
+		            }
+		        }
+			  
+		  })
+		  
+		  
    }
    
 	
@@ -67,7 +84,7 @@
 	    var auth2 = gapi.auth2.getAuthInstance();
 	    console.log("auth2:",auth2);
 	    auth2.signOut().then(function () {
-	      location.href="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost:8080/main/index"
+	      location.href="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=https://duckooweberd.ze.am/main/index"
 	      console.log('User signed out.');
 	    });
    };
