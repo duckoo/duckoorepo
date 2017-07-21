@@ -113,7 +113,7 @@ public class RestCon {
 				  in.close();
 			}
 	   }
-	    response.setContentType("text/html;charset=UTF-8");
+	    
 		return ret;
 	 }
 	
