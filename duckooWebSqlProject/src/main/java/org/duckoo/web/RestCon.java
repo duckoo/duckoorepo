@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,8 @@ public class RestCon {
     private	String uploadPath;
 	
 	@RequestMapping("setErdPageJSON")
-    boolean setErdPageJSON(@RequestBody Map<String,Object> jsons,HttpServletRequest request){
+    boolean setErdPageJSON(@RequestBody Map<String,Object> jsons,HttpServletRequest request) throws UnsupportedEncodingException{
+		request.setCharacterEncoding("utf-8");
 		Cookie[] cookies = request.getCookies();
 		String userid = null;
 		for(int i=0; i<cookies.length; i++){
@@ -82,6 +84,8 @@ public class RestCon {
 	//@RequestMapping(value="getErdPageJSON",produces="application/text; charset=utf8")
 	@RequestMapping(value="getErdPageJSON",produces="application/json")
 	List<String> getErdPageJSON(HttpServletResponse response,HttpServletRequest request) throws IOException{
+		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
 		Cookie[] cookies = request.getCookies();
 		String userid = null;
 		for(int i=0; i<cookies.length; i++){
