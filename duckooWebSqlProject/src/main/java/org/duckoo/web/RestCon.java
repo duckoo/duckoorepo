@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
 import org.duckoo.domain.FileVO;
 import org.duckoo.service.ServiceDAO;
 import org.duckoo.util.UploadFileUtill;

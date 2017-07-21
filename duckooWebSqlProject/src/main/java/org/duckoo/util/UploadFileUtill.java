@@ -6,11 +6,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
+
 import javax.imageio.ImageIO;
 
-import org.apache.log4j.Logger;
 import org.imgscalr.Scalr;
-
 import org.springframework.util.FileCopyUtils;
 
 public class UploadFileUtill {
