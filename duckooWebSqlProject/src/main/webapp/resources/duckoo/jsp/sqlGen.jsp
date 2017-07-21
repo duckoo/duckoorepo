@@ -78,8 +78,8 @@ ADD CONSTRAINT PK_{{name}} PRIMARY KEY {{#getPk this}}{{/getPk}}
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Create Query</h4>
         </div>
-        <div class="modal-body">
-			<div id="queryDiv" style="overflow:auto;">
+        <div class="modal-body" style="height:400px;">
+			<div id="queryDiv" style="overflow:auto; height:100%;">
 			</div>
         </div>
         <div class="modal-footer">
