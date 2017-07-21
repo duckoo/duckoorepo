@@ -14,7 +14,6 @@ import org.imgscalr.Scalr;
 import org.springframework.util.FileCopyUtils;
 
 public class UploadFileUtill {
- private static Logger log= Logger.getLogger(UploadFileUtill.class);
 	
  public static String calPath(String uploadPath){
 	 Calendar cal=Calendar.getInstance();
@@ -28,10 +27,8 @@ public class UploadFileUtill {
 	  if(new File(paths[paths.length-1]).exists())
 		  return ;
 	  for(String path: paths){
-		  log.info(path);
 		  File dirPath=new File(BasicPath+path);
 		  if(! dirPath.exists()){
-			  log.info("in?"+dirPath);
 			  dirPath.mkdir();
 		  }
 	  }
@@ -60,7 +57,6 @@ public class UploadFileUtill {
 	   UUID uid=UUID.randomUUID();
 	   String saveName=uid.toString()+"_"+originalName;
 	   String savePath=calPath(uploadPath);
-	   log.info("cal prev");
 	   File target= new File(uploadPath+savePath,saveName);
 	   FileCopyUtils.copy(fileData, target);
 	   String formatName= originalName.substring(originalName.lastIndexOf(".")+1);
@@ -69,14 +65,13 @@ public class UploadFileUtill {
 		   uploadName= makeThumbnail(uploadPath,savePath,saveName);
 	   }
 	   List<String> ret = new ArrayList<>();
-	   ret.add(target.getAbsolutePath()); //경로
-	   ret.add(uploadName);//유유아이디 파일 이름
+	   ret.add(target.getAbsolutePath()); //path
+	   ret.add(uploadName);//uuidFileName
 	   
-	   //합쳐져서 디비에 들어감
+	   //mergeAndDBSave
 	   
 	   
-	   return ret
-			   ;
+	   return ret;
    }
  
 }

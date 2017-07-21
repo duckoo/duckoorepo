@@ -31,13 +31,13 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		System.out.println("뭐야뭐야");
+		System.out.println("taebongPage");
 		HttpSession session = request.getSession();
 					
 		if(session.getAttribute("login")==null){
 			
 			saveDest(request);
-			System.out.println("세션없음");
+			System.out.println("sessionNull");
 			response.sendRedirect("/main/index");
 			return false;
 		}else{
@@ -46,7 +46,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			Map<String,String> cookieList = new HashMap<>();
 			if(cookie==null){
 				saveDest(request);
-				System.out.println("쿠키없음");
+				System.out.println("CookieNull");
 				response.sendRedirect("/main/index");
 				return false;
 			} else{
@@ -55,7 +55,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				}
 				if(cookieList.get("username")==null){
 					saveDest(request);
-					System.out.println("유저네임없음");
+					System.out.println("usernameNull");
 					response.sendRedirect("/main/index");
 					return false;
 				}

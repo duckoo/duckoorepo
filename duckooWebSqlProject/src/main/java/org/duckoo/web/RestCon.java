@@ -35,8 +35,6 @@ public class RestCon {
 	@Resource(name="uploadPath")
     private	String uploadPath;
 	
-	private static Logger log= Logger.getLogger(UploadFileUtill.class);
- 
 	@RequestMapping("setErdPageJSON")
     boolean setErdPageJSON(@RequestBody Map<String,Object> jsons,HttpServletRequest request){
 		Cookie[] cookies = request.getCookies();
@@ -48,10 +46,10 @@ public class RestCon {
 		}
 		System.out.println(jsons);
 		for (Map.Entry<String, Object> entry : jsons.entrySet()) {
-			String key   = entry.getKey();//스키마이름
-			Object value =  entry.getValue();//스키마 제이슨 데이터
-			JSONObject js = new JSONObject(); //잭슨바인더로 인수받아서
-			js.put(key,value);// json이라는 라이브러리 추가해서 한거임..
+			String key   = entry.getKey();//schemaName
+			Object value =  entry.getValue();//schemaJSON
+			JSONObject js = new JSONObject(); //JacsonData
+			js.put(key,value);
 			System.out.println("json:: "+js);
 			byte[] jByte=js.toString().getBytes();
 			UploadFileUtill ufu=new UploadFileUtill();
@@ -59,7 +57,6 @@ public class RestCon {
 				List<String>  filePathAndName =ufu.uploadFile(uploadPath, key+".txt", jByte);
 				FileVO fvo =new FileVO();
 				fvo.setFschema(key);
-				log.info("이게뭐야:"+filePathAndName.get(0)+":"+filePathAndName.get(1));
 				fvo.setFsrc(filePathAndName.get(0));
 				fvo.setUserid(userid);
 				List<FileVO> fvoList = service.fileList(userid);
@@ -74,7 +71,7 @@ public class RestCon {
 				}
 				
 				
-				//DB에 파일 저장 s.get(0) === 경로 s.get(1) 이름 
+				// s.get(0) === s.get(1) 
 			} catch (Exception e) {
 				System.out.println("FILE ERROR");
 				e.printStackTrace();
@@ -95,7 +92,7 @@ public class RestCon {
 		}
 		List<String> src=new LinkedList<>();
 		List<String> ret= new LinkedList<>();
-		//데이터베이스에서 경로 가져와야한다.
+		//bring the path from DB
 		List<FileVO> fvo = service.fileList(userid);
 		System.out.println("fvo:"+fvo);
 		for(int i=0; i<fvo.size(); i++){
@@ -114,7 +111,6 @@ public class RestCon {
 				  in.close();
 			}
 	   }
-		log.info("get: "+ret);
 	    response.setContentType("text/html;charset=UTF-8");
 		return ret;
 	 }
