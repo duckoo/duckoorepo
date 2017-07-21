@@ -106,7 +106,11 @@ public class RestCon {
 			InputStream  in=null;
 			try {	
 				in= new FileInputStream(file);
-				ret.add(IOUtils.toString(in,"utf-8"));
+				String str = IOUtils.toString(in,"utf-8");
+				if(str.startsWith("uFEFF")){
+					str=str.substring(1);
+				}
+				ret.add(str);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}finally{
