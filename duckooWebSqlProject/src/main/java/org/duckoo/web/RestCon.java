@@ -82,7 +82,7 @@ public class RestCon {
 	}
 	
 	//@RequestMapping(value="getErdPageJSON",produces="application/text; charset=utf8")
-	@RequestMapping(value="getErdPageJSON",produces="application/text; charset=utf8")
+	@RequestMapping(value="getErdPageJSON",produces="application/json; charset=utf8")
 	List<String> getErdPageJSON(HttpServletResponse response,HttpServletRequest request) throws IOException{
 		request.setCharacterEncoding("utf-8");
 		Cookie[] cookies = request.getCookies();
