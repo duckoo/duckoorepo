@@ -7,7 +7,7 @@ var maps = (function(){
 				 "TimeStamp":"TimeStamp",
 				 "INTEGER":"Integer",
 				 "VARCHAR":"Varchar",
-				 "int":"int"
+				 "int":"Integer"
 				 };
 	
 	function getType(dataType){
