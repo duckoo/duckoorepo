@@ -36,6 +36,14 @@ var jpaGen = (function(){
 	 console.log("jpaCodeTitleSource:",jpaCodeTitleSource);
 	 var jpaCodeTitleTemplate = Handlebars.compile(jpaCodeTitleSource);
 	 
+	 Handlebars.registerHelper('ifInteger', function(dataType, options) {
+		  if(dataType == "Integer") {
+		    return options.fn(this);
+		  }
+		  return options.inverse(this);
+		});
+	 
+	 
 	 for(var i=0; i<classInfo.length; i++){
 		 var className = classInfo[i].className;
 		 var shopClassName = "#"+className;

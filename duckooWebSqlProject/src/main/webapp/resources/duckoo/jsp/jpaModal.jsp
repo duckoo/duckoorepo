@@ -73,8 +73,15 @@
 </script>
 
 <script id="annoId" type="text/x-handlebars-template">
+{{#ifInteger dataType}}
 <br>
 <div style="color:#63666B; float:left; width:100%;">@{{propAnno}}</div>
+<br>
+<div style="color:#63666B; float:left; width:100%;">@GeneratedValue(strategy=GenerationType.IDENTITY)</div>
+{{else}}
+<br>
+<div style="color:#63666B; float:left; width:100%;">@{{propAnno}}</div>
+{{/ifInteger}}
 </script>
 
 <script id="annoOTM" type="text/x-handlebars-template">
