@@ -118,7 +118,7 @@ $makeSQLBtn.on("click",function(e){
 			  sqls+=sql+"\n";
 	}
 	$sqlSelectModal.modal("hide");
-	$queryDiv.html("<div>"+sqls+"</div>");
+	$queryDiv.html(sqls);
 	$sqlQueryModal.modal();
 });
 $("#closeSqlQueryBtn").on("click",function(e){
