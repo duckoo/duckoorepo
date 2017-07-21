@@ -83,7 +83,7 @@ ADD CONSTRAINT PK_{{name}} PRIMARY KEY {{#getPk this}}{{/getPk}}
 			</div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button id="closeSqlQueryBtn" type="button" class="btn btn-danger">Close</button>
         </div>
       </div>
     </div>
@@ -120,6 +120,12 @@ $makeSQLBtn.on("click",function(e){
 	$sqlSelectModal.modal("hide");
 	$queryDiv.html("<div>"+sqls+"</div>");
 	$sqlQueryModal.modal();
+});
+$("#closeSqlQueryBtn").on("click",function(e){
+	e.stopPropagation();
+	e.preventDefault();
+	$queryDiv.empty();
+	$sqlQueryModal.modal("hide");
 });
 
 </script>
