@@ -121,8 +121,15 @@ jsPlumb.ready(function() {
 		, success : function(data) {
 			
 		  for(var i=0,len=data.length;i<len;i++){
-			 var sub= data[i].substring(0);
+			 var sub= data[i];
+			 console.log("what sub",sub[0]);
+			 if(sub[0]!=="{"){
+				 sub= data[i].substring(1);
+			 }
+			 
 			 //이렇게하니까 된다.. 왜그런지는 모름...
+			 
+			 
 			var schema=JSON.parse(sub);
 			var jObj= SchemaManager.set(schema);
 		  }
