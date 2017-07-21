@@ -122,7 +122,7 @@ jsPlumb.ready(function() {
 			
 		  for(var i=0,len=data.length;i<len;i++){
 			 var sub= data[i];
-			 console.log("what?: ",sub)
+			 console.log("what?: ",sub);
 			 
 			 console.log("what sub",sub[0]);
 			 if(sub[0]!=="{"){
