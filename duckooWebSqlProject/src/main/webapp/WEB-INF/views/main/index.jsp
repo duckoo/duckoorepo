@@ -97,19 +97,6 @@
    		</div>   		 		
    	</div> 
 
-   	<!-- Modal Popup
-	   ========================================================= -->
-
-      <div id="video-popup" class="popup-modal mfp-hide">
-
-		   <div class="fluid-video-wrapper">
-            <div class="fluid-width-video-wrapper" style="padding-top: 56.2%;"><iframe src="http://player.vimeo.com/video/14592941?title=0&amp;byline=0&amp;portrait=0&amp;color=faec09" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" id="fitvid0"></iframe></div> 
-         </div>		     
-
-         <a class="close-popup">Close</a>         
-
-	   </div> <!-- /video-popup -->  	 	
-
    </section>
    <div style="display:none">
 		<form id="garaForm" method="get" action="/main/index"></form>
