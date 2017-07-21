@@ -79,7 +79,7 @@ ADD CONSTRAINT PK_{{name}} PRIMARY KEY {{#getPk this}}{{/getPk}}
           <h4 class="modal-title">Create Query</h4>
         </div>
         <div class="modal-body">
-			<div id="queryDiv">
+			<div id="queryDiv" style="overflow:auto;">
 			</div>
         </div>
         <div class="modal-footer">
