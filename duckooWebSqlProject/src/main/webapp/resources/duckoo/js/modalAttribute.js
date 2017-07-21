@@ -187,10 +187,13 @@ function updateAttrFinalBtn(e){
     delete attr1["notNull"];
     delete attr1["autoIncrement"];
     
-    
-    attrNodeManager.updateTourAll(String(id),{datetype:attr.datetype});
-    attrNodeManager.updateTourChild(String(id),attr1);
-    attrNodeManager.keyTypeTour(String(id),{isPk:attr.isPk,isFk:attr.isFk});
+    if(attrNodeManager.hasNode(id)){
+    	   attrNodeManager.updateTourAll(String(id),{datetype:attr.datetype});
+    	    attrNodeManager.updateTourChild(String(id),attr1);
+    	    attrNodeManager.keyTypeTour(String(id),{isPk:attr.isPk,isFk:attr.isFk});
+    	
+    }
+    tagSetAttr();
     
 }
 obb=Object.create(Obsever);
@@ -273,7 +276,6 @@ function addAttrFinalBtn(e){
     console.log("pkArr:::::::::",pkArr);
     var newAttr = entity.setAttr(attr).clone();
    
-    
     if(isPk) {
     	 console.log("cAttr: ",newAttr);
     	 //부실 공사.
@@ -284,6 +286,7 @@ function addAttrFinalBtn(e){
     console.log("소트엔티티:",entity);
     v(entity).refresh();
     v(entity).entitySizing();
+    tagSetAttr();
     console.log("엔티티araboja:",EntityManager.getEntityByName());
     console.log("노트도 좀 보자:",attrNodeManager.getAllNode());
     //console.log("릴레이션좀 보자:",relationManager.get());

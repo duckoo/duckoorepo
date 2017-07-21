@@ -299,9 +299,16 @@ var attrNodeManager=(function(){
 		}.bind(this));
 	}
 	
+	AttrNodeManager.prototype.hasNode=function(id){
+		   var id= Number(id);
+		return this.arr[id];
+	}
+	
 	
 	AttrNodeManager.prototype.updateTourAll=function(id,attr){
 		   var pArr=[];
+		   var id= Number(id);
+		   console.log("utA error: ",this.arr[id])
 		   if(!this.arr[id].parent)return;
 		    (function up(parent){
 		    	if(!parent)return;

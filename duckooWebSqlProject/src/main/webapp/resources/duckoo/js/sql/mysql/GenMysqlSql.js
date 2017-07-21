@@ -29,7 +29,7 @@ Handlebars.registerHelper("genMySqlAttribute", function(that) {
   attr.forEach(function(att,i){
 	 var str=attributeTemplate(att);
 	 str= str.replace(/\s+$/,'');
-	 if(i!=len-1)str+=",\n  ";
+	 if(i!=len-1)str+=",\n";
 	 strs+=str;
   }); 
   return strs;

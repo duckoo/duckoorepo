@@ -18,7 +18,7 @@ var CommonSql=(function(){
 			entityNames.push(rel.target);
 		})
 		for(var i=entityNames.length-1;i>=0 ;i--){
-			sql+=" DROP TABLE " +entityNames[i]+"; \n";
+			sql+="<font color='blue'> DROP TABLE </font>"+entityNames[i]+"; \n";
 		}
 		return sql;
 	}
