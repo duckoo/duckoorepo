@@ -52,10 +52,10 @@ public class RestCon {
 			JSONObject js = new JSONObject(); //JacsonData
 			js.put(key,value);
 			System.out.println("json:: "+js);
-			byte[] jByte=js.toString().getBytes();
+			//byte[] jByte=js.toString().getBytes();
 			UploadFileUtill ufu=new UploadFileUtill();
 			try {
-				List<String>  filePathAndName =ufu.uploadFile(uploadPath, key+".txt", jByte);
+				List<String>  filePathAndName =ufu.uploadFile(uploadPath, key+".txt", js.toString());
 				FileVO fvo =new FileVO();
 				fvo.setFschema(key);
 				fvo.setFsrc(filePathAndName.get(0));

@@ -1,6 +1,8 @@
 package org.duckoo.util;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -57,6 +59,9 @@ public class UploadFileUtill {
 	   String saveName=uid.toString()+"_"+originalName;
 	   String savePath=calPath(uploadPath);
 	   File target= new File(uploadPath+savePath,saveName);
+	   /*FileOutputStream fo= new FileOutputStream(target);
+	   OutputStreamWriter ow= new OutputStreamWriter(fo,"utf-8");
+	   */
 	   FileCopyUtils.copy(fileData, target);
 	   String formatName= originalName.substring(originalName.lastIndexOf(".")+1);
 	   String uploadName=null;
@@ -67,10 +72,32 @@ public class UploadFileUtill {
 	   ret.add(target.getAbsolutePath()); //path
 	   ret.add(uploadName);//uuidFileName
 	   
-	   //mergeAndDBSave
-	   
-	   
+	  
 	   return ret;
    }
+   
+   //
+   public static List<String> uploadFile(String uploadPath,String originalName,String fileData)throws Exception{
+	   UUID uid=UUID.randomUUID();
+	   String saveName=uid.toString()+"_"+originalName;
+	   String savePath=calPath(uploadPath);
+	   File target= new File(uploadPath+savePath,saveName);
+	   FileOutputStream fo= new FileOutputStream(target);
+	   OutputStreamWriter ow= new OutputStreamWriter(fo,"utf-8");
+	   FileCopyUtils.copy(fileData, ow);
+	   String formatName= originalName.substring(originalName.lastIndexOf(".")+1);
+	   String uploadName=null;
+	   if(MediaUtils.get(formatName)!=null){
+		   uploadName= makeThumbnail(uploadPath,savePath,saveName);
+	   }
+	   List<String> ret = new ArrayList<>();
+	   ret.add(target.getAbsolutePath()); //path
+	   ret.add(uploadName);//uuidFileName
+	   
+	  
+	   return ret;
+   }
+ 
+   
  
 }
