@@ -85,7 +85,6 @@ public class RestCon {
 	@RequestMapping(value="getErdPageJSON",produces="application/json; charset=utf8")
 	List<String> getErdPageJSON(HttpServletResponse response,HttpServletRequest request) throws IOException{
 		request.setCharacterEncoding("utf-8");
-		response.setCharacterEncoding("utf-8");
 		Cookie[] cookies = request.getCookies();
 		String userid = null;
 		for(int i=0; i<cookies.length; i++){
@@ -107,7 +106,7 @@ public class RestCon {
 			InputStream  in=null;
 			try {	
 				in= new FileInputStream(file);
-				ret.add(IOUtils.toString(in));
+				ret.add(IOUtils.toString(in,"utf-8"));
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}finally{
