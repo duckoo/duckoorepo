@@ -26,9 +26,10 @@ var EnitityView=(function(){
   	  var $that =$("#"+this.name);
   	  var thisObj=this;
 	  $that.draggable({handle:'.table_name',containment:"#canvasDiv",scroll:true,stop:function(ev,ui){
-		  console.log("ev,ui:",ev,ui);
-		  var left = ui.position.left;
-		  var top = ui.position.top;
+		 // console.log("ev,ui:",ev,ui);
+		  var left = $that.offset().left;
+		  var top = $that.offset().top;
+		  console.log("l t ::asdfasdas",left,":",top );
 		  thisObj.left=left;
 		  thisObj.top=top;
 		  
