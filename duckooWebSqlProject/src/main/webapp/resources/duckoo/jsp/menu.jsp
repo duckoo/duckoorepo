@@ -28,6 +28,7 @@
                 <div class="genBtnListDiv">
                     <button id="genTest" class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="left" title="CREATE 쿼리를 생성합니다."><span>Generate-SQL</span></button>
                     <button id="genJpaBtn" class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="left" title="JPA 코드를 생성합니다."><span>Generate-JPA Code</span></button>
+                    <button id="genVoBtn" class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="left" title="VO 코드를 생성합니다."><span>Generate-VO Code</span></button>
                     <button id="erdSaveBtn" class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="left" title="SAVE"><span>SAVE</span></button>
                     <button class="button btn btn-success" type="button" style="vertical-align:middle; float:right;" data-toggle="tooltip" data-placement="bottom" title="DB에 테이블을 생성합니다."><span>Insert DB</span></button> 
 			    </div>
