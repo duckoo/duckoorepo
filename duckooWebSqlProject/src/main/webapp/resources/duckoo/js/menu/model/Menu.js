@@ -15,8 +15,7 @@ var Menu=(function(){
 			this.observer.fire("Item_add",{param:arguments,that:this});
 		}
 	}
-  
-    
+
     Menu.prototype.itemDel=function(name){ /////고쳐야됨 씨발...
 		var ret=undefined;
 		if(itemList[name]){

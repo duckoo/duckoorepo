@@ -48,14 +48,14 @@ function click_trDatas(e){
 			 
 		 }else{
 			 if($hideDiv.css("display")==='block'){
-				 console.log("col:",$preCol);
-				 console.log("hiden:",$hideDiv);
+				 //console.log("col:",$preCol);
+				 //console.log("hiden:",$hideDiv);
 				 $preCol.css("background-color","");
 				 $hideDiv.css("height","0px");
 				 $hideDiv.css("padding-top","0px");
 				 //setTimeout(function(){$hideDiv.css("display","none");},270); 안먹힘....
 				 $hideDiv.css("display","none");
-				 console.log("none?:",$hideDiv.css("display"));
+				 //console.log("none?:",$hideDiv.css("display"));
 			 }
 		 }
 	 };
@@ -87,7 +87,7 @@ function openConstraintBtn(e){
 /*	e.event
 	e.that;
 */	
- console.log("evetn.: ", e)	;
+// console.log("evetn.: ", e)	;
 	var id=$(e.that).attr("data-openCB");
 	var $hiddenDiv=$("#openDiv_"+id);
 	var $btnsDiv=$("#openAttrDelUpDiv_"+id);
@@ -153,12 +153,11 @@ Obserable.setEventObserver("attrInputChange",obb);
 
 function updateAttrFinalBtn(e){
 	var $that = $(e.that);
-	console.log("that: ",$that);
+	//console.log("that: ",$that);
 	var id= $that.attr("data-id");
-	console.log("ididid",Number(id));
+	//console.log("ididid",Number(id));
 	var attr =  entity.getAttr(Number(id));
-	console.log("uafb attr : ",attr);
-	
+	//console.log("uafb attr : ",attr);
 	var keyType = $("#keyTypeUp option:selected").val();
 	if(keyType==="PK"){
 		attr.isPk = true;
@@ -169,7 +168,6 @@ function updateAttrFinalBtn(e){
 	}else if(keyType==="None"){
 		attr.isPk = false;
 		attr.isFk = false;
-		console.log("난다고래래래래래래래래래래래래래래ㅐ래랠래래ㅐ래랠");
 	}else{
 		attr.isPk = true;
 		attr.isFk = true;	
@@ -237,9 +235,7 @@ function confirmYes(){
 	else{
 	 entity.deleteAttr(Number(id));
 	}
-	
-	console.log("delete Atfer:",attrNodeManager);
-	
+	//console.log("delete Atfer:",attrNodeManager);
 	entity.deleteAttr(Number(id));
 	var $openAttrDelUpDiv= $("#openAttrDelUpDiv_"+id);
 	var $openDiv = $("openDiv_"+id);
@@ -277,18 +273,18 @@ function addAttrFinalBtn(e){
     var newAttr = entity.setAttr(attr).clone();
    
     if(isPk) {
-    	 console.log("cAttr: ",newAttr);
+    	 //console.log("cAttr: ",newAttr);
     	 //부실 공사.
     	 var id = (pkArr[0] && pkArr[0].id) || [];
     	 attrNodeManager.addNodeTour(id,newAttr);
     }
     entity.sortAttribute();
-    console.log("소트엔티티:",entity);
+    //console.log("소트엔티티:",entity);
     v(entity).refresh();
     v(entity).entitySizing();
     tagSetAttr();
-    console.log("엔티티araboja:",EntityManager.getEntityByName());
-    console.log("노트도 좀 보자:",attrNodeManager.getAllNode());
+    //console.log("엔티티araboja:",EntityManager.getEntityByName());
+    //console.log("노트도 좀 보자:",attrNodeManager.getAllNode());
     //console.log("릴레이션좀 보자:",relationManager.get());
 }
 obb=Object.create(Obsever);
@@ -312,7 +308,7 @@ Obserable.setEventObserver("saveBtn",obb);
 
 function tagSetAttr(){
 	var attr= entity.getAttr();
-	console.log("tagSetAttr:",attr);//값살아있음
+	//console.log("tagSetAttr:",attr);//값살아있음
 	var $tbl=  $(".tbl");
 	 $tbl.html("");
 	for(var i=0,len=attr.length;i<len;i++){
@@ -324,7 +320,6 @@ function setModal(enti,modal){
 	entity=enti;
 	modal.setViewPort(body);
 	 tagSetAttr();
-	 console.log("tlwkr");
 }
 
 

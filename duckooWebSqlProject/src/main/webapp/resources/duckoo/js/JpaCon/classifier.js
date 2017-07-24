@@ -16,8 +16,6 @@ var classifier = (function(){
 		
 		for(var i in superClasses){
 			if(tempNode.id===superClasses[i].id){
-				/*console.log("what is tempNode?",tempNode);
-				console.log("what is inNode?",inNode);*/
 				return;
 			}
 			else{
@@ -27,7 +25,6 @@ var classifier = (function(){
 	}
 	
 	classifier.prototype.punish =function(){
-		console.log("superclass",superClasses);
 		superClasses.forEach(function(spc){	
 			classInfoMaker.makeClassInfo(spc);
 		});
@@ -61,7 +58,6 @@ var classifier = (function(){
 
 
     classifier.prototype.active = function(){
-        console.log("새로운 엔티티 배열.",this.entities);
         this.entities.forEach(function(En){    
             classInfoMaker.mkClassInfo(En);
         });
@@ -73,9 +69,7 @@ var classifier = (function(){
 	classifier.prototype.initClasses = function(){
 		this.entities=[];
 		this.superClasses=[];
-		console.log("초기호ㅏ 완료 :",this.entities);
 	}
 	
-	console.log("classInfo : ",classManager.getClassInfoArr());
 	return classifier;
 })();

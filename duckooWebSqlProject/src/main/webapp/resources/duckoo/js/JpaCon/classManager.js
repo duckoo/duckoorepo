@@ -1,10 +1,6 @@
 var classManager = (function(){
 	
 	var ClassInfoArr = [];
-	
-
-	
-	
 	var addClassInfo = function(classInfo){
 		//console.log("targeted hmm classInfo",classInfo);
 		if(ClassInfoArr.length==0){
@@ -15,8 +11,6 @@ var classManager = (function(){
 			ClassInfoArr.push(classInfo);
 		};
 	}
-	
-	
 	
 	var getClassInfoArr = function(){
 		return ClassInfoArr;

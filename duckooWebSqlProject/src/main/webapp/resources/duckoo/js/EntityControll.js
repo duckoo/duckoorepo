@@ -23,17 +23,13 @@ var EntityControll = (function(){
 	
 	//not use
 	function isAlreadyConnected(tempRelation){
-		
-		
-		console.log("connection founded",RelationShipManager.getRelation(tempRelation.name));
+		//console.log("connection founded",RelationShipManager.getRelation(tempRelation.name));
 		if(RelationShipManager.getRelation(tempRelation.name)){
 			return true;
 		}else{
 			return false;
 		}
-		
 	}
-	
 	function isChangeable(src_table_id,attr){
 		RelationShipManager.getRelationBySrcId();
 		

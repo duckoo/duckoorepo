@@ -5,6 +5,5 @@ var Sidebar = (function(){
 		this.id= opt.id || "Sidebar";
 	}
 	
-	
 	return Sidebar;
 })();

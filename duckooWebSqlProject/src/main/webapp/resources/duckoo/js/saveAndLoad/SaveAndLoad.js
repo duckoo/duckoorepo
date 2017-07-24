@@ -44,8 +44,6 @@ var SaveAndLoad=(function(){
 	SaveAndLoad.prototype.saveToJson=function(){
 		
 		var schemas= SchemaManager.get();
-		console.log("ssss",schemas);
-		
 		/*
 		 var enArr=EntityManager.getEntityByName();
 		 var noArr=attrNodeManager.prepareJSON();

@@ -10,9 +10,9 @@ var Newschema = (function(){
 		EntityManager.deleteEntity();
 		attrNodeManager.deleteAll();
 		classManager.delclassInfo();
-		console.log("classInfo!!!!!!!!!!!:",classManager.getClassInfoArr());
-		console.log("entity!!!!!!:",EntityManager.getEntityByName());
-		console.log("attrNode!!!!!!:",attrNodeManager.getAllNode());
+		//console.log("classInfo!!!!!!!!!!!:",classManager.getClassInfoArr());
+		//console.log("entity!!!!!!:",EntityManager.getEntityByName());
+		//console.log("attrNode!!!!!!:",attrNodeManager.getAllNode());
 		
 	}
 	return{delCurrentAllInfo:delCurrentAllInfo}

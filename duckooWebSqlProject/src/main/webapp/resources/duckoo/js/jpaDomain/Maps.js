@@ -15,10 +15,6 @@ var maps = (function(){
 		var type = Values[reDatatype];
 		return type;
 	}
-
-
-
-
 	return{getType:getType}
 })();
 

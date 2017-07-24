@@ -30,7 +30,6 @@ var Attribute=(function(){
 	 this.id= opt.id;
  }
  function g_countInit(val){
-	 console.log(val);
 	 counter.init(val); 
  }
  

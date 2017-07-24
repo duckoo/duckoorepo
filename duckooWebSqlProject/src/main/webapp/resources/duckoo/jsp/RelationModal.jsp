@@ -145,11 +145,7 @@ $document.on("click","#makeRelationBtn",function(e){
 	
 	relationfunction.initiateElementArr();
 	var icon = $(this);
-	  
-	console.log("rf:",relationfunction)
-	
 	var mkFlag=relationfunction.changeFlagState();
-	console.log("rf:",mkFlag);
 	var color="#5cb85c";
 	if(mkFlag)
 	  color="#FF0066";
@@ -230,14 +226,12 @@ $("#relSave").on("click",function(e){
      	
      	if(relationfunction.getTempRelation().relationLine=="identify"){
      		getFKAttr.isFk = true;
-     		
-     		console.log("trans element pk,fk",getFKAttr)
      	}else{
      		getFKAttr.isFk = true;
      		getFKAttr.isPk = false;
      	}
      	relationfunction.getTempRelation().name = firstName +"_"+lastName;
-     	console.log("pk error is correct? : " ,relationfunction.getTempRelation());
+     	//console.log("pk error is correct? : " ,relationfunction.getTempRelation());
      }
 
 	

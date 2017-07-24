@@ -6,23 +6,14 @@ var jpaGen = (function(){
 		
 	}
 	jpaGen.prototype.generate = function(){
-	
-	console.log("클래스 인포:",classManager.getClassInfoArr());
 	 var classInfos = classManager.getClassInfoArr();
-	 
 	 var emclass=[];
-	 
 	 for(var i=0; i<classInfos.length; i++){
 		 if(classInfos[i].Emclass!=undefined){
 			 emclass.push(classInfos[i].Emclass);
 		 }
 	 }
-	 
 	 var classInfo = emclass.concat(classInfos);
-	 
-	 console.log("클래스인포데스:",classInfo);
-	 
-	 
 	 var $javaClassText = $("#javaClassText");//클래스들 붙일 곳
 	 var $jpaCodeTab =$("#jpaCodeTab");
 	 
@@ -33,7 +24,6 @@ var jpaGen = (function(){
 	 var classAnnotationTemplate = Handlebars.compile(classAnnotationSource);// 클래스어노테이션컴파일
 	 
 	 var jpaCodeTitleSource = $("#jpaCodeTitle").html();
-	 console.log("jpaCodeTitleSource:",jpaCodeTitleSource);
 	 var jpaCodeTitleTemplate = Handlebars.compile(jpaCodeTitleSource);
 	 
 	 Handlebars.registerHelper('ifInteger', function(dataType, options) {

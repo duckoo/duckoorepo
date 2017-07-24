@@ -71,9 +71,6 @@ var propMaker = (function(){
 				}else{
 					//일단 보류. 하나있을때 밖에 구분못하는데 너무 복잡하게 찾아들어감
 					var ano = EntityManager.getEntityByName(relation.source).search({isPk:true});
-					console.log("allofClassInfo",classManager.getClassInfoArr());
-					console.log("targetClassName : ",relation.source);
-					console.log("ananananananananana",classManager.getClassInfoByClassName(codeUtils.upperFirstLetter(relation.source)));
 					var refCol;
 					ano.forEach(function(ref){
 						refCol = ref;

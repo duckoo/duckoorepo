@@ -101,7 +101,6 @@ var $sqlQueryModal = $("#sqlQueryModal");
 var $queryDiv = $("#queryDiv");
 
 $document.on("click","#genTest",function(e){
-	console.log("hi");
 	$sqlSelectModal.modal();
 });
 

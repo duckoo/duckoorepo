@@ -52,7 +52,6 @@ function getAttr(id){
 	 var maxId=-1;
 	 
 	 this.attr.forEach(function(val){
-		 console.log(val.id);
 		 var id= Number(val.id);
 		 if(maxId<id)maxId=id;
 	 });

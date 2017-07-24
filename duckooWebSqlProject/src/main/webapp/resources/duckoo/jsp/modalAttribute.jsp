@@ -101,7 +101,6 @@ $(document).on('click','.deleteAttrBtn',function(e){
 $("#confirmYes").on("click",function(e){
 	e.stopPropagation();
     e.preventDefault();
-	console.log("concocncocncocncocncoccn");
     modalAttribute.Obserable.fire("confirmYes",{event:e,that:this});
 });
 ///////////////////delete end//////////////////////////////////
@@ -126,19 +125,6 @@ $(document).on("click","#updateAttrFinalBtn",function(e){
 
 
 $(document).on('click','#saveBtn',function(e){
-	console.log("eeeeeee:",e);
-	/* tagGetAttr(entity);
-    EntityManager.setEntity(entity); */
-    /*
-    var $entity = $("#"+entity.name);
-    var $innerEntity = $("[data-innerEntity='"+entity.name+"']");
-    console.log($innerEntity);
-    $entity.html($(entity.genHtml()).html());
-    $entity.css("width",300);
-    $entity.css("height",350);
-    $innerEntity.css("width",275);
-    $innerEntity.css("height",325);
-    */
     modalAttribute.Obserable.fire("saveBtn",{event:e,that:this});
     $("#myModal").modal("hide");
 });

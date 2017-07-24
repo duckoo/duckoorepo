@@ -10,8 +10,6 @@ var SidebarView=(function(){
 		return entityListTemplate(obj);
 	});
 			
-			
-	
 	function SidebarView(sidebar){
 		 this.sidebar=sidebar;
 		 this.id= this.sidebar.id;

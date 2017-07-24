@@ -24,27 +24,9 @@ var hbMap =(function(){
 		 $("#columnDiv_"+classInfo[i].className+"_"+classInfo[i].properties[j].pName).append(annoHtml);
 	}
 	
-	var embeddedId = function(){
-		
-	}
-	
-	var joinColumn = function(){
-		
-	}
-	
-	var oneToMany = function(){
-		
-	}
-	
-	var manyToOne = function(){
-		
-	}
-	
-	
-	
-	
-	
-	
-	
+	var embeddedId = function(){}
+	var joinColumn = function(){}
+	var oneToMany = function(){}
+	var manyToOne = function(){}
 	return {}
 })();

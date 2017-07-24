@@ -5,6 +5,5 @@ var Console=(function(){
 		this.id= opt.id || "Console";
 	}
 	
-	
 	return Console;
 })();
