@@ -236,6 +236,13 @@ $("#genJpaBtn").on("click",function(e){
 	jg.generate();	
 	$("#jpaModal").modal();
 });
+$("#genVoBtn").on("click",function(e){
+	e.stopPropagation();
+    e.preventDefault();
+	var vg = new voGen();
+	vg.generate();
+	$("#voModal").modal();
+});
 
 
 

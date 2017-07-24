@@ -24,7 +24,15 @@ var EnitityView=(function(){
 		 var str=this.genHtmlStr();
 		$taget.append(str);
   	  var $that =$("#"+this.name);
-	  $that.draggable({handle:'.table_name',containment:"#canvasDiv",scroll:true});
+  	  var thisObj=this;
+	  $that.draggable({handle:'.table_name',containment:"#canvasDiv",scroll:true,stop:function(ev,ui){
+		  console.log("ev,ui:",ev,ui);
+		  var left = ui.position.left;
+		  var top = ui.position.top;
+		  thisObj.left=left;
+		  thisObj.top=top;
+		  
+	  }});
 }
  function show(pt){ 
 		var $this=$("#"+this.name);

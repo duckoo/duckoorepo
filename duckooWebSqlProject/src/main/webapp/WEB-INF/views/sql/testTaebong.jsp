@@ -86,6 +86,10 @@
 <jsp:param name="token" value="<%=token%>" />
 </jsp:include>
 
+<jsp:include page="/resources/duckoo/jsp/voModal.jsp">
+<jsp:param name="token" value="<%=token%>" />
+</jsp:include>
+
 <jsp:include page="/resources/duckoo/jsp/makeSchemaModal.jsp">
 <jsp:param name="token" value="<%=token%>" />
 </jsp:include>  
